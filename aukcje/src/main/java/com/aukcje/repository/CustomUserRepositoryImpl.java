@@ -1,0 +1,95 @@
+package com.aukcje.repository;
+
+import com.aukcje.dto.UserDTO;
+import com.aukcje.entity.User;
+import com.aukcje.entity.UserStatus;
+import com.aukcje.enums.UserStatusEnum;
+import com.aukcje.model.UserSearchModel;
+import com.aukcje.utils.Utils;
+import org.hibernate.Criteria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public class CustomUserRepositoryImpl implements CustomUserRepository{
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Autowired
+    private UserStatusRepository userStatusRepository;
+
+
+    @Override
+    public Page<User> findByUserSearchModel(UserSearchModel userSearchModel) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+
+        List<Predicate> statusPredicates = new ArrayList<>();
+        Path<UserStatus> statusPath = root.get("userStatus").get("name");
+        if(userSearchModel.getIsActive() != null && userSearchModel.getIsActive()){
+            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.AKTYWNY.name() ));
+        }
+        if(userSearchModel.getIsBlocked() != null && userSearchModel.getIsBlocked()){
+            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.ZBANOWANY.name() ));
+        }
+        if(userSearchModel.getIsDeleted() != null && userSearchModel.getIsDeleted()){
+            statusPredicates.add( criteriaBuilder.equal( statusPath, UserStatusEnum.USUNIĘTY.name() ));
+        }
+
+        List<Predicate> phrasePredicates = new ArrayList<>();
+        if( !( userSearchModel.getPhrase() == null || userSearchModel.getPhrase().isBlank() || userSearchModel.getPhrase().isEmpty() )){
+            String phrase = userSearchModel.getPhrase();
+            Path<Long> idPath = root.get("id");
+            Path<String> usernamePath = root.get("username");
+
+            if( !Utils.isLong(userSearchModel.getPhrase()) ){
+                phrasePredicates.add(criteriaBuilder.like( usernamePath, "%"+phrase+"%" ));
+            }else {
+                phrasePredicates.add(criteriaBuilder.equal( idPath, Long.parseLong(phrase) ));
+                phrasePredicates.add(criteriaBuilder.like( usernamePath, "%"+phrase+"%" ));
+            }
+        }
+
+
+        if(userSearchModel.getPageSize() == null || userSearchModel.getPageSize() <=0) userSearchModel.setPageSize(10);
+
+
+        if(!statusPredicates.isEmpty()){
+            predicates.add(criteriaBuilder.or(statusPredicates.toArray(new Predicate[statusPredicates.size()])));
+        }
+        if(!phrasePredicates.isEmpty()){
+            predicates.add(criteriaBuilder.and(phrasePredicates.toArray(new Predicate[phrasePredicates.size()])));
+        }
+
+        if(predicates.isEmpty()){
+            criteriaQuery.select(root);
+
+            return Utils.listToPageMapper(entityManager.createQuery(criteriaQuery).getResultList(),
+                    PageRequest.of(0, userSearchModel.getPageSize()));
+        }
+
+        criteriaQuery.select(root)
+                .where(predicates.toArray(new Predicate[predicates.size()]));
+
+        Page<User> users = Utils.listToPageMapper(entityManager.createQuery(criteriaQuery).getResultList(),
+                PageRequest.of(0, userSearchModel.getPageSize()));
+
+        return users;
+    }
+}

@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html{
+  font-size: 62.5%;
+}
+
+body{
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+  background-color: #e8e4e4;
+}
+
+nav {
+  /*background: #785c6c;*/
+  background: #7A5785;
+}
+
+.dropdown-navbar .dropdown-item{
+  font-size: 1.4rem;
+}
+
+.form-select{
+  height: 4rem;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;
+  background-color: #c7c3c1;
+  height: 1px;
+}
+
+
+.page-logo-icon{
+  color: #f8643c;
+}
+.page-logo, .page-logo{
+  font-size: 3rem;
+}
+.page-logo-bold{
+  font-weight: bold;
+}
+
+.form-control {
+  font-size: 1.4rem;
+  height: 4rem;
+  display: inline;
+}
+
+.btn {
+  height: 4rem;
+  font-size: 1.6rem;
+  /*display: inline;*/
+  color: white;
+}
+
+.button-submit{
+  background-color: #f8643c;
+  border-color: #f8643c;
+}
+.button-submit:hover{
+  background-color: #ff8363;
+  border-color: #ff8363;
+  color: white;
+  font-weight: bold;
+}
+.button-cancel{
+  background-color: #B4abbd;
+  border-color: #B4abbd;
+}
+
+.button-cancel:hover{
+  background-color: #c3bcca;
+  border-color: #c3bcca;
+  color: white;
+  font-weight: bold;
+}
+
+.button-delete{
+  background-color: #b63041;
+  border-color: #a92f3c;
+}
+.button-delete:hover{
+  background-color: #d75766;
+  border-color: #e16371;
+  color: white;
+  font-weight: bold;
+}
+
+form label {
+  margin-top: 1.5rem;
+}
+
+.error{
+  color: red;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.myplaceholder{
+  color: gray;
+}
+
+

@@ -1,0 +1,22 @@
+package com.aukcje.model.mapper;
+
+import com.aukcje.entity.Role;
+import com.aukcje.entity.User;
+import com.aukcje.model.UserEditModel;
+import com.aukcje.model.UserRegisterModel;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface UserRegisterModelMapper {
+
+    UserRegisterModelMapper instance = Mappers.getMapper(UserRegisterModelMapper.class);
+
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "userStatus", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    User user(UserRegisterModel userRegisterModelModel);
+
+}

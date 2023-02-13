@@ -1,0 +1,38 @@
+Must:
+- licytowanie 2d
+- zakładanie konta i logowanie 2d 
+- dodawanie ogłoszeń 2d
+- wyszukiwarka (filtrowanie) 2d
+- podgląd oferty 1d
+- koszyk 3d
+- składanie zamówień 2d
+
+Should:
+- kup teraz 1d
+- wyszukiwarka (sortowanie, paginacja) 7d
+- banowanie użytkowników 3d
+- dodawanie zdjęć do oferty 2d
+- slider ze zdjęciami w podglądzie oferty 1d
+- historia zamówień 1d
+
+Nice to have:
+- powiązanie parametrów oferty z kategoriami (5d)
+- tryb nocny 1d
+- avatar użytkownika 1d
+- obserwowanie ofert 1d
+- promowanie ofert (przez administratora - reklamy) 2d
+- ocena sprzedającego 1d (AVERAGE_RATE - aktualizować po każdym dodaniu oferty, gdzie day user jest SELLER'em)
+- czat ze sprzedającym 4d
+
+
+Razem 39
+
+
+
+Ubrania
+	Koszulki
+		Bez rękawków
+		Z rękawkami
+	Dresy
+	Koszula
+Kosiarki

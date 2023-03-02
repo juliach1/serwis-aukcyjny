@@ -203,7 +203,7 @@
                                         <p class="card-title col">${auctionDTOS.get(index.index).offerDetails.title}</p>
                                         <div class="col text-end">OBS</div>
                                     </div>
-                                    <a href="#" class="btn btn-primary">Zobacz ogłoszenie</a>
+                                    <a href="${pageContext.request.contextPath}/admin/uzytkownik" class="btn btn-primary">Zobacz ogłoszenie</a>
                                 </div>
                             </div>
                             </c:if>

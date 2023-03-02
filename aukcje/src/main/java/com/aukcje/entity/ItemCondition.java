@@ -7,24 +7,20 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "offer_details")
+@Table(name = "item_condition")
 @Setter
 @Getter
 @NoArgsConstructor
-public class OfferDetails {
+public class ItemCondition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
-    Long id;
+    Integer id;
 
-    @Column(name="TITLE")
-    String title;
+    @Column(name = "NAME")
+    String name;
 
     @Column(name="DESCRIPTION")
     String description;
-
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "ID_ITEM_CONDITION")
-    ItemCondition itemCondition;
 }

@@ -8,9 +8,7 @@ import com.aukcje.entity.Offer;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.repository.CustomOfferRepository;
 import com.aukcje.repository.OfferRepository;
-import com.aukcje.service.iface.OfferDetailsService;
-import com.aukcje.service.iface.OfferService;
-import com.aukcje.service.iface.OfferTypeService;
+import com.aukcje.service.iface.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,17 +26,25 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private OfferRepository offerRepository;
-    @Autowired
-    private OfferDetailsService offerDetailsService;
-    @Autowired
-    private OfferTypeService offerTypeService;
 
+    @Autowired
+    private OfferPhotoService offerPhotoService;
+
+    @Autowired
+    private CategoryService categoryService;
     @Autowired
     private CustomOfferRepository customOfferRepository;
 
     private final Integer DEFAULT_PAGE_SIZE = 12;
 
 
+    @Override
+    public OfferDTO findById(Long id) {
+        OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElse(new Offer()) );
+        offerDTO.setOfferPhotoDTO( offerPhotoService.findByOfferId(id) );
+
+        return offerDTO;
+    }
 
     @Override
     public List<OfferDTO> findNewAuctions(Integer pageSize) {
@@ -52,16 +58,15 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel) {
-
         return createOfferDTO(customOfferRepository.findByOfferSearchModel(offerSearchModel).toList());
     }
 
     private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {
-
         if(isInvalid(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
 
         List<Offer> offers = offerRepository.findNewByOfferTypeId( offerTypeId, setPageSize(pageSize) ).toList() ;
-        List<OfferDTO> offerDTOS = createOfferDTO(offers );
+        List<OfferDTO> offerDTOS = createOfferDTO( offers );
+
 
         return offerDTOS;
     }
@@ -73,12 +78,22 @@ public class OfferServiceImpl implements OfferService {
         return PageRequest.of(0, size);
     }
 
+
+    private OfferDTO createOfferDTO(Offer offer){
+        OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
+        offerDTO.setCategoryPath(categoryService.getCategoryPath(offer.getCategory()));
+
+        return offerDTO ;
+    }
+
     private List<OfferDTO> createOfferDTO(List<Offer> offers){
         List<OfferDTO> offerDTOS = new ArrayList<>();
 
         for(Offer offer : offers){
-            offerDTOS.add(OfferDTOMapper.instance.offerDTO(offer));
+            offerDTOS.add( createOfferDTO(offer) );
         }
         return offerDTOS;
     }
+
+
 }

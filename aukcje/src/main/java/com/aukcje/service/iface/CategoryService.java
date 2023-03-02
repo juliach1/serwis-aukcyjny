@@ -2,6 +2,7 @@ package com.aukcje.service.iface;
 
 import com.aukcje.dto.CategoryDTO;
 import com.aukcje.dto.CategoryParentHierarchyDTO;
+import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.CategorySelectDTO;
 import com.aukcje.entity.Category;
 import com.aukcje.model.CategoryModel;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 public interface CategoryService {
 
+    List<CategoryPathCategoryDTO> getCategoryPath(Category category);
 
     List<CategoryDTO> findAll();
 

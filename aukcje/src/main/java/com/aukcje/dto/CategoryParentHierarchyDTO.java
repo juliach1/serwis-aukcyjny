@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 public class CategoryParentHierarchyDTO {
 
-//    int id;
-
     String text;
     List<CategoryParentHierarchyDTO> nodes;
     Boolean expanded = true;

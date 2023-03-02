@@ -1,3 +1,16 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -58,6 +71,10 @@ hr {
   /*display: inline;*/
   color: white;
 }
+.observe-icon{
+  font-size: 3rem;
+  color: #f8643c;
+}
 
 .button-submit{
   background-color: #f8643c;
@@ -107,3 +124,35 @@ form label {
 }
 
 
+
+
+
+
+
+
+.btn-buy-now{
+  min-height: 45px;
+  color: white;
+  background-color: #7A5785;
+  border-color: #7A5785;
+}
+
+.btn-buy-now:hover {
+  color: white;
+  background-color: #a373af;
+  border-color: #a373af;
+  font-weight: bold;
+}
+
+
+.btn-add-to-cart{
+  color: lavender;
+  background-color: #b69cbe;
+  border-color: #b69cbe;
+}
+
+.btn-add-to-cart:hover {
+  color: white;
+  background-color: #cdb4d5;
+  border-color: #c8afd0;
+}

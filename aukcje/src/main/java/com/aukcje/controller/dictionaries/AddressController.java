@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+//TODO: Dodać podgląd adresów
 @Controller
 @RequestMapping("/uzytkownik/adres")
 public class AddressController {
-
 
     @Autowired
     AddressService addressService;
@@ -27,7 +27,6 @@ public class AddressController {
 
     @Autowired
     CountryService countryService;
-
 
     @GetMapping("/dodaj")
     public String addAddress(Model model){
@@ -89,5 +88,4 @@ public class AddressController {
         addressService.updateAddress(addressModel, userId);
         return "redirect:/uzytkownik/adres/dodaj";
     }
-
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface OfferService {
 
+    OfferDTO findById(Long id);
     List<OfferDTO> findNewAuctions(Integer pageSize);
     List<OfferDTO> findNewBuyNow(Integer pageSize);
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);

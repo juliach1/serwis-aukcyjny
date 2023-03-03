@@ -63,73 +63,96 @@
 <main>
     <%--@elvariable id="offerDTO" type="com.aukcje.dto.OfferDTO"--%>
 
-    <section class="central container col-sm-12 col-md-10 col-xl-8">
+    <section class="central container col-sm-12 col-md-9 col-xl-8">
 
 
         <section id="offer-display" class="bg-light p-5">
 
-            <header class="mb-5">
+            <header class="mb-3">
                 <p class="display-6">
                     ${offerDTO.offerDetails.title}
                 </p>
 
-                <h4>
-                    <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
-                        <c:choose>
-                            <c:when test="${index.index != 0}">
-                                →  ${offerDTO.categoryPath.get(index.index).name}
-                            </c:when>
-                            <c:otherwise>
-                                ${offerDTO.categoryPath.get(index.index).name}
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </h4>
+                <section class="d-flex">
+                    <h4 class="col-md-6 col-lg-7 col-xl-8">
+                        <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
+                            <c:choose>
+                                <c:when test="${index.index != 0}">
+                                    →  ${offerDTO.categoryPath.get(index.index).name}
+                                </c:when>
+                                <c:otherwise>
+                                    ${offerDTO.categoryPath.get(index.index).name}
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </h4>
+
+                     <c:if test="${offerDTO.offerType.name=='aukcja'}">
+                         <div class="ps-3 col pb-0 mb-0">
+                             <p class="p-0 m-0 fw-bold">Koniec licytacji:</p>
+                             <p class="p-0 m-0">xx.xx.xxxxr. xx:xx:xx</p>
+                         </div>
+                     </c:if>
+                </section>
+
             </header>
 
             <main class="row">
 
-                <section class="left-part col-md-7 col-lg-9 ">
-                    <div id="photos-carousel" class="carousel slide" data-bs-ride="carousel">
+                <section class="left-part col-md-6 col-lg-7 col-xl-8 ">
 
-                        <div class="carousel-indicators">
+                    <div id="photos-carousel" class="carousel slide" data-bs-ride="true">
+                        <c:choose>
 
-                            <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                            <c:when test="${offerDTO.offerPhotoDTO.size() > 0}">
 
-                                <c:choose>
-                                    <c:when test="${index.index == 0}">
-                                        <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class="active"></button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}"></button>
-                                    </c:otherwise>
-                                </c:choose>
+                                <div class="carousel-indicators">
+                                    <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
 
-                            </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${index.index == 0}">
+                                            <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class="active"></button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class=""></button>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                        </div>
+                                    </c:forEach>
 
-                        <div class="carousel-inner">
+                                </div>
 
-                            <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                                <div class="carousel-inner">
+                                    <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                                        <c:choose>
+                                            <c:when test="${index.index == 0}">
+                                                <div class="carousel-item active">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="carousel-item">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
 
-                                <c:choose>
-
-                                    <c:when test="${index.index == 0}">
-                                        <div class="dynamic-height carousel-item active">
-                                            <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="photo" class="d-block w-100">
-                                        </div>                            </c:when>
-                                    <c:otherwise>
-                                        <div class="dynamic-height carousel-item">
-                                            <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="photo" class="d-block w-100">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="0" class="active"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="${pageContext.request.contextPath}/files/img/offers/offer-photo-placeholder.png" alt="Brak zdjęć przedmiotu" class="d-block w-100">
                                         </div>
-                                    </c:otherwise>
+                                </div>
 
-                                </c:choose>
+                            </c:otherwise>
 
-                            </c:forEach>
-
-                        </div>
+                        </c:choose>
 
                         <button class="carousel-control-prev" type="button" data-bs-target="#photos-carousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
@@ -138,57 +161,92 @@
                             <span class="carousel-control-next-icon"></span>
                         </button>
 
-
                     </div>
-                    <div id="offer-desc">
-                        <h5>
+
+                    <div id="offer-desc" class="my-5 pb-3">
+                        <h3>
                             ${offerDTO.offerDetails.description}
-                        </h5>
+                        </h3>
 
                     </div>
                 </section>
 
-                <section class="right-part col-md">
+                <section class="right-part d-flex flex-column align-content-between col-md">
 
-                    <div class="buy-panel text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
-                        <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
+                    <c:choose>
+                        <c:when test="${offerDTO.offerType.name=='kup teraz'}">
+                            <div id="buy-panel">
+                                <div class="text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
 
-                            <div class="d-flex justify-content-center pt-4 my-2">
+                                    <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
 
-                                <div id="quantity-selection" class="d-inline-flex justify-content-center col-4 col-md-2">
-                                    <button id="button-quantity-down" type="button" class="btn button-quantity col">
-                                        <i class="bi bi-caret-down"></i>
-                                    </button>
+                                    <div class=" pt-4 my-2">
 
-                                    <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" min="1" max="${offerDTO.quantity}">
+                                        <div id="quantity-selection" class="d-inline-flex justify-content-center col-4 col-md-2">
+                                            <button id="button-quantity-down" type="button" class="btn button-quantity col">
+                                                <i class="bi bi-caret-down"></i>
+                                            </button>
 
-                                    <button id="button-quantity-up" type="button" class="btn button-quantity col">
-                                        <i class="bi bi-caret-up"></i>
+                                            <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" min="1" max="${offerDTO.quantity}">
+
+                                            <button id="button-quantity-up" type="button" class="btn button-quantity col">
+                                                <i class="bi bi-caret-up"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <p class="pt-2">/${offerDTO.quantity}szt.</p>
+
+                                    <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                        <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
+                                        <button type="submit" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                            do koszyka
+                                        </button>
+                                    </div>
+
+                                    <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
+                                        KUP TERAZ
                                     </button>
 
                                 </div>
 
-                        </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div id="buy-panel-auction">
+                                <div class="text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
 
-                        <p class="pt-2">/${offerDTO.quantity}szt.</p>
+                                    <p>Aktualna cena:</p>
+                                    <div class="current-price">
+                                        <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
+                                        <p class="pt-2">/${offerDTO.quantity}szt.</p>
+                                    </div>
 
-                        <div class="d-inline-flex justify-content-center mt-2 col-9">
-                            <a id="observe-button py-0 my-0" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
+                                    <p>Twoja oferta:</p>
+                                    <div class="user-offer d-inline-flex">
+                                        <!-- TODO: DODAĆ NAJWYŻSZĄ CENĘ JAKO MIN, A AKTUALNĄ CENĘ + 1ZŁ JAKO PLACEHOLDER-->
+                                        <input type="number" class="form-control" id="user-offer" name="quantity">
+                                        <p>zł</p>
+                                    </div>
 
-                            <button type="submit" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                do koszyka
-                            </button>
+                                    <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                        <a id="observe-button-auction" class="observe-button" href="#"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
+                                        <button type="submit" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
+                                            licytuj
+                                        </button>
 
-                        </div>
+                                    </div>
+                                </div>
 
-                        <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
-                            KUP TERAZ
-                        </button>
-
-                    </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
 
 
-                    <div class="info-panel mt-3">
+
+                    <div id="item-info-panel" class="mt-4 mt-md-3">
 
                         <div class=" border border-2 px-2 py-3 py-md-4 py-lg-5">
                             <p><span class="fw-bold">Stan: </span> ${offerDTO.offerDetails.itemCondition.name}</p>
@@ -199,6 +257,31 @@
 
                     </div>
 
+                    <div id="seller-info-panel" class="mt-5">
+
+                        <div class="d-flex justify-content-center">
+                            <a class="text-center" href="#####PODGLAD UZYTKOWNIKA">
+
+                                <c:choose>
+                                    <c:when test="${empty offerDTO.user.avatarPath}">
+
+                                        <img src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" class="avatar" alt="Zdjęcie profilowe sprzedawcy">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/files/img/users/${offerDTO.user.avatarPath}" class="avatar rounded" alt="Zdjęcie">
+
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <h1>${offerDTO.user.firstName}</h1>
+
+                            </a>
+                        </div>
+
+
+
+                    </div>
                 </section>
 
 

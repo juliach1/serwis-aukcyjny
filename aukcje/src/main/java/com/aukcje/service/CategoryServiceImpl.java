@@ -30,16 +30,20 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryPathCategoryDTOS.add(CategoryDTOMapper.instance.categoryTreeCategoryDTO(category));
 
-        do {
-            category=category.getParentCategory();
-            categoryPathCategoryDTOS.add( CategoryDTOMapper.instance.categoryTreeCategoryDTO( category ));
-        }while (category.getParentCategory() != null);
+        while (category.getParentCategory() != null) {
+            category = category.getParentCategory();
+            categoryPathCategoryDTOS.add(CategoryDTOMapper.instance.categoryTreeCategoryDTO(category));
+        }
 
         List<CategoryPathCategoryDTO> revList = new LinkedList<>();
         for(int i=categoryPathCategoryDTOS.size()-1; i>=0; i--){
             revList.add(categoryPathCategoryDTOS.get(i));
         }
 
+        System.out.println("-----ŚCIEŻKA KATEGORII: ");
+        for (CategoryPathCategoryDTO categoryDTO : revList){
+            System.out.println(categoryDTO.name);
+        }
         return revList;
     }
 

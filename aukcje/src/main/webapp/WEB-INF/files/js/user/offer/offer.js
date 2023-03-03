@@ -5,15 +5,16 @@
 //     div.css('height', width);
 // });
 
-var obsBtn =  document.querySelector('#observe-button');
-var obsIcon = document.querySelector('#observe-icon');
+var obsBtn =  document.getElementById('observe-button');
+var obsIcon = document.getElementById('observe-icon');
 
-obsBtn.addEventListener('click', function () {
+
+obsBtn.addEventListener("click", function () {
     changeObserveIcon();
-})
-
+});
 
 function changeObserveIcon(){
     obsIcon.classList.toggle('bi-eye');
     obsIcon.classList.toggle('bi-eye-fill');
-}
+};
+

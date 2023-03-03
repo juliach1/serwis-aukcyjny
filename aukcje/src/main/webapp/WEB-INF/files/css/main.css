@@ -9,8 +9,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,14 +24,29 @@ body{
   background-color: #e8e4e4;
 }
 
+
+/* PASEK GÓRNY */
+
 nav {
   /*background: #785c6c;*/
   background: #7A5785;
 }
-
 .dropdown-navbar .dropdown-item{
   font-size: 1.4rem;
 }
+
+.page-logo-icon{
+  color: #f8643c;
+}
+.page-logo, .page-logo{
+  font-size: 3rem;
+}
+.page-logo-bold{
+  font-weight: bold;
+}
+
+
+
 
 .form-select{
   height: 4rem;
@@ -49,64 +62,17 @@ hr {
 }
 
 
-.page-logo-icon{
-  color: #f8643c;
-}
-.page-logo, .page-logo{
-  font-size: 3rem;
-}
-.page-logo-bold{
-  font-weight: bold;
-}
-
 .form-control {
   font-size: 1.4rem;
   height: 4rem;
   display: inline;
 }
 
-.btn {
-  height: 4rem;
-  font-size: 1.6rem;
-  /*display: inline;*/
-  color: white;
-}
+
+
 .observe-icon{
   font-size: 3rem;
   color: #f8643c;
-}
-
-.button-submit{
-  background-color: #f8643c;
-  border-color: #f8643c;
-}
-.button-submit:hover{
-  background-color: #ff8363;
-  border-color: #ff8363;
-  color: white;
-  font-weight: bold;
-}
-.button-cancel{
-  background-color: #B4abbd;
-  border-color: #B4abbd;
-}
-
-.button-cancel:hover{
-  background-color: #c3bcca;
-  border-color: #c3bcca;
-  color: white;
-  font-weight: bold;
-}
-
-.button-delete{
-  background-color: #b63041;
-  border-color: #a92f3c;
-}
-.button-delete:hover{
-  background-color: #d75766;
-  border-color: #e16371;
-  color: white;
-  font-weight: bold;
 }
 
 form label {
@@ -125,34 +91,44 @@ form label {
 
 
 
+/*przyciski*/
 
-
-
-
-
-.btn-buy-now{
-  min-height: 45px;
+.btn {
+  height: 4rem;
+  font-size: 1.6rem;
+  /*display: inline;*/
   color: white;
-  background-color: #7A5785;
-  border-color: #7A5785;
 }
 
-.btn-buy-now:hover {
+.button-submit{
+  background-color: #f8643c;
+  border-color: #f8643c;
+}
+.button-submit:hover{
+  background-color: #ff8363;
+  border-color: #ff8363;
   color: white;
-  background-color: #a373af;
-  border-color: #a373af;
   font-weight: bold;
 }
 
-
-.btn-add-to-cart{
-  color: lavender;
-  background-color: #b69cbe;
-  border-color: #b69cbe;
+.button-cancel{
+  background-color: #B4abbd;
+  border-color: #B4abbd;
+}
+.button-cancel:hover{
+  background-color: #c3bcca;
+  border-color: #c3bcca;
+  color: white;
+  font-weight: bold;
 }
 
-.btn-add-to-cart:hover {
+.button-delete{
+  background-color: #b63041;
+  border-color: #a92f3c;
+}
+.button-delete:hover{
+  background-color: #d75766;
+  border-color: #e16371;
   color: white;
-  background-color: #cdb4d5;
-  border-color: #c8afd0;
+  font-weight: bold;
 }

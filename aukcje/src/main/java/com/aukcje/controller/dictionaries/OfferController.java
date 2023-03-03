@@ -19,6 +19,8 @@ public class OfferController {
 
     @GetMapping("/podglad/{ofertaId}")
     public String getOffer(@PathVariable("ofertaId") Long offerId, Model model){
+
+
         model.addAttribute("offerDTO", offerService.findById(offerId) );
 
         return "/user/offer/offer";

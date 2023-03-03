@@ -1,9 +1,11 @@
 package com.aukcje.service;
 
+import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferDetailsDTO;
 import com.aukcje.dto.OfferTypeDTO;
 import com.aukcje.dto.mapper.OfferDTOMapper;
+import com.aukcje.entity.Category;
 import com.aukcje.entity.Offer;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.repository.CustomOfferRepository;
@@ -32,6 +34,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private CustomOfferRepository customOfferRepository;
 
@@ -81,7 +84,11 @@ public class OfferServiceImpl implements OfferService {
 
     private OfferDTO createOfferDTO(Offer offer){
         OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
-        offerDTO.setCategoryPath(categoryService.getCategoryPath(offer.getCategory()));
+        Category category = offer.getCategory();
+
+        List<CategoryPathCategoryDTO> categoryPathCategoryDTOS = categoryService.getCategoryPath(category);
+
+        offerDTO.setCategoryPath(categoryPathCategoryDTOS);
 
         return offerDTO ;
     }

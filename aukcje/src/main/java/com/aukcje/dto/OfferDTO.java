@@ -9,6 +9,7 @@ import java.util.List;
 
 public class OfferDTO {
     public long id;
+    public CategoryDTO categoryDTO;
     public OfferDetailsDTO offerDetails;
     public OfferTypeDTO offerType;
     public UserDTO user;
@@ -22,19 +23,4 @@ public class OfferDTO {
     public List<CategoryPathCategoryDTO> categoryPath;
 
 
-//    @Override
-//    public String toString() {
-//        return "OfferDTO{" +
-//                "id=" + id +
-//                ", offerDetails=" + offerDetails +
-//                ", offerType=" + offerType +
-//                ", user=" + user +
-//                ", parentCategory=" + parentCategory +
-//                ", price=" + price +
-//                ", views=" + views +
-//                ", quantity=" + quantity +
-//                ", insertDate=" + insertDate +
-//                ", offerStatusDTO=" + offerStatusDTO +
-//                '}';
-//    }
 }

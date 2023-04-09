@@ -30,8 +30,8 @@ public class SecurityDataSourceConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").permitAll()
-                .antMatchers("/rest/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/rest/**").hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .antMatchers("/rejestracja").permitAll()
                 .antMatchers("/rejestracja/**").permitAll()
@@ -42,7 +42,7 @@ public class SecurityDataSourceConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/logowanie")
                 .loginProcessingUrl("/logowanie/autoryzacja")
-                    .defaultSuccessUrl("/admin/uzytkownik")
+                    .defaultSuccessUrl("/uzytkownik/strona-glowna")
                     .permitAll()
                 .and()
                     .logout().permitAll().logoutSuccessUrl("/logowanie")

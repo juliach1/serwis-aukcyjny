@@ -19,7 +19,6 @@ import java.util.List;
 public class CustomOfferRepositoryImpl implements CustomOfferRepository {
     @PersistenceContext
     private EntityManager entityManager;
-
     private CriteriaBuilder criteriaBuilder;
     private CriteriaQuery<Offer> criteriaQuery;
     private Root<Offer> root;

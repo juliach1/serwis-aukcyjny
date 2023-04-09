@@ -125,7 +125,7 @@
                     </div>
 
                         <hr/>
-                        <div class="text-center mb-4 mt-5"> Powrót do strony <a href="${pageContext.request.contextPath}/logowanie">Logowania</a> </div>
+                        <div class="text-center mb-4 mt-5"> Masz już konto? <a href="${pageContext.request.contextPath}/logowanie">Zaloguj się</a> </div>
 
 
                 </div>

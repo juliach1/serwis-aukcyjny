@@ -7,6 +7,7 @@ import com.aukcje.dto.OfferTypeDTO;
 import com.aukcje.dto.mapper.OfferDTOMapper;
 import com.aukcje.entity.Category;
 import com.aukcje.entity.Offer;
+import com.aukcje.enums.OfferTypeEnum;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.repository.CustomOfferRepository;
 import com.aukcje.repository.OfferRepository;
@@ -46,6 +47,8 @@ public class OfferServiceImpl implements OfferService {
         OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElse(new Offer()) );
         offerDTO.setOfferPhotoDTO( offerPhotoService.findByOfferId(id) );
 
+
+
         return offerDTO;
     }
 
@@ -62,6 +65,11 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel) {
         return createOfferDTO(customOfferRepository.findByOfferSearchModel(offerSearchModel).toList());
+    }
+
+    @Override
+    public Boolean isOfferTypeAuction(OfferDTO offer) {
+        return OfferTypeEnum.AUKCJA.toString().equals(offer.offerType.getName());
     }
 
     private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {

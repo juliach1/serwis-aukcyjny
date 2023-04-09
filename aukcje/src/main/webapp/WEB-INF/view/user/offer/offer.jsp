@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>User</title>
+    <title>${offerDTO.offerDetails.title} - SellBuy</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,14 +28,18 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark py-2 sticky-top" id="navbar">
+
     <div class="container">
+
         <a class="navbar-brand" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">
             <a class="navbar-brand page-logo" href="#"> Sell<span class="page-logo-bold">B<i class="bi bi-basket page-logo-icon"></i>Y</span></a>
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
                 <a class="nav-link px-lg-3 active" aria-current="page" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">STRONA GŁÓWNA</a>
@@ -55,6 +59,7 @@
                     </ul>
                 </li>
             </div>
+
         </div>
     </div>
 </nav>
@@ -64,7 +69,6 @@
     <%--@elvariable id="offerDTO" type="com.aukcje.dto.OfferDTO"--%>
 
     <section class="central container col-sm-12 col-md-9 col-xl-8">
-
 
         <section id="offer-display" class="bg-light p-5">
 
@@ -88,7 +92,7 @@
                     </h4>
 
                      <c:if test="${offerDTO.offerType.name=='aukcja'}">
-                         <div class="ps-3 col pb-0 mb-0">
+                         <div class="ps-3 col pb-0 mb-0 text-end">
                              <p class="p-0 m-0 fw-bold">Koniec licytacji:</p>
                              <p class="p-0 m-0">xx.xx.xxxxr. xx:xx:xx</p>
                          </div>
@@ -127,12 +131,12 @@
                                         <c:choose>
                                             <c:when test="${index.index == 0}">
                                                 <div class="carousel-item active">
-                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpg" alt="Zdjęcie przedmiotu" class="d-block w-100">
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="carousel-item">
-                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpeg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpg" alt="Zdjęcie przedmiotu" class="d-block w-100">
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>
@@ -187,7 +191,7 @@
                                                 <i class="bi bi-caret-down"></i>
                                             </button>
 
-                                            <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" min="1" max="${offerDTO.quantity}">
+                                            <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" value="1" min="1" max="${offerDTO.quantity}">
 
                                             <button id="button-quantity-up" type="button" class="btn button-quantity col">
                                                 <i class="bi bi-caret-up"></i>
@@ -215,19 +219,38 @@
                             </div>
                         </c:when>
                         <c:otherwise>
+                            <%--@elvariable id="startValue" type="java.lang.Double"--%>
+                            <%--@elvariable id="highestValueUserAuction" type="com.aukcje.dto.UserAuctionDTO"--%>
+
                             <div id="buy-panel-auction">
                                 <div class="text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
 
                                     <p>Aktualna cena:</p>
+
+
                                     <div class="current-price">
-                                        <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
+                                        <c:choose>
+                                            <c:when test="${highestValueUserAuction.value > 0 }">
+                                                <h1>${highestValueUserAuction.value} <span class="text-center"> zł</span> </h1>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <h1>${startValue} <span class="text-center"> zł</span> </h1>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <p class="pt-2">/${offerDTO.quantity}szt.</p>
                                     </div>
 
                                     <p>Twoja oferta:</p>
                                     <div class="user-offer d-inline-flex">
-                                        <!-- TODO: DODAĆ NAJWYŻSZĄ CENĘ JAKO MIN, A AKTUALNĄ CENĘ + 1ZŁ JAKO PLACEHOLDER-->
-                                        <input type="number" class="form-control" id="user-offer" name="quantity">
+                                        <c:choose>
+                                            <c:when test="${highestValueUserAuction.value > 0 && highestValueUserAuction.value>startValue}">
+                                                <input type="number" class="form-control" id="user-offer" name="quantity" min="${highestValueUserAuction.value + 0.01}" placeholder="${highestValueUserAuction.value + 1.0}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="number" class="form-control" id="user-offer" name="quantity" min="${startValue + 0.01}" placeholder="${startValue + 1.0}">
+                                            </c:otherwise>
+                                        </c:choose>
+
                                         <p>zł</p>
                                     </div>
 

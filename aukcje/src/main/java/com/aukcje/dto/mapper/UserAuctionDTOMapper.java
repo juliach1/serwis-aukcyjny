@@ -13,4 +13,5 @@ public interface UserAuctionDTOMapper {
 
     @Mappings({})
     UserAuctionDTO userAuctionDTO(UserAuction userAuction);
+
 }

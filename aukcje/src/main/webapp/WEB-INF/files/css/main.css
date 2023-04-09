@@ -5,7 +5,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -14,53 +14,57 @@ input[type=number] {
   margin: 0;
   padding: 0;
 }
-html{
+html {
   font-size: 62.5%;
 }
 
-body{
-  font-family: 'Raleway', sans-serif;
+a {
+  color: black;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
   font-size: 1.6rem;
   background-color: #e8e4e4;
 }
 
-
 /* PASEK GÓRNY */
 
+.navbar .dropdown .dropdown-item {
+  font-size: 1.4rem;
+}
 nav {
   /*background: #785c6c;*/
-  background: #7A5785;
+  background: #7a5785;
 }
-.dropdown-navbar .dropdown-item{
+.dropdown-navbar .dropdown-item {
   font-size: 1.4rem;
 }
 
-.page-logo-icon{
+.page-logo-icon {
   color: #f8643c;
 }
-.page-logo, .page-logo{
+.page-logo,
+.page-logo {
   font-size: 3rem;
 }
-.page-logo-bold{
+.page-logo-bold {
   font-weight: bold;
 }
 
-
-
-
-.form-select{
+.form-select {
   height: 4rem;
 }
 
 hr {
   border: 0;
-  clear:both;
-  display:block;
+  clear: both;
+  display: block;
   width: 96%;
   background-color: #c7c3c1;
   height: 1px;
 }
-
 
 .form-control {
   font-size: 1.4rem;
@@ -68,9 +72,7 @@ hr {
   display: inline;
 }
 
-
-
-.observe-icon{
+.observe-icon {
   font-size: 3rem;
   color: #f8643c;
 }
@@ -79,17 +81,15 @@ form label {
   margin-top: 1.5rem;
 }
 
-.error{
-  color: red;
+.error {
+  color: rgb(255, 0, 0);
   font-style: italic;
   font-size: 1.2rem;
 }
 
-.myplaceholder{
+.myplaceholder {
   color: gray;
 }
-
-
 
 /*przyciski*/
 
@@ -100,33 +100,33 @@ form label {
   color: white;
 }
 
-.button-submit{
+.button-submit {
   background-color: #f8643c;
   border-color: #f8643c;
 }
-.button-submit:hover{
+.button-submit:hover {
   background-color: #ff8363;
   border-color: #ff8363;
   color: white;
   font-weight: bold;
 }
 
-.button-cancel{
-  background-color: #B4abbd;
-  border-color: #B4abbd;
+.button-cancel {
+  background-color: #b4abbd;
+  border-color: #b4abbd;
 }
-.button-cancel:hover{
+.button-cancel:hover {
   background-color: #c3bcca;
   border-color: #c3bcca;
   color: white;
   font-weight: bold;
 }
 
-.button-delete{
+.button-delete {
   background-color: #b63041;
   border-color: #a92f3c;
 }
-.button-delete:hover{
+.button-delete:hover {
   background-color: #d75766;
   border-color: #e16371;
   color: white;

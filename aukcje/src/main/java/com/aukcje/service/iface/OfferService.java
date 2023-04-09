@@ -16,5 +16,5 @@ public interface OfferService {
     List<OfferDTO> findNewBuyNow(Integer pageSize);
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);
 
-
+    Boolean isOfferTypeAuction(OfferDTO offer);
 }

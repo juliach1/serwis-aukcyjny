@@ -1,6 +1,7 @@
 package com.aukcje.dto.mapper;
 
 import com.aukcje.dto.CountryDTO;
+import com.aukcje.dto.ItemConditionDTO;
 import com.aukcje.dto.ItemConditionOfferPreviewDTO;
 import com.aukcje.entity.Country;
 import com.aukcje.entity.ItemCondition;
@@ -15,4 +16,7 @@ public interface ItemConditionDTOMapper {
 
     @Mappings({})
     ItemConditionOfferPreviewDTO itemConditionOfferPreviewDTO(ItemCondition itemCondition);
+
+    @Mappings({})
+    ItemConditionDTO itemConditionDTO(ItemCondition itemCondition);
 }

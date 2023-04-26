@@ -2,27 +2,23 @@ package com.aukcje.service;
 
 import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.OfferDTO;
-import com.aukcje.dto.OfferDetailsDTO;
-import com.aukcje.dto.OfferTypeDTO;
 import com.aukcje.dto.mapper.OfferDTOMapper;
 import com.aukcje.entity.Category;
 import com.aukcje.entity.Offer;
 import com.aukcje.enums.OfferTypeEnum;
+import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.repository.CustomOfferRepository;
 import com.aukcje.repository.OfferRepository;
 import com.aukcje.service.iface.*;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -70,6 +66,15 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Boolean isOfferTypeAuction(OfferDTO offer) {
         return OfferTypeEnum.AUKCJA.toString().equals(offer.offerType.getName());
+    }
+
+    @Override
+    public void save(OfferAddModel offerModel, Long userId, MultipartFile multipartFile) {
+        Offer offer = new Offer();
+
+
+
+
     }
 
     private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {

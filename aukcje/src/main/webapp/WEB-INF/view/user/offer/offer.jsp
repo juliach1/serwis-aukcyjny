@@ -175,110 +175,110 @@
                     </div>
                 </section>
 
-                <section class="right-part d-flex flex-column align-content-between col-md">
+                <section class="right-part col-md">
+                     <c:choose>
+                            <c:when test="${offerDTO.offerType.name=='kup teraz'}">
+                                <div class="right-part-panel mb-3" id="buy-panel">
+                                    <div class="text-center shadow px-2 py-3 py-md-4 py-lg-5">
 
-                    <c:choose>
-                        <c:when test="${offerDTO.offerType.name=='kup teraz'}">
-                            <div id="buy-panel">
-                                <div class="text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
+                                        <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
 
-                                    <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
+                                        <div class=" pt-4 my-2">
 
-                                    <div class=" pt-4 my-2">
+                                            <div id="quantity-selection" class="d-inline-flex justify-content-center col-4 col-md-2">
+                                                <button id="button-quantity-down" type="button" class="btn button-quantity col">
+                                                    <i class="bi bi-caret-down"></i>
+                                                </button>
 
-                                        <div id="quantity-selection" class="d-inline-flex justify-content-center col-4 col-md-2">
-                                            <button id="button-quantity-down" type="button" class="btn button-quantity col">
-                                                <i class="bi bi-caret-down"></i>
-                                            </button>
+                                                <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" value="1" min="1" max="${offerDTO.quantity}">
 
-                                            <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" value="1" min="1" max="${offerDTO.quantity}">
+                                                <button id="button-quantity-up" type="button" class="btn button-quantity col">
+                                                    <i class="bi bi-caret-up"></i>
+                                                </button>
 
-                                            <button id="button-quantity-up" type="button" class="btn button-quantity col">
-                                                <i class="bi bi-caret-up"></i>
-                                            </button>
+                                            </div>
 
                                         </div>
 
-                                    </div>
-
-                                    <p class="pt-2">/${offerDTO.quantity}szt.</p>
-
-                                    <div class="d-inline-flex justify-content-center mt-2 col-9">
-                                        <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
-                                        <button type="submit" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                            do koszyka
-                                        </button>
-                                    </div>
-
-                                    <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
-                                        KUP TERAZ
-                                    </button>
-
-                                </div>
-
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <%--@elvariable id="startValue" type="java.lang.Double"--%>
-                            <%--@elvariable id="highestValueUserAuction" type="com.aukcje.dto.UserAuctionDTO"--%>
-
-                            <div id="buy-panel-auction">
-                                <div class="text-center border border-2 px-2 py-3 py-md-4 py-lg-5">
-
-                                    <p>Aktualna cena:</p>
-
-
-                                    <div class="current-price">
-                                        <c:choose>
-                                            <c:when test="${highestValueUserAuction.value > 0 }">
-                                                <h1>${highestValueUserAuction.value} <span class="text-center"> zł</span> </h1>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <h1>${startValue} <span class="text-center"> zł</span> </h1>
-                                            </c:otherwise>
-                                        </c:choose>
                                         <p class="pt-2">/${offerDTO.quantity}szt.</p>
-                                    </div>
 
-                                    <p>Twoja oferta:</p>
-                                    <div class="user-offer d-inline-flex">
-                                        <c:choose>
-                                            <c:when test="${highestValueUserAuction.value > 0 && highestValueUserAuction.value>startValue}">
-                                                <input type="number" class="form-control" id="user-offer" name="quantity" min="${highestValueUserAuction.value + 0.01}" placeholder="${highestValueUserAuction.value + 1.0}">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input type="number" class="form-control" id="user-offer" name="quantity" min="${startValue + 0.01}" placeholder="${startValue + 1.0}">
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                            <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
+                                            <button type="submit" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                                do koszyka
+                                            </button>
+                                        </div>
 
-                                        <p>zł</p>
-                                    </div>
-
-                                    <div class="d-inline-flex justify-content-center mt-2 col-9">
-                                        <a id="observe-button-auction" class="observe-button" href="#"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
-                                        <button type="submit" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
-                                            licytuj
+                                        <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
+                                            KUP TERAZ
                                         </button>
 
                                     </div>
+
                                 </div>
+                            </c:when>
+                            <c:otherwise>
+                                <%--@elvariable id="startValue" type="java.lang.Double"--%>
+                                <%--@elvariable id="highestValueUserAuction" type="com.aukcje.dto.UserAuctionDTO"--%>
 
+                                <div class="right-part-panel shadow mb-3" id="buy-panel-auction">
+                                    <div class="text-center px-2 py-3 py-md-4 py-lg-5">
+
+                                        <p>Aktualna cena:</p>
+
+
+                                        <div class="current-price">
+                                            <c:choose>
+                                                <c:when test="${highestValueUserAuction.value > 0 }">
+                                                    <h1>${highestValueUserAuction.value} <span class="text-center"> zł</span> </h1>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <h1>${startValue} <span class="text-center"> zł</span> </h1>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <p class="pt-2">/${offerDTO.quantity}szt.</p>
+                                        </div>
+
+                                        <p>Twoja oferta:</p>
+                                        <div class="user-offer d-inline-flex">
+                                            <c:choose>
+                                                <c:when test="${highestValueUserAuction.value > 0 && highestValueUserAuction.value>startValue}">
+                                                    <input type="number" class="form-control" id="user-offer" name="quantity" min="${highestValueUserAuction.value + 0.01}" placeholder="${highestValueUserAuction.value + 1.0}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="number" class="form-control" id="user-offer" name="quantity" min="${startValue + 0.01}" placeholder="${startValue + 1.0}">
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                            <p>zł</p>
+                                        </div>
+
+                                        <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                            <a id="observe-button-auction" class="observe-button" href="#"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
+                                            <button type="submit" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
+                                                licytuj
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
+
+
+
+                        <div class="right-part-panel shadow" id="item-info-panel" class="mt-4 mt-md-3">
+
+                            <div class="px-2 py-3 py-md-4 py-lg-5">
+                                <p><span class="fw-bold">Stan: </span> ${offerDTO.offerDetails.itemCondition.name}</p>
+                                <p><span class="fw-bold">Kategoria: </span> ${offerDTO.categoryPath.get(offerDTO.categoryPath.size()-1).name} </p>
+                                <p><span class="fw-bold">Wyświetleń: </span> ${offerDTO.views} </p>
+                                <p><span class="fw-bold">Data dodania: </span> ${offerDTO.insertDate} </p>
                             </div>
-                        </c:otherwise>
-                    </c:choose>
 
-
-
-                    <div id="item-info-panel" class="mt-4 mt-md-3">
-
-                        <div class=" border border-2 px-2 py-3 py-md-4 py-lg-5">
-                            <p><span class="fw-bold">Stan: </span> ${offerDTO.offerDetails.itemCondition.name}</p>
-                            <p><span class="fw-bold">Kategoria: </span> ${offerDTO.categoryPath.get(offerDTO.categoryPath.size()-1).name} </p>
-                            <p><span class="fw-bold">Wyświetleń: </span> ${offerDTO.views} </p>
-                            <p><span class="fw-bold">Data dodania: </span> ${offerDTO.insertDate} </p>
                         </div>
-
-                    </div>
 
                     <div id="seller-info-panel" class="mt-5">
 

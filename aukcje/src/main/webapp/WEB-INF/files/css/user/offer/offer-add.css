@@ -1,0 +1,22 @@
+.selected-category{
+    background: #CDA5F3;
+    color: white;
+    font-weight: bold;
+}
+
+.bstreeview .list-group-item:hover {
+   background: #e1cff3;
+}
+
+#choose-category-button{
+    background: #b184c0;
+    border-color: #b184c0;
+}
+
+
+#choose-category-button:hover{
+    background: #c295d1;
+    border-color: #c295d1;
+    font-weight: bold;
+}
+

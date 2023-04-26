@@ -1,6 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CategoryParentHierarchyDTO;
+import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.service.iface.CategoryService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class RestCategoryController {
     public List<CategoryParentHierarchyDTO> getCategories(){
         System.out.println("rest url: "+ baseUrl);
         return categoryService.createCategoriesTree(baseUrl);
+    }
+
+
+    @Transactional
+    @GetMapping("/categories/selection")
+    public List<CategorySelectionParentHierarchyDTO> getSelectionCategories(){
+        System.out.println("rest url: "+ baseUrl);
+        return categoryService.createCategoriesSelectionTree(baseUrl);
     }
 
 

@@ -26,9 +26,8 @@ public class Category {
     private String name;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-@ManyToOne()
-
-@JoinColumn(name = "ID_PARENT")
+    @ManyToOne()
+    @JoinColumn(name = "ID_PARENT")
     private Category parentCategory;
 
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

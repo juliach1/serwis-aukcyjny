@@ -13,6 +13,7 @@ public class CategoryParentHierarchyDTO {
     Boolean expanded = true;
     String href;
 
+
     @JsonProperty("class")
     String classField;
 

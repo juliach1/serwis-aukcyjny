@@ -118,8 +118,6 @@
 
     $('#tree').bstreeview({data: response});
 
-
-
 </script>
 
 </body>

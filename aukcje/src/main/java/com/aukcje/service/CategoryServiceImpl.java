@@ -3,6 +3,7 @@ package com.aukcje.service;
 import com.aukcje.dto.CategoryDTO;
 import com.aukcje.dto.CategoryParentHierarchyDTO;
 import com.aukcje.dto.CategoryPathCategoryDTO;
+import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.entity.Category;
 import com.aukcje.model.CategoryModel;
@@ -142,6 +143,34 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         return createCategoryParentHierarchy(topCategories, baseUrl);
+    }
+
+    @Override
+    public List<CategorySelectionParentHierarchyDTO> createCategoriesSelectionTree(String baseUrl) {
+        List<Category> topCategories = categoryRepository.getCategoriesByParentCategoryIsNull();
+
+        for(Category category : topCategories){
+            category.setSubCategories(categoryRepository.getCategoriesByParentCategory(category));
+        }
+
+        return createCategorySelectionParentHierarchy(topCategories);
+    }
+
+
+    private List<CategorySelectionParentHierarchyDTO> createCategorySelectionParentHierarchy(List<Category> categories){
+        List<CategorySelectionParentHierarchyDTO> categoryDTOS = new ArrayList<>();
+
+        for(Category category: categories){
+            CategorySelectionParentHierarchyDTO categoryParentHierarchyDTO = new CategorySelectionParentHierarchyDTO();
+            categoryParentHierarchyDTO.setText(category.getName());
+            categoryParentHierarchyDTO.setNodes(createCategorySelectionParentHierarchy((category.getSubCategories())));
+            if(category.getParentCategory()==null) categoryParentHierarchyDTO.setClassField("fw-bold");
+
+            if(category.getSubCategories().isEmpty()) categoryParentHierarchyDTO.setSelectable(true);
+            categoryDTOS.add(categoryParentHierarchyDTO);
+        }
+
+        return categoryDTOS;
     }
 
 

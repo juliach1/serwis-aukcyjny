@@ -18,6 +18,10 @@ function changeObserveIcon(){
     obsIcon.classList.toggle('bi-eye-fill');
 };
 
+
+document.getElementById('photo-height-panel').height = Math.floor(document.getElementById('left-part').height);
+
+
 // var obsBtnAuction =  document.getElementById('observe-button-auction');
 // var obsIconAuction = document.getElementById('observe-icon-auction');
 //

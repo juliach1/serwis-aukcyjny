@@ -89,8 +89,8 @@
                 <div class="row row-cols-md-2 row-cols-1 pb-3">
 
                     <div class="d-flex col mt-4 justify-content-center align-items-center">
-                        <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked"  value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}
-                        <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" checked="unchecked"  value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
+                        <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}
+                        <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" checked="unchecked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
                         <form:errors element="offerType" cssClass="error" />
                     </div>
 

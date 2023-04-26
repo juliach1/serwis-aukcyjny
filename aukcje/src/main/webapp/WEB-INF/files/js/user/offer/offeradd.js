@@ -7,6 +7,26 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 
 
 
+//---------DISPLAYING PRICE INPUTS (AUCTION, BUYNOW)-----
+
+let auctionCheckbox = document.getElementById('auction-check')
+let buyNowCheckbox = document.getElementById('buy-now-check')
+
+let auctionPriceLabel = document.getElementById('auction-price-label')
+let buyNowPriceLabel = document.getElementById('buy-now-price-label')
+
+
+function setPriceInputVisibility(checkboxElem) {
+    if (checkboxElem === auctionCheckbox) {
+        auctionPriceLabel.classList.remove('d-none')
+        buyNowPriceLabel.classList.add('d-none')
+    } else if(checkboxElem === buyNowCheckbox) {
+        auctionPriceLabel.classList.add('d-none')
+        buyNowPriceLabel.classList.remove('d-none')
+    }
+}
+
+
 //--------------------SELECTING CATEGORY--------------------
 
 let lastSelectedCategory=null;

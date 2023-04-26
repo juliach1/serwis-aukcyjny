@@ -1,0 +1,130 @@
+/* zdjęcia przedmiotu */
+
+.carousel-item img{
+    min-height: 100px;
+    max-height: 550px;
+    object-fit: cover;
+    height: 90%;
+    min-width: auto;
+
+}
+
+.left-part {
+    height: 100% ;
+}
+
+/* panel zakupu */
+
+.selected-category{
+    background: #CDA5F3;
+    color: white;
+}
+
+
+.right-part-panel{
+    /*background: #c7c2d7;*/
+    /*background: radial-gradient(circle, rgba(199,194,215,1) 0%, rgba(182,172,215,1) 61%);*/
+    /*background: radial-gradient(circle, rgba(212,208,227,1) 0%, rgba(193,187,212,1) 61%);;*/
+    /*background: radial-gradient(circle, rgba(212,208,227,1) 0%, rgba(186,178,210,1) 61%);*/
+}
+
+
+.observe-button{
+    align-content: center;
+    align-self: center;
+}
+
+.observe-icon:hover{
+    color: orangered;
+}
+
+.button-quantity {
+    height: 4rem;
+    font-size: 1.6rem;
+    /*display: inline;*/
+    color: black;
+}
+
+.button-quantity:hover{
+    color: white;
+    background-color: #7A5785;
+}
+
+
+.btn-buy-now, .btn-bid{
+    min-height: 45px;
+    color: white;
+    background-color: #7A5785;
+    border-color: #7A5785;
+}
+.btn-buy-now:hover, .btn-bid:hover{
+    color: white;
+    background-color: #a373af;
+    border-color: #a373af;
+    font-weight: bold;
+}
+
+.btn-add-to-cart{
+    color: lavenderblush;
+    background-color: #8E659A;
+    border-color: #b69cbe;
+}
+.btn-add-to-cart:hover {
+    color: white;
+    background-color: #B093B8;
+    background-color: #9a6599;
+    border-color: #c8afd0;
+}
+
+
+
+#quantity{
+    min-width: 50px;
+}
+
+.button-arrow{
+    color: #a49999;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-size: 2.8rem
+}
+
+input{
+    height: auto;
+}
+
+
+/* panel informacji o przedmiocie */
+#item-info-panel p{
+    font-size: 1.5rem;
+}
+
+/* usunięcie oznaczenia linków */
+
+#seller-info-panel a:link{
+    text-decoration: none;
+    color: black;
+}
+#seller-info-panel a:visited{
+    text-decoration: none;
+    color: black;
+}
+#seller-info-panel a:hover{
+    text-decoration: none;
+    color: black;
+}
+#seller-info-panel a:active{
+    text-decoration: none;
+    color: black;
+}
+
+
+/* panel sprzedawcy */
+
+.avatar{
+    max-height: 80px;
+    max-width: 80px;
+    object-fit: cover;
+}
+
+

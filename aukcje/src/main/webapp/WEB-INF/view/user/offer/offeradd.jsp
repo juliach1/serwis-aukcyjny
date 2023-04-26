@@ -86,95 +86,97 @@
 
                 <form:form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/oferta/dodaj/przetworz" modelAttribute="offerAddModel">
 
-                <div class="row row-cols-md-2 row-cols-1 pb-3">
-
-                    <div class="d-flex col mt-4 justify-content-center align-items-center">
-                        <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}
-                        <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" checked="unchecked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
-                        <form:errors element="offerType" cssClass="error" />
-                    </div>
-
-                    <div class="col pb-3 pb-md-0">
-                        <label for="titleInput" class="form-label">Tytuł oferty</label>
-                        <form:input type="text" path="title" class="form-control" id="titleInput" placeholder="Podaj tytuł oferty"/>
-                        <form:errors path="title" cssClass="error"/>
-                    </div>
-
-                </div>
-
-                <div class="pb-3">
-                    <label for="descriptionTextArea" class="form-label">Opis oferty</label>
-                    <form:textarea type="text" path="description" class="form-control" id="descriptionTextArea" placeholder="Podaj kupującym więcej szczegółów na temat sprzedawanego przedmiotu"/>
-                    <form:errors path="description" cssClass="error"/>
-                </div>
+                    <form:hidden path="categoryId" id="chosen-category-id"/>
 
 
-                <div class="row pb-3">
-                    <div class="col d-flex">
-                        <div class="d-flex align-self-end">
+                    <div class="row row-cols-md-2 row-cols-1 pb-3">
 
-                            <button id="choose-category-button" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-                                Wybierz kategorię
-                            </button>
-
-                            <div class="offcanvas offcanvas-start" id="demo">
-                                <div class="offcanvas-header">
-                                    <h1 class="offcanvas-title">Kategorie</h1>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <div id="categoryTree" class="col-12" onclick=""></div>
-                                </div>
-                            </div>
-
-                            <p id="chosen-category-display" class="align-self-end ms-3">
-                                    Wybrana kategoria
-                            </p>
-
-                            <form:errors element="category" cssClass="error" />
-
+                        <div class="d-flex col mt-4 justify-content-center align-items-center">
+                            <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}
+                            <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" checked="unchecked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
+                            <form:errors element="offerType" cssClass="error" />
                         </div>
 
+                        <div class="col pb-3 pb-md-0">
+                            <label for="titleInput" class="form-label">Tytuł oferty</label>
+                            <form:input type="text" path="title" class="form-control" id="titleInput" placeholder="Podaj tytuł oferty"/>
+                            <form:errors path="title" cssClass="error"/>
+                        </div>
 
                     </div>
-                    <div class="col-md-4 col-lg-6">
-                        <label for="itemConditionSelect" class="form-label">Stan</label>
-                        <form:select path="itemCondition" class="form-select form-control" id="itemConditionSelect">
-                            <c:forEach var = "conditionVar" items = "${itemConditionDTOS}">
-                                <option value="${conditionVar.name}"> ${conditionVar.name} </option>
-                            </c:forEach>
-                        </form:select>
-                        <form:errors element="itemCondition" cssClass="error" />
+
+                    <div class="pb-3">
+                        <label for="descriptionTextArea" class="form-label">Opis oferty</label>
+                        <form:textarea type="text" path="description" class="form-control" id="descriptionTextArea" placeholder="Podaj kupującym więcej szczegółów na temat sprzedawanego przedmiotu"/>
+                        <form:errors path="description" cssClass="error"/>
                     </div>
+
+
+                    <div class="row pb-3">
+                        <div class="col d-flex">
+                            <div class="d-flex align-self-end">
+
+                                <button id="choose-category-button" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                                    Wybierz kategorię
+                                </button>
+
+                                <div class="offcanvas offcanvas-start" id="demo">
+                                    <div class="offcanvas-header">
+                                        <h1 class="offcanvas-title">Kategorie</h1>
+                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <div id="categoryTree" class="col-12" onclick=""></div>
+                                    </div>
+                                </div>
+
+                                <p id="chosen-category-display" class="align-self-end ms-3">
+                                        Wybrana kategoria
+                                </p>
+
+                                <form:errors element="category" cssClass="error" />
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4 col-lg-6">
+                            <label for="itemConditionSelect" class="form-label">Stan</label>
+                            <form:select path="itemCondition" class="form-select form-control" id="itemConditionSelect">
+                                <c:forEach var = "conditionVar" items = "${itemConditionDTOS}">
+                                    <option value="${conditionVar.name}"> ${conditionVar.name} </option>
+                                </c:forEach>
+                            </form:select>
+                            <form:errors element="itemCondition" cssClass="error" />
+                        </div>
+                    </div>
+
+                    <section id="pricing" class="row pb-5">
+
+                        <div class="col">
+                            <label id="buy-now-price-label" for="priceInput" class="form-label">Cena [zł/szt]</label>
+                            <label id="auction-price-label" for="priceInput" class="form-label d-none">Cena początkowa [zł]</label>
+                            <form:input type="text" path="price" class="form-control" id="priceInput"/>
+                            <form:errors element="price" cssClass="error" />
+                        </div>
+                        <div class="col">
+                            <label for="quantityInput" class="form-label">Liczba przedmiotów</label>
+                            <form:input type="number" min="1" path="quantity" class="form-control" id="quantityInput"/>
+                            <form:errors element="quantity" cssClass="error" />
+                        </div>
+
+                    </section>
+
+                    <div class="form-check mt-4 pb-3 ps-0">
+                        <input type="file" name="file" id="file" accept="image/png, image/jpeg">
+                    </div>
+
+                <div class="row mt-3 mb-3 justify-content-center">
+                    <button type="submit" class="btn button-submit col-sm-5 col-lg-4 mt-5 text-uppercase me-sm-2">Dodaj ogłoszenie</button>
+                    <button type="button" class="btn button-cancel col-sm-5 col-lg-4 mt-3 mt-sm-5 text-capitalize ms-sm-2">Anuluj</button>
                 </div>
 
-                <section id="pricing" class="row pb-5">
-
-                    <div class="col">
-                        <label id="buy-now-price-label" for="priceInput" class="form-label">Cena [zł/szt]</label>
-                        <label id="auction-price-label" for="priceInput" class="form-label d-none">Cena początkowa [zł]</label>
-                        <form:input type="text" path="price" class="form-control" id="priceInput"/>
-                        <form:errors element="price" cssClass="error" />
-                    </div>
-                    <div class="col">
-                        <label for="quantityInput" class="form-label">Liczba przedmiotów</label>
-                        <form:input type="number" min="1" path="quantity" class="form-control" id="quantityInput"/>
-                        <form:errors element="quantity" cssClass="error" />
-                    </div>
-
-                </section>
-
-                <div class="form-check mt-4 pb-3 ps-0">
-                    <input type="file" name="file" id="file" accept="image/png, image/jpeg">
-                </div>
-
-            <div class="row mt-3 mb-3 justify-content-center">
-                <button type="submit" class="btn button-submit col-sm-5 col-lg-4 mt-5 text-uppercase me-sm-2">Dodaj ogłoszenie</button>
-                <button type="button" class="btn button-cancel col-sm-5 col-lg-4 mt-3 mt-sm-5 text-capitalize ms-sm-2">Anuluj</button>
-            </div>
-
-        </section>
-
+            </section>
 
         </form:form>
 

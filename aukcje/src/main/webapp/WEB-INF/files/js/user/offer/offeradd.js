@@ -31,6 +31,7 @@ function setPriceInputVisibility(checkboxElem) {
 
 let lastSelectedCategory=null;
 let chosenCategoryDisplay = document.getElementById('chosen-category-display');
+let chosenCategoryId = document.getElementById('chosen-category-id');
 
 document.addEventListener('click', e =>
     {
@@ -57,6 +58,9 @@ document.addEventListener('click', e =>
 
 function setChosenCategory(selectedCategory){
     chosenCategoryDisplay.innerText = selectedCategory.textContent;
+    chosenCategoryId.value = selectedCategory.id;
+    console.log(selectedCategory.id)
+
 }
 
 function isBaseCategory(category){

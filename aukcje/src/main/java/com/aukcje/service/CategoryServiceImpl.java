@@ -162,11 +162,14 @@ public class CategoryServiceImpl implements CategoryService {
 
         for(Category category: categories){
             CategorySelectionParentHierarchyDTO categoryParentHierarchyDTO = new CategorySelectionParentHierarchyDTO();
+
+            categoryParentHierarchyDTO.setId(category.getId());
             categoryParentHierarchyDTO.setText(category.getName());
             categoryParentHierarchyDTO.setNodes(createCategorySelectionParentHierarchy((category.getSubCategories())));
+
             if(category.getParentCategory()==null) categoryParentHierarchyDTO.setClassField("fw-bold");
 
-            if(category.getSubCategories().isEmpty()) categoryParentHierarchyDTO.setSelectable(true);
+//            if(category.getSubCategories().isEmpty()) categoryParentHierarchyDTO.setSelectable(true);
             categoryDTOS.add(categoryParentHierarchyDTO);
         }
 

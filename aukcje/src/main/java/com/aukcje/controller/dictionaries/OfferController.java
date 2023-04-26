@@ -7,7 +7,12 @@ import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/oferta")
@@ -59,21 +64,31 @@ public class OfferController {
         return "/user/offer/offeradd";
     }
 
-//    @PostMapping("/dodaj/przetworz")
-//    public String addOfferProcess(Model model, Principal principal,
-//                                  @Valid @ModelAttribute("offerAddModel") OfferAddModel offerAddModel,
-//                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file){
-//
-//        if(bindingResult.hasErrors()){
-//            model.addAttribute("offerAddModel", offerAddModel);
-//            model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
-//            model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
-//
-//            return "/user/offer/offeradd";
-//        }
+    @PostMapping("/dodaj/przetworz")
+    public String addOfferProcess(Model model, Principal principal,
+                                  @Valid @ModelAttribute("offerAddModel") OfferAddModel offerAddModel,
+                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("offerAddModel", offerAddModel);
+            model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
+            model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
+
+            return "/user/offer/offeradd";
+        }
+
+        System.out.println("----------------------------");
+        System.out.println("Dodawanie oferty:");
+        System.out.println("-kategoria: " + offerAddModel.getCategoryId());
+        System.out.println(offerAddModel.getTitle());
+        System.out.println(offerAddModel.getDescription());
+        System.out.println(offerAddModel.getPrice()+"zł,");   System.out.print(" dostępne "+offerAddModel.getQuantity() +"szt.");
+        System.out.println(offerAddModel.getItemCondition());
 //        offerService.save(offerAddModel, userService.findByUsername(principal.getName()).getId(), file);
-//
-//    }
+
+        return "/user/offer/offeradd";
+
+    }
 
 
 //    @PostMapping("/dodaj-oferte-przetwarzanie")

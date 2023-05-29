@@ -13,6 +13,7 @@ public interface OfferDTOMapper {
 
     OfferDTOMapper instance = Mappers.getMapper(OfferDTOMapper.class);
 
+
     @Mappings({})
     OfferDTO offerDTO(Offer offer);
 

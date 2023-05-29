@@ -160,43 +160,48 @@
             <hr/>
 
                 <section id="offers" class="mt-4">
-                    <p class="display-5 text-left mt-5">
-                        Ulubione ogłoszenia
-                    </p>
-                    <div class="row-cols-4">
-                        <div class="favorite-offers row row-cols-12 row-cols-md-6 row-cols-lg-4 row-cols-xl-3 px-3">
+
+                    <div class="favorite-offers row px-md-3">
+                        <p class="display-5 text-left mt-5">
+                            Ulubione ogłoszenia
+                        </p>
                             <c:forEach begin="0" end="${pageSize-1}" varStatus="loop">
-                                <div class="card col g-5">
-                                        <%--                                <img class="card-img-top" src="img_avatar1.png" alt="Card image">--%>
-                                    <div class="card-body">
-                                        <h4 class="card-title">John Doe</h4>
-                                        <p class="card-text">Some example text.</p>
-                                        <a href="#" class="btn btn-primary">See Profile</a>
+
+                                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+                                    <div class="card g-5 mx-2">
+                                        <div class="card-body">
+                                            <h4 class="card-title">John Doe</h4>
+                                            <p class="card-text">Some example text.</p>
+                                            <a href="#" class="btn btn-primary">See Profile</a>
+                                        </div>
                                     </div>
                                 </div>
+
                             </c:forEach>
-                            <p class="text h3 mt-4 text-end">
-                                Zobacz wszystkie ulubione...
-                            </p>
-                        </div>
+
+                        <p class="text h3 mt-4 text-end">
+                            Zobacz wszystkie ulubione...
+                        </p>
                     </div>
 
 
 
 
-                    <div class="buynow row cols-md-2 cols-lg-4 cols-xl-6 px-3">
+                    <div class="buynow row px-md-3">
                         <p class="display-5 text-left mt-5">
                             Najnowsze "Kup teraz"
                         </p>
                             <c:forEach begin="0" end="${pageSize-1}" varStatus="index">
                                 <jsp:useBean id="buyNowDTOS" scope="request" type="java.util.List<com.aukcje.dto.OfferDTO>"/>
                                 <c:if test="${buyNowDTOS.size() > index.index}">
-                                    <div class="card col p-0 g-5">
-                                        <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${buyNowDTOS.get(index.index).id}"></a>
+
+                                    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+                                        <div class="card g-5 mx-2">
+                                            <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${buyNowDTOS.get(index.index).id}"></a>
 
                                             <div class="m-0 p-0">
                                                 <div class="img-container">
-                                                    <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${buyNowDTOS.get(index.index).id}/1.jpg" alt="Card image">
+                                                    <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${buyNowDTOS.get(index.index).id}/1.png" alt="Card image">
                                                 </div>
                                                 <div class="card-body">
                                                     <h4 class="card-title price text-center">${buyNowDTOS.get(index.index).price}zł</h4>
@@ -206,6 +211,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+
                                     </div>
 
                                 </c:if>
@@ -218,7 +225,7 @@
                         </p>
                     </div>
 
-                    <div class="auctions row cols-md-2 cols-lg-4 cols-xl-6 px-3">
+                    <div class="auctions row px-md-3">
                         <p class="display-5 text-left mt-5">
                             Najnowsze aukcje
                         </p>
@@ -226,20 +233,25 @@
                         <c:forEach begin="0" end="${pageSize-1}" varStatus="index">
                             <jsp:useBean id="auctionDTOS" scope="request" type="java.util.List<com.aukcje.dto.OfferDTO>"/>
                             <c:if test="${auctionDTOS.size() > index.index}">
-                            <div class="card col-12 col-md-6 col-lg-4 col-xl-3 g-5">
-                                <a href="${pageContext.request.contextPath}/oferta/podglad/${auctionDTOS.get(index.index).id}">
-                                    <div class="img-container">
-                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${auctionDTOS.get(index.index).id}/1.jpg" alt="Card image">
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title price text-center">${auctionDTOS.get(index.index).price}zł</h4>
-                                        <div class="d-flex flex-row">
-                                            <p class="card-text item-title pb-0 align-self-center">${auctionDTOS.get(index.index).offerDetails.title}</p>
-                                            <a class="text-right ms-auto" id="observe-button-${auctionDTOS.get(index.index).id}" href="#"> <i id="observe-icon-${auctionDTOS.get(index.index).id}" class="observe-icon bi bi-eye"></i> </a>
-                                        </div>
 
-                                    </div>
-                                </a>
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+
+                                <div class="card g-5 mx-2">
+                                    <a href="${pageContext.request.contextPath}/oferta/podglad/${auctionDTOS.get(index.index).id}">
+                                        <div class="img-container">
+                                            <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${auctionDTOS.get(index.index).id}/1.png" alt="Card image">
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title price text-center">${auctionDTOS.get(index.index).price}zł</h4>
+                                            <div class="d-flex flex-row">
+                                                <p class="card-text item-title pb-0 align-self-center">${auctionDTOS.get(index.index).offerDetails.title}</p>
+                                                <a class="text-right ms-auto" id="observe-button-${auctionDTOS.get(index.index).id}" href="#"> <i id="observe-icon-${auctionDTOS.get(index.index).id}" class="observe-icon bi bi-eye"></i> </a>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                </div>
+
                             </div>
                             </c:if>
                         </c:forEach>

@@ -73,12 +73,13 @@
 <main>
     <%--@elvariable id="offerAddModel" type="com.aukcje.model.OfferAddModel"--%>
     <%--@elvariable id="itemConditionDTOS" type="java.util.List<com.aukcje.dto.ItemConditionDTO>"--%>
-    <%--@elvariable id="offerTypeDTOS" type="java.util.List<com.aukcje.dto.OfferTypeDTO>"--%>
+        <%--@elvariable id="offerTypeDTOS" type="java.util.List<com.aukcje.dto.OfferTypeDTO>"--%>
+      <%--@elvariable id="badCategory" type="java.lang.String"--%>
 
-    <section class="central container col-sm-12 col-md-10 col-xl-8">
-        <section id="new-offer" class="bg-light p-5 mt-5">
+    <section class="central container col-11 col-sm-10 col-md-9 col-lg-8 col-xl-7">
+        <section id="new-offer" class="bg-light p-4 pt-5 mt-5">
 
-            <div class="mx-sm-1 mx-md-2 mx-lg-4 mx-xl-5 px-xl-4 px-lg-3 px-md-2">
+            <div class="mx-3 mx-sm-4 mx-md-5 px-md-2 px-lg-3 px-xl-4">
 
                 <p class="display-3 text-center mt-3 mb-5">
                     Dodaj przedmiot
@@ -87,17 +88,18 @@
                 <form:form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/oferta/dodaj/przetworz" modelAttribute="offerAddModel">
 
                     <form:hidden path="categoryId" id="chosen-category-id"/>
+                    <form:hidden path="isBaseCategoryChosen" id="base-category-chosen"/>
 
 
                     <div class="row row-cols-md-2 row-cols-1 pb-3">
 
                         <div class="d-flex col mt-4 justify-content-center align-items-center">
                             <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}
-                            <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" checked="unchecked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
+                            <form:radiobutton id="auction-check" path="offerType" class="ms-5 me-2" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(1).name}"/> ${offerTypeDTOS.get(1).name}
                             <form:errors element="offerType" cssClass="error" />
                         </div>
 
-                        <div class="col pb-3 pb-md-0">
+                        <div class="col pb-4 pb-md-0">
                             <label for="titleInput" class="form-label">Tytuł oferty</label>
                             <form:input type="text" path="title" class="form-control" id="titleInput" placeholder="Podaj tytuł oferty"/>
                             <form:errors path="title" cssClass="error"/>
@@ -105,69 +107,74 @@
 
                     </div>
 
-                    <div class="pb-3">
+                    <div class="pb-4">
                         <label for="descriptionTextArea" class="form-label">Opis oferty</label>
-                        <form:textarea type="text" path="description" class="form-control" id="descriptionTextArea" placeholder="Podaj kupującym więcej szczegółów na temat sprzedawanego przedmiotu"/>
+                        <form:textarea type="text" path="description" style="height: 150px" class="form-control" id="descriptionTextArea" placeholder="Podaj kupującym więcej szczegółów na temat sprzedawanego przedmiotu"/>
                         <form:errors path="description" cssClass="error"/>
                     </div>
 
 
-                    <div class="row pb-3">
-                        <div class="col d-flex">
-                            <div class="d-flex align-self-end">
+                    <div class="row pb-4">
 
-                                <button id="choose-category-button" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-                                    Wybierz kategorię
-                                </button>
-
-                                <div class="offcanvas offcanvas-start" id="demo">
-                                    <div class="offcanvas-header">
-                                        <h1 class="offcanvas-title">Kategorie</h1>
-                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+                        <div class="col align-self-end p-0">
+                                <div class="d-flex">
+                                    <button id="choose-category-button" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                                        Wybierz kategorię
+                                    </button>
+                                    <div class="offcanvas offcanvas-start" id="demo">
+                                        <div class="offcanvas-header">
+                                            <h1 class="offcanvas-title">Kategorie</h1>
+                                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+                                        </div>
+                                        <div class="offcanvas-body">
+                                            <div id="categoryTree" class="col-12" onclick=""></div>
+                                        </div>
                                     </div>
-                                    <div class="offcanvas-body">
-                                        <div id="categoryTree" class="col-12" onclick=""></div>
-                                    </div>
+                                    <p id="chosen-category-display" class="align-self-end ms-3">
+                                            Wybrana kategoria
+                                    </p>
                                 </div>
-
-                                <p id="chosen-category-display" class="align-self-end ms-3">
-                                        Wybrana kategoria
-                                </p>
-
-                                <form:errors element="category" cssClass="error" />
-
-                            </div>
-
-
                         </div>
-                        <div class="col-md-4 col-lg-6">
+
+
+                        <div class="col-md-4 col-lg-5 col-xl-6">
                             <label for="itemConditionSelect" class="form-label">Stan</label>
-                            <form:select path="itemCondition" class="form-select form-control" id="itemConditionSelect">
+                            <form:select type="text" path="itemCondition" class="form-select form-control" id="itemConditionSelect">
                                 <c:forEach var = "conditionVar" items = "${itemConditionDTOS}">
                                     <option value="${conditionVar.name}"> ${conditionVar.name} </option>
                                 </c:forEach>
                             </form:select>
                             <form:errors element="itemCondition" cssClass="error" />
                         </div>
+
                     </div>
 
-                    <section id="pricing" class="row pb-5">
+
+<%--                <c:if test="${not empty badCategory}">--%>
+<%--                <p class="d-flex-row error">${badCategory}</p>--%>
+<%--                </c:if>--%>
+
+                    <form:errors path="categoryId" cssClass="error"/>
+
+
+                <section id="pricing" class="row pb-5">
 
                         <div class="col">
                             <label id="buy-now-price-label" for="priceInput" class="form-label">Cena [zł/szt]</label>
                             <label id="auction-price-label" for="priceInput" class="form-label d-none">Cena początkowa [zł]</label>
-                            <form:input type="text" path="price" class="form-control" id="priceInput"/>
-                            <form:errors element="price" cssClass="error" />
+                            <form:input type="text" path="price" class="form-control" id="priceInput" placeholder="Podaj cenę"/>
+                            <form:errors path="price" cssClass="error" />
                         </div>
+
                         <div class="col">
                             <label for="quantityInput" class="form-label">Liczba przedmiotów</label>
-                            <form:input type="number" min="1" path="quantity" class="form-control" id="quantityInput"/>
-                            <form:errors element="quantity" cssClass="error" />
+                            <form:input type="number" step="1" path="quantity" class="form-control" value="1" id="quantityInput"/>
+                            <form:errors path="quantity" cssClass="error" />
                         </div>
 
                     </section>
 
-                    <div class="form-check mt-4 pb-3 ps-0">
+                    <div class="form-check mt-4 pb-4 ps-0">
                         <input type="file" name="file" id="file" accept="image/png, image/jpeg">
                     </div>
 

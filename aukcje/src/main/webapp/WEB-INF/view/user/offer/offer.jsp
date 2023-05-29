@@ -131,12 +131,12 @@
                                         <c:choose>
                                             <c:when test="${index.index == 0}">
                                                 <div class="carousel-item active">
-                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.png" alt="Zdjęcie przedmiotu" class="d-block w-100">
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="carousel-item">
-                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.jpg" alt="Zdjęcie przedmiotu" class="d-block w-100">
+                                                    <img src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.png" alt="Zdjęcie przedmiotu" class="d-block w-100">
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>
@@ -181,7 +181,10 @@
                                 <div class="right-part-panel mb-3" id="buy-panel">
                                     <div class="text-center shadow px-2 py-3 py-md-4 py-lg-5">
 
-                                        <h1>${offerDTO.price} <span class="text-center"> zł</span> </h1>
+                                        <p>Cena:</p>
+
+
+                                        <h1>${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span> </h1>
 
                                         <div class=" pt-4 my-2">
 
@@ -230,7 +233,7 @@
                                         <div class="current-price">
                                             <c:choose>
                                                 <c:when test="${highestValueUserAuction.value > 0 }">
-                                                    <h1>${highestValueUserAuction.value} <span class="text-center"> zł</span> </h1>
+                                                    <h1>${highestValueUserAuction.value} <span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <h1>${startValue} <span class="text-center"> zł</span> </h1>
@@ -275,7 +278,7 @@
                                 <p><span class="fw-bold">Stan: </span> ${offerDTO.offerDetails.itemCondition.name}</p>
                                 <p><span class="fw-bold">Kategoria: </span> ${offerDTO.categoryPath.get(offerDTO.categoryPath.size()-1).name} </p>
                                 <p><span class="fw-bold">Wyświetleń: </span> ${offerDTO.views} </p>
-                                <p><span class="fw-bold">Data dodania: </span> ${offerDTO.insertDate} </p>
+                                <p><span class="fw-bold">Data dodania: </span> ${offerDTO.insertDate.toLocalDate()} ${offerDTO.insertDate.toLocalTime()} </p>
                             </div>
 
                         </div>

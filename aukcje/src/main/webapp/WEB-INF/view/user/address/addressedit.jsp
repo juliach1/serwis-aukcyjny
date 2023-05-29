@@ -66,13 +66,13 @@
             <%--@elvariable id="addressModel" type="com.aukcje.model.AddressModel"--%>
             <%--@elvariable id="addressDTO" type="com.aukcje.dto.AddressDTO"--%>
 
+            <p class="display-3 text-center mt-3 mb-5">
+                Edytuj adres
+            </p>
+
             <form:form method="POST" action="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/przetworz" modelAttribute="addressModel">
 
-                <p class="display-3 text-center mt-3 mb-5">
-                Edytuj adres
-                </p>
                     <form:hidden path="id"/>
-
 
                 <div class="row mt-2">
                 <div class="col-md-6">

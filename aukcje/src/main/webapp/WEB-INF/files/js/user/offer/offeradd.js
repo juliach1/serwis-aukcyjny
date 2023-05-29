@@ -16,6 +16,7 @@ let auctionPriceLabel = document.getElementById('auction-price-label')
 let buyNowPriceLabel = document.getElementById('buy-now-price-label')
 
 
+
 function setPriceInputVisibility(checkboxElem) {
     if (checkboxElem === auctionCheckbox) {
         auctionPriceLabel.classList.remove('d-none')
@@ -32,9 +33,22 @@ function setPriceInputVisibility(checkboxElem) {
 let lastSelectedCategory=null;
 let chosenCategoryDisplay = document.getElementById('chosen-category-display');
 let chosenCategoryId = document.getElementById('chosen-category-id');
+let isBaseCategoryChosen = document.getElementById('base-category-chosen');
+
+
+function setChosenCategoryId(chosenCatId){
+    if(chosenCatId.value  !== null){
+        chosenCategoryId.value = chosenCatId;
+        console.log("WCZYTANA KATEGORIA TO "+chosenCatId)
+    }
+}
+
+
+
 
 document.addEventListener('click', e =>
     {
+        console.log("WYBRANO BAZOWĄ KATEGORIE: "+isBaseCategoryChosen.value)
         let clickedItem = e.target;
         let isCategory = clickedItem.classList.contains('list-group-item')
         let isAnyCategorySelected = lastSelectedCategory!==null;
@@ -42,6 +56,8 @@ document.addEventListener('click', e =>
         if(isCategory){
 
             if(isBaseCategory(clickedItem)){
+                isBaseCategoryChosen.value = true;
+                console.log("WYBRANO BAZOWĄ KATEGORIE: "+isBaseCategoryChosen.value)
 
                 //TODO: DODAĆ ODZNACZANIE PO KLIKNIĘCIU TEJ SAMEJ KATEGORII DRUGI RAZ!
                 if(isAnyCategorySelected){
@@ -52,9 +68,24 @@ document.addEventListener('click', e =>
                 setChosenCategory(clickedItem);
                 lastSelectedCategory = clickedItem;
             }
+
+            if(!isBaseCategory(clickedItem)){
+                console.log("zaznaczono kategorie ktora ma dzieci")
+                isBaseCategoryChosen.value = false;
+            }
+
         }
     }
 );
+
+if (chosenCategoryId.value !== null) {
+    let lastSelectedCat = document.getElementById(chosenCategoryId.value);
+    lastSelectedCategory = lastSelectedCat;
+    setChosenCategory(lastSelectedCat)
+    toggleCategorySelection(lastSelectedCat);
+}
+
+
 
 function setChosenCategory(selectedCategory){
     chosenCategoryDisplay.innerText = selectedCategory.textContent;

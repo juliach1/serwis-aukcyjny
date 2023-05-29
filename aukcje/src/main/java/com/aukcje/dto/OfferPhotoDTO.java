@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class OfferPhotoDTO {
-    public OfferDTO offer;
-    public String path;
-    public Integer sequence;
+    private OfferDTO offer;
+    private String path;
+    private Integer sequence;
 }

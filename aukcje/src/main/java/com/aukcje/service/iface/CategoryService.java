@@ -3,9 +3,13 @@ package com.aukcje.service.iface;
 import com.aukcje.dto.*;
 import com.aukcje.entity.Category;
 import com.aukcje.model.CategoryModel;
+import com.aukcje.model.OfferAddModel;
+
 import java.util.List;
 
 public interface CategoryService {
+
+    Boolean isChosenCategoryForOfferAddCorrect(OfferAddModel offerAddModel);
 
     List<CategoryPathCategoryDTO> getCategoryPath(Category category);
 

@@ -2,17 +2,22 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
+import com.aukcje.model.AddressModel;
+import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
+import com.aukcje.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/oferta")
@@ -21,6 +26,8 @@ public class OfferController {
     @Autowired
     OfferService offerService;
 
+    @Autowired
+    CategoryService categoryService;
     @Autowired
     UserAuctionService userAuctionService;
 
@@ -56,7 +63,7 @@ public class OfferController {
     }
 
     @GetMapping("/dodaj")
-    public String addAddress(Model model){
+    public String addOffer(Model model){
         model.addAttribute("offerAddModel", new OfferAddModel());
         model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
         model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
@@ -67,30 +74,113 @@ public class OfferController {
     @PostMapping("/dodaj/przetworz")
     public String addOfferProcess(Model model, Principal principal,
                                   @Valid @ModelAttribute("offerAddModel") OfferAddModel offerAddModel,
-                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file){
+                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file,
+                                  Errors error) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors() || !categoryService.isChosenCategoryForOfferAddCorrect(offerAddModel) ) {
             model.addAttribute("offerAddModel", offerAddModel);
             model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
             model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
+            model.addAttribute("isBaseCategoryChosen", offerAddModel.getIsBaseCategoryChosen());
+
+            if(Objects.nonNull(offerAddModel.getCategoryId())) {
+                model.addAttribute("categoryId", offerAddModel.getCategoryId());
+            }
+
+            if (!categoryService.isChosenCategoryForOfferAddCorrect(offerAddModel)) {
+                System.out.println("BAZOWA KATEGORIA: " + offerAddModel.getIsBaseCategoryChosen());
+
+                //TODO POPRAWIC ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
+                bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
+            }
 
             return "/user/offer/offeradd";
         }
 
-        System.out.println("----------------------------");
-        System.out.println("Dodawanie oferty:");
-        System.out.println("-kategoria: " + offerAddModel.getCategoryId());
-        System.out.println(offerAddModel.getTitle());
-        System.out.println(offerAddModel.getDescription());
-        System.out.println(offerAddModel.getPrice()+"zł,");   System.out.print(" dostępne "+offerAddModel.getQuantity() +"szt.");
-        System.out.println(offerAddModel.getItemCondition());
-//        offerService.save(offerAddModel, userService.findByUsername(principal.getName()).getId(), file);
 
-        return "/user/offer/offeradd";
+        Long userId = userService.findByUsername(principal.getName()).getId();
+
+        Long newOfferId = offerService.save(offerAddModel, userId, file);
+
+        return "redirect:/oferta/podglad/"+newOfferId;
 
     }
 
 
+    @GetMapping("/edytuj/{ofertaId}")
+    public String editOffer(Principal principal,
+                              @PathVariable("ofertaId") Long offerId,
+                            Model model){
+
+        Long userId = userService.findByUsername(principal.getName()).getId();
+
+        System.out.println("EDYCJA "+offerId);
+
+        if( offerService.isOfferAssignedToUser(userId, offerId) ){
+            OfferDTO offerDTO = offerService.findById(offerId);
+
+            model.addAttribute("offerAddModel", new OfferAddModel());
+            model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
+            model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
+            model.addAttribute("offerDTO", offerDTO);
+
+            return "/user/offer/offeredit";
+        }
+
+        return "redirect:/oferta/dodaj";
+    }
+
+//
+//    @PostMapping("/edytuj/przetworz")
+//    public String editAddressProcess( Principal principal,
+//                                      Model model,
+//                                      @Valid @ModelAttribute("addressModel") AddressModel addressModel,
+//                                      BindingResult bindingResult ){
+//        if(bindingResult.hasErrors()){
+//            model.addAttribute("countries", countryService.findAll());
+//            model.addAttribute("addressModel", addressModel);
+//
+//            return "/user/address/addressedit";
+//        }
+//
+//        Long userId = userService.findByUsername(principal.getName()).getId();
+//        addressService.updateAddress(addressModel, userId);
+//        return "redirect:/uzytkownik/adres/dodaj";
+//    }
+//}
+
+//    @PostMapping("/dodaj/przetworz")
+//    public String addOfferProcess(Model model, Principal principal,
+//                                  @Valid @ModelAttribute("offerAddModel") OfferAddModel offerAddModel,
+//                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file,
+//                                  Errors error) {
+//
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("offerAddModel", offerAddModel);
+//            model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
+//            model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
+//
+//            if(Objects.nonNull(offerAddModel.getCategoryId())) {
+//                model.addAttribute("categoryId", offerAddModel.getCategoryId());
+//            }
+//
+//            if (!categoryService.isChosenCategoryForOfferAddCorrect(offerAddModel)) {
+//                model.addAttribute("badCategory", "Wybierz kategorię");
+//            }
+//            return "/user/offer/offeradd";
+//        }else {
+//            model.addAttribute("badCategory", "");
+//        }
+//
+//            Long userId = userService.findByUsername(principal.getName()).getId();
+//
+//            offerService.save(offerAddModel, userId, file);
+//
+//            return "/user/offer/offeradd";
+//
+//    }
+
+}
 //    @PostMapping("/dodaj-oferte-przetwarzanie")
 //    public String addOfferProcessing(Model model, Principal principal,
 //                                     @Valid @ModelAttribute("editNieruchomoscModel") AddNieruchomoscModelByEmployee nieruchomoscModel,
@@ -109,5 +199,3 @@ public class OfferController {
 //        return "redirect:/pracownik/twoje-oferty?dodawanie-oferty-udane";
 //    }
 
-
-}

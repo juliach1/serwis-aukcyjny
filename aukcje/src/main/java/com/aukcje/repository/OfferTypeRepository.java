@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface OfferTypeRepository extends JpaRepository<OfferType, Integer> {
 
+    OfferType findByName(String name);
 }

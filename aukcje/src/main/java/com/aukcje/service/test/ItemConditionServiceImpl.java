@@ -22,6 +22,11 @@ public class ItemConditionServiceImpl implements ItemConditionService {
         return getItemConditionDTO(itemConditionRepository.findAll());
     }
 
+    @Override
+    public ItemCondition findByName(String name) {
+        return itemConditionRepository.findByName(name);
+    }
+
     private ItemConditionDTO getItemConditionDTO(ItemCondition itemCondition){
         return ItemConditionDTOMapper.instance.itemConditionDTO(itemCondition);
     }

@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
+    Optional<Category> getById(Integer id);
     List<Category> findByIdNot(Integer id);
 
     List<Category> getCategoriesByParentCategory(Category category);

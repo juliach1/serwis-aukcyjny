@@ -15,5 +15,6 @@ public interface OfferService {
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);
     Boolean isOfferTypeAuction(OfferDTO offer);
 
-    void save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
+    Boolean isOfferAssignedToUser(Long userId, Long offerId);
+    Long save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
 }

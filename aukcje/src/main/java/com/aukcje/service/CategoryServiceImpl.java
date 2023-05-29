@@ -7,6 +7,7 @@ import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.entity.Category;
 import com.aukcje.model.CategoryModel;
+import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.mapper.CategoryAddModelMapper;
 import com.aukcje.repository.CategoryRepository;
 import com.aukcje.service.iface.CategoryService;
@@ -24,6 +25,26 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+
+    @Override
+    public Boolean isChosenCategoryForOfferAddCorrect(OfferAddModel offerAddModel) {
+
+        //       boolean var1 = anyCategoryChosen(offerAddModel.getCategoryId());
+//        boolean var2 = baseCategoryChosen(offerAddModel.getIsBaseCategoryChosen());
+        return anyCategoryChosen(offerAddModel.getCategoryId()) && baseCategoryChosen(offerAddModel.getIsBaseCategoryChosen());
+    }
+
+
+    private Boolean baseCategoryChosen(Boolean baseCatChosen){
+       return  !Objects.isNull(baseCatChosen) && baseCatChosen;
+    }
+    private Boolean categoryExist(Integer id){
+        return categoryRepository.getById(id).isPresent();
+    }
+
+    private Boolean anyCategoryChosen(Integer id){
+        return Objects.nonNull(id);
+    }
 
     @Override
     public List<CategoryPathCategoryDTO> getCategoryPath(Category category) {
@@ -46,10 +67,6 @@ public class CategoryServiceImpl implements CategoryService {
             System.out.println(categoryDTO.name);
         }
         return revList;
-    }
-
-    private CategoryPathCategoryDTO getCategoryPathCategoryDTO(Category category){
-        return CategoryDTOMapper.instance.categoryTreeCategoryDTO( category.getParentCategory() );
     }
 
     @Override

@@ -56,7 +56,7 @@
                             <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
                         </security:authorize>
                         <li>
-                            <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+                            <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
                                 <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
                             </form:form>
                         </li>

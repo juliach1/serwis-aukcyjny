@@ -33,23 +33,36 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                <a class="nav-link px-lg-3" aria-current="page" href="index.html">STRONA GŁÓWNA</a>
-                <a class="nav-link px-lg-3" href="#">Ogłoszenia</a>
-                <a class="nav-link px-lg-3" href="#">Koszyk</a>
 
-                <security:authorize access="hasRole('ADMIN')">
-                    <a class="nav-link px-lg-3 active" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
+                <a class="nav-link px-lg-3" aria-current="page" href="index.html">STRONA GŁÓWNA</a>
+
+                <security:authorize access="hasRole('USER') ">
+                    <a class="nav-link px-lg-3" href="#">Koszyk</a>
                 </security:authorize>
 
+                <security:authorize access="hasRole('ADMIN')">
+                    <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
+                </security:authorize>
+
+                <security:authorize access="hasRole('ADMIN')">
+                    <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/kategoria/pobierz-wszystkie">Kategorie</a>
+                </security:authorize>
+
+
                 <li class="nav-item dropdown">
-                    <span class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Moje konto</span>
-                    <ul class="dropdown-menu dropdown-navbar bg-success-light">
-                        <li><a class="dropdown-item text-dark" href="#">Mój profil</a></li>
-                        <li><a class="dropdown-item text-dark" href="#">Moje zamówienia</a></li>
-                        <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout">Wyloguj</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Mój profil</a></li>
+                        <security:authorize access="hasRole('USER')">
+                            <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
+                        </security:authorize>
+                        <li>
+                            <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
+                                <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
+                            </form:form>
+                        </li>
                     </ul>
                 </li>
-
 
             </div>
         </div>

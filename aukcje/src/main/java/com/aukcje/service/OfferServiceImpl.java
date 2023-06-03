@@ -157,10 +157,23 @@ public class OfferServiceImpl implements OfferService {
         System.out.println("typ: " + offer.getOfferType());
 
         offerRepository.save(offer);
-        addPhoto(offer.getId(), multipartFile);
+
+        if(Objects.nonNull(multipartFile)){
+            addPhoto(offer.getId(), multipartFile);
+        }
 
         return offer.getId();
     }
+
+    @Override
+    public void update(OfferAddModel offerModel, Long userId, MultipartFile multipartFile) {
+//        Offer offer = OfferMapper.offer(offerModel, userId);
+
+        save(offerModel, userId, multipartFile);
+    }
+
+
+
 
 
     private void addPhoto(long offerId, MultipartFile multipartFile){

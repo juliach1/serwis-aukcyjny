@@ -65,7 +65,11 @@
                         <security:authorize access="hasRole('USER')">
                             <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
                         </security:authorize>
-                        <li><a class="dropdown-item text-danger" href="#">Wyloguj</a></li>
+                        <li>
+                            <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
+                                <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
+                            </form:form>
+                        </li>
                     </ul>
                 </li>
             </ul>

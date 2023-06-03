@@ -46,6 +46,7 @@ public class SecurityDataSourceConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout().permitAll().logoutSuccessUrl("/logowanie")
+                .logoutUrl("/wyloguj")
                 .and().csrf().disable();
 
     }

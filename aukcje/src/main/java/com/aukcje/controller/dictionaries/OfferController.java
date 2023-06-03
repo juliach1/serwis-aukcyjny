@@ -130,6 +130,40 @@ public class OfferController {
         return "redirect:/oferta/dodaj";
     }
 
+    @PostMapping("/edytuj/przetworz")
+    public String editOfferProcess( Principal principal,
+                                      Model model,
+                                      @Valid @ModelAttribute("offerAddModel") OfferAddModel offerModel,
+                                        @RequestParam("file") MultipartFile file,
+                                      BindingResult bindingResult ){
+
+
+        if (bindingResult.hasErrors() || !categoryService.isChosenCategoryForOfferAddCorrect(offerModel) ) {
+            model.addAttribute("offerAddModel", offerModel);
+            model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
+            model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
+            model.addAttribute("isBaseCategoryChosen", offerModel.getIsBaseCategoryChosen());
+
+            if(Objects.nonNull(offerModel.getCategoryId())) {
+                model.addAttribute("categoryId", offerModel.getCategoryId());
+            }
+
+            if (!categoryService.isChosenCategoryForOfferAddCorrect(offerModel)) {
+                //TODO POPRAWIC ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
+                bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
+            }
+
+            return "/user/offer/offeredit";
+        }
+
+        Long userId = userService.findByUsername(principal.getName()).getId();
+
+        Long newOfferId = offerService.save(offerModel, userId, file);
+
+        return "redirect:/oferta/podglad/"+newOfferId;
+
+    }
+
 //
 //    @PostMapping("/edytuj/przetworz")
 //    public String editAddressProcess( Principal principal,

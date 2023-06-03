@@ -33,38 +33,48 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark py-2 sticky-top" id="navbar">
-
     <div class="container">
-
         <a class="navbar-brand" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">
             <a class="navbar-brand page-logo" href="#"> Sell<span class="page-logo-bold">B<i class="bi bi-basket page-logo-icon"></i>Y</span></a>
         </a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link px-lg-3 active" aria-current="page" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">STRONA GŁÓWNA</a>
-                <a class="nav-link px-lg-3" href="#">Ogłoszenia</a>
-                <a class="nav-link px-lg-3" href="#">Koszyk</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 active" aria-current="page" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">STRONA GŁÓWNA</a>
+                </li>
+                <security:authorize access="hasRole('USER')">
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3" href="#">Koszyk</a>
+                    </li>
+                </security:authorize>
 
                 <security:authorize access="hasRole('ADMIN')">
-                    <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
+                    </li>
+                </security:authorize>
+
+                <security:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/kategoria/pobierz-wszystkie">Kategorie</a>
+                    </li>
                 </security:authorize>
 
                 <li class="nav-item dropdown">
-                    <span class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Moje konto</span>
-                    <ul class="dropdown-menu dropdown-navbar bg-success-light">
-                        <li><a class="dropdown-item text-dark" href="#">Mój profil</a></li>
-                        <li><a class="dropdown-item text-dark" href="#">Moje zamówienia</a></li>
-                        <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout">Wyloguj</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Mój profil</a></li>
+                        <security:authorize access="hasRole('USER')">
+                            <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
+                        </security:authorize>
+                        <li><a class="dropdown-item text-danger" href="#">Wyloguj</a></li>
                     </ul>
                 </li>
-            </div>
-
+            </ul>
         </div>
     </div>
 </nav>

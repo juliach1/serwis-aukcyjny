@@ -157,6 +157,7 @@
                         </c:if>
                     </div>
 
+                    <%--
                     <div class="d-flex flex-wrap align-content-end col-4 col-md-4 col-lg-3 ml-0">
                         <label for="sortTypeSelect" class="form-label">Sortowanie</label>
                         <form:select  type="text" path="sortType" class=" form-control form-select display" id="sortTypeSelect" name="typSortowania">
@@ -164,8 +165,8 @@
                                 <option value="${sortType}">${sortType}</option>
                             </c:forEach>
                         </form:select>
-
                     </div>
+                    --%>
 
                     <div class="row d-flex ms-auto me-auto me-lg-0 p-0 align-items-end mt-5 col-md-10 col-lg-3">
                         <button type="submit" class="btn button-submit text-uppercase mt-4">Szukaj</button>
@@ -192,14 +193,49 @@
                     </c:if>
 
                     <c:forEach var="tempOffer" items="${offers}" begin="0" end="${offerSearchModel.pageSize}">
-                        <div class="card col-12 col-md-6 col-lg-4 col-xl-3 g-5">
-                            <div class="card-body">
-                                <h4 class="card-title">${tempOffer.offerDetails.title}</h4>
-                                <p class="card-text">${tempOffer.offerDetails.description}</p>
-                                <a href="#" class="btn btn-primary">Zobacz</a>
+
+<%--                        <c:if test="${offers.size() > index.index}">--%>
+
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+                                <div class="card g-5 mx-2">
+                                    <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${tempOffer.id}"></a>
+
+                                    <div class="m-0 p-0">
+                                        <div class="img-container">
+                                            <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${tempOffer.id}/1.png" alt="Card image">
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <c:if test="${tempOffer.offerType.id == 1}">
+                                                <p class="m-0">Cena:</p>
+                                            </c:if>
+                                            <c:if test="${tempOffer.offerType.id == 2}">
+                                                <p class="m-0">Aktualna cena:</p>
+                                            </c:if>
+                                            <h4 class="card-title price">${tempOffer.price}zł</h4>
+                                            <div class="d-flex flex-row">
+                                                <p class="card-text item-title pb-0 align-self-center text-left">${tempOffer.offerDetails.title}</p>
+                                                <a class="text-right ms-auto" id="observe-button-${tempOffer.id}" href="#"> <i id="observe-icon-${tempOffer.id}" class="observe-icon bi bi-eye"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
+
+<%--                        </c:if>--%>
                     </c:forEach>
+
+
+<%--                    <c:forEach var="tempOffer" items="${offers}" begin="0" end="${offerSearchModel.pageSize}">--%>
+<%--                        <div class="card col-12 col-md-6 col-lg-4 col-xl-3 g-5">--%>
+<%--                            <div class="card-body">--%>
+<%--                                --%>
+<%--                                <h4 class="card-title">${tempOffer.offerDetails.title}</h4>--%>
+<%--                                <p class="card-text">${tempOffer.offerDetails.description}</p>--%>
+<%--                                <a href="#" class="btn btn-primary">Zobacz</a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
 
                 </div>
 

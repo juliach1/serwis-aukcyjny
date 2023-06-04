@@ -9,7 +9,7 @@ public class PriceValidator implements ConstraintValidator<ValidPrice, String> {
 
     private Pattern pattern;
     private Matcher matcher;
-    private static final  String PRICE_PATTERN = "^\\d{1,5}$|(?=^.{1,5}$)^\\d+\\.\\d{0,2}$";
+    private static final  String PRICE_PATTERN = "[0-9]+([,.][0-9]{1,2})?";
 
 
     @Override

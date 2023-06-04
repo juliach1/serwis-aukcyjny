@@ -25,8 +25,7 @@ public class Address {
     @JoinColumn(name="ID_USER")
     private User user;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,
-                CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name="ID_COUNTRY")
     private Country country;
 

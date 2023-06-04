@@ -143,6 +143,7 @@ public class OfferServiceImpl implements OfferService {
         offer.setOfferDetails(offerDetails);
         offer.setQuantity(offerModel.getQuantity());
         offer.setPrice(Double.valueOf(offerModel.getPrice()));
+        offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
 
         System.out.println("-----------DODAWANY OBIEKT-----------");
 

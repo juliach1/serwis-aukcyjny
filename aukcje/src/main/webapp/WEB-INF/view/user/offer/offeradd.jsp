@@ -186,7 +186,17 @@
                             <form:errors path="quantity" cssClass="error" />
                         </div>
 
-                    </section>
+                </section>
+
+                <section id="length" class="row pb-5 d-none">
+
+                    <div class="col-6 col-sm-5 col-xl-3">
+                        <label for="lengthInput" class="form-label">Długość aukcji (dni)</label>
+                        <form:input type="text" path="lengthInDays" class="form-control" id="lengthInput" value="14" placeholder="max 90 dni"/>
+                        <form:errors path="lengthInDays" cssClass="error" />
+                    </div>
+
+                </section>
 
                     <div class="form-check mt-4 pb-4 ps-0">
                         <input type="file" name="file" id="file" accept="image/png, image/jpeg">

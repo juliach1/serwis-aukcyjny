@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
         })
 public abstract class OfferMapper {
 
-
-
-
     @Named("offer")
     public static Offer offer(OfferAddModel offerModel, Long userId){
         Offer offer = new Offer();

@@ -15,16 +15,25 @@ let buyNowCheckbox = document.getElementById('buy-now-check')
 let auctionPriceLabel = document.getElementById('auction-price-label')
 let buyNowPriceLabel = document.getElementById('buy-now-price-label')
 
+let auctionPriceLengthSection = document.getElementById('length')
 
 
 function setPriceInputVisibility(checkboxElem) {
     if (checkboxElem === auctionCheckbox) {
         auctionPriceLabel.classList.remove('d-none')
         buyNowPriceLabel.classList.add('d-none')
+        setAuctionLengthVisibility(true)
     } else if(checkboxElem === buyNowCheckbox) {
         auctionPriceLabel.classList.add('d-none')
         buyNowPriceLabel.classList.remove('d-none')
+        setAuctionLengthVisibility(false)
+
     }
+}
+
+function setAuctionLengthVisibility(isVisible){
+    if(isVisible) auctionPriceLengthSection.classList.remove('d-none')
+    else auctionPriceLengthSection.classList.add('d-none')
 }
 
 

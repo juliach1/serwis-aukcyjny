@@ -73,7 +73,7 @@
                         </security:authorize>
                         <li>
                             <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
-                            <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
+                                <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
                             </form:form>
                         </li>
                     </ul>

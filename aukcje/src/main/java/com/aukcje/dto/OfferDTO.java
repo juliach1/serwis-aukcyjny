@@ -17,6 +17,7 @@ public class OfferDTO {
     public Long views;
     public Integer quantity;
     public LocalDateTime insertDate;
+    public LocalDateTime endDate;
     public OfferStatusDTO offerStatusDTO;
     public List<OfferPhotoDTO> offerPhotoDTO;
 

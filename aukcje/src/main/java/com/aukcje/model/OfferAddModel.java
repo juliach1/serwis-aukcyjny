@@ -37,4 +37,8 @@ public class OfferAddModel {
     @NotNull(message = "Podaj liczbę sprzedawanych przedmiotów")
     @Min(value = 1, message = "Wprowadź prawidłową liczbę przedmiotów")
     private Integer quantity;
+
+    @Min(value = 1, message = "Aukcja nie może trwać mniej niż 1 dzień")
+    @Max(value = 90, message = "Maksymalna długość aukcji to 90 dni")
+    private Integer lengthInDays;
 }

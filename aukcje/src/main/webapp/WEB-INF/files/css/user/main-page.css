@@ -15,6 +15,13 @@
     width: 100%;
 }
 
+.card-body{
+    min-height: 13rem;
+    max-height: 13rem;
+    overflow: hidden;
+    margin-bottom: 1.4rem;
+}
+
 .img-container:after {
     content: "";
     display: block;
@@ -36,6 +43,14 @@
 .card-body .price{
     font-size: 3rem;
 }
-.card-body .item-title{
+.card-body .item-title:hover{
+    color: darkorange;
 
 }
+a:hover{
+    color: rebeccapurple;
+}
+
+/*a:hover{*/
+/*    color: orange;*/
+/*}*/

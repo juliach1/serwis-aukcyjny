@@ -85,28 +85,46 @@
         <section id="offer-display" class="bg-light p-5">
 
             <header class="mb-3">
-                <p class="display-6">
-                    ${offerDTO.offerDetails.title}
-                </p>
 
-                <section class="d-flex">
-                    <h4 class="col-md-6 col-lg-7 col-xl-8">
-                        <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
-                            <c:choose>
-                                <c:when test="${index.index != 0}">
-                                    →  ${offerDTO.categoryPath.get(index.index).name}
-                                </c:when>
-                                <c:otherwise>
-                                    ${offerDTO.categoryPath.get(index.index).name}
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </h4>
+
+                <section class="d-flex align-items-end">
+
+                    <div class="flex-column flex-fill col-md-6 col-lg-5 col-xl-4">
+                        <p class="display-6">
+                            ${offerDTO.offerDetails.title}
+                        </p>
+
+                        <h4 class="col-md-6 col-lg-7 col-xl-8">
+                            <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
+                                <c:choose>
+                                    <c:when test="${index.index != 0}">
+                                        →  ${offerDTO.categoryPath.get(index.index).name}
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${offerDTO.categoryPath.get(index.index).name}
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </h4>
+                    </div>
+
 
                      <c:if test="${offerDTO.offerType.name=='aukcja'}">
-                         <div class="ps-3 col pb-0 mb-0 text-end">
+                         <div class="ps-3 col-md-6 col-lg-5 col-xl-4 pb-0 mb-0 text-end">
                              <p class="p-0 m-0 fw-bold">Koniec licytacji:</p>
-                             <p class="p-0 m-0">xx.xx.xxxxr. xx:xx:xx</p>
+                             <p class="p-0 m-0">${offerDTO.endDate.toLocalDate()} ${offerDTO.endDate.toLocalTime()}</p>
+                             <p class="p-0 m-0 mt-2 text-danger">
+                                 <c:choose>
+
+                             <c:when test="${offerDTO.daysLeft > 0}">
+                                 Pozostało ${offerDTO.daysLeft} dni
+                             </c:when>
+                             <c:otherwise>
+                                 Licytacja zakończona
+                             </c:otherwise>
+                            </c:choose>
+                             </p>
+
                          </div>
                      </c:if>
                 </section>
@@ -242,13 +260,15 @@
                                         <p>Aktualna cena:</p>
 
 
-                                        <div class="current-price">
+                                        <div class="current-price mb-4">
                                             <c:choose>
                                                 <c:when test="${highestValueUserAuction.value > 0 }">
-                                                    <h1>${highestValueUserAuction.value} <span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
+                                                    <h1>${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span> </h1>
+
+                                                    <h1>${highestValueUserAuction.value}<span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <h1>${startValue} <span class="text-center"> zł</span> </h1>
+                                                    <h1>${startValue}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span>  </h1>
                                                 </c:otherwise>
                                             </c:choose>
                                             <p class="pt-2">/${offerDTO.quantity}szt.</p>
@@ -268,7 +288,7 @@
                                             <p>zł</p>
                                         </div>
 
-                                        <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                        <div class="d-inline-flex justify-content-center mt-5 col-9">
                                             <a id="observe-button-auction" class="observe-button" href="#"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
                                             <button type="submit" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
                                                 licytuj

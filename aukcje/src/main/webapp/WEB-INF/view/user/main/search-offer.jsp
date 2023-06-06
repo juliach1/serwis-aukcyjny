@@ -206,9 +206,11 @@
                                         </div>
                                         <div class="card-body text-center">
                                             <c:if test="${tempOffer.offerType.id == 1}">
+                                                <p class="offertype-text mb-1 ">KUP TERAZ</p>
                                                 <p class="m-0">Cena:</p>
                                             </c:if>
                                             <c:if test="${tempOffer.offerType.id == 2}">
+                                                <p class="offertype-text">AUKCJA</p>
                                                 <p class="m-0">Aktualna cena:</p>
                                             </c:if>
                                             <h4 class="card-title price">${tempOffer.price}zł</h4>

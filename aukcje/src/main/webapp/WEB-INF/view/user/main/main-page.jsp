@@ -211,6 +211,7 @@
                                                 <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${buyNowDTOS.get(index.index).id}/1.png" alt="Card image">
                                             </div>
                                             <div class="card-body text-center">
+                                                <p class="offertype-text mb-1 ">KUP TERAZ</p>
                                                 <p class="m-0">Cena:</p>
                                                 <h4 class="card-title price">${buyNowDTOS.get(index.index).price}<span class="text-center">${buyNowDTOS.get(index.index).price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
 <%--                                                <h4 class="card-title price text-center">${buyNowDTOS.get(index.index).price}zł</h4>--%>
@@ -253,6 +254,7 @@
                                         <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${auctionDTOS.get(index.index).id}/1.png" alt="Card image">
                                     </div>
                                     <div class="card-body text-center">
+                                        <p class="offertype-text mb-1 ">AUKCJA</p>
                                         <p class="m-0">Aktualna cena:</p>
                                         <h4 class="card-title price">${auctionDTOS.get(index.index).price}<span class="text-center">${auctionDTOS.get(index.index).price*10 % 1 == 0 ? '0' : ''} zł</span> </h4>
 

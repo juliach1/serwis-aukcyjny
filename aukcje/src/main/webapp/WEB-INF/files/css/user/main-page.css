@@ -16,8 +16,8 @@
 }
 
 .card-body{
-    min-height: 13rem;
-    max-height: 13rem;
+    min-height: 15.2rem;
+    max-height: 15.2rem;
     overflow: hidden;
     margin-bottom: 1.4rem;
 }
@@ -49,6 +49,11 @@
 }
 a:hover{
     color: rebeccapurple;
+}
+
+.offertype-text{
+    font-size: 1.3rem;
+    color: #a92f3c;
 }
 
 /*a:hover{*/

@@ -14,7 +14,7 @@ public interface OfferDTOMapper {
     OfferDTOMapper instance = Mappers.getMapper(OfferDTOMapper.class);
 
 
-    @Mappings({})
+    @Mapping(target = "daysLeft", ignore = true)
     OfferDTO offerDTO(Offer offer);
 
 }

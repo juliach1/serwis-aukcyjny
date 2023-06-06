@@ -28,6 +28,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 
 @Service
 public class OfferServiceImpl implements OfferService {

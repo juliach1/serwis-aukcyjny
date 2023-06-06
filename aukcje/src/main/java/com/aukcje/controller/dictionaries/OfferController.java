@@ -17,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 @RequestMapping("/oferta")
@@ -46,6 +49,7 @@ public class OfferController {
         //TODO dodac ograniczenie dla AKTYWNYCH
         //przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO =  offerService.findById(offerId);
+        offerDTO.setDaysLeft((int) DAYS.between(LocalDateTime.now(), offerDTO.getEndDate()));
 
         if( offerService.isOfferTypeAuction(offerDTO) ){
             model.addAttribute("startValue", offerDTO.getPrice());

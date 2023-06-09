@@ -49,8 +49,10 @@ public class OfferController {
         //TODO dodac ograniczenie dla AKTYWNYCH
         //przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO =  offerService.findById(offerId);
-        offerDTO.setDaysLeft((int) DAYS.between(LocalDateTime.now(), offerDTO.getEndDate()));
 
+        if(offerDTO.getEndDate() != null) {
+            offerDTO.setDaysLeft((int) DAYS.between(LocalDateTime.now(), offerDTO.getEndDate()));
+        }
         if( offerService.isOfferTypeAuction(offerDTO) ){
             model.addAttribute("startValue", offerDTO.getPrice());
 
@@ -117,13 +119,14 @@ public class OfferController {
                             Model model){
 
         Long userId = userService.findByUsername(principal.getName()).getId();
-
+        OfferAddModel offerAddModel = new OfferAddModel();
+        offerAddModel.setId(offerId);
         System.out.println("EDYCJA "+offerId);
 
         if( offerService.isOfferAssignedToUser(userId, offerId) ){
             OfferDTO offerDTO = offerService.findById(offerId);
 
-            model.addAttribute("offerAddModel", new OfferAddModel());
+            model.addAttribute("offerAddModel", offerAddModel);
             model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
             model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
             model.addAttribute("offerDTO", offerDTO);
@@ -140,6 +143,7 @@ public class OfferController {
                                       @Valid @ModelAttribute("offerAddModel") OfferAddModel offerModel,
                                         @RequestParam("file") MultipartFile file,
                                       BindingResult bindingResult ){
+
 
 
         if (bindingResult.hasErrors() || !categoryService.isChosenCategoryForOfferAddCorrect(offerModel) ) {
@@ -162,7 +166,9 @@ public class OfferController {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
 
+        System.out.println("ZAPISYWANIE "+offerModel.getId());
         Long newOfferId = offerService.save(offerModel, userId, file);
+
 
         return "redirect:/oferta/podglad/"+newOfferId;
 

@@ -9,6 +9,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,7 +27,7 @@ a {
 body {
   font-family: "Raleway", sans-serif;
   font-size: 1.6rem;
-  background-color: #e8e4e4;
+  /*background-color: #e8e4e4;*/
 }
 
 /* PASEK GÓRNY */
@@ -131,4 +132,19 @@ form label {
   border-color: #e16371;
   color: white;
   font-weight: bold;
+}
+
+body{
+  /*background-image: url("../img/background-purple-light.png");*/
+  background-image: url("../img/background-purple-light-tiled-blur.png");
+  background-image: url("../img/marble-bg-light.png");
+  /*width: 100%;*/
+  /*width: 100%;*/
+  /*filter: blur(8px);*/
+  /*-webkit-filter: blur(8px);*/
+  /*height: 100%;*/
+  background-position: center;
+  /*background-repeat: no-repeat;*/
+  background-size: cover;
+
 }

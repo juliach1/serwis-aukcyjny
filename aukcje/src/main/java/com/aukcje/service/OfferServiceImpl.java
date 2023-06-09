@@ -136,6 +136,7 @@ public class OfferServiceImpl implements OfferService {
         offerDetails.setItemCondition(itemCondition);
 
         Offer offer = new Offer();
+        offer.setId(offerModel.getId());
         offer.setCategory(category);
         offer.setUser(user);
         offer.setInsertDate(LocalDateTime.now());
@@ -145,10 +146,15 @@ public class OfferServiceImpl implements OfferService {
         offer.setOfferDetails(offerDetails);
         offer.setQuantity(offerModel.getQuantity());
         offer.setPrice(Double.valueOf(offerModel.getPrice()));
-        offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
 
+        if(offerModel.getLengthInDays() != null) {
+            offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
+        }else {
+
+        }
         System.out.println("-----------DODAWANY OBIEKT-----------");
 
+        System.out.println("ID "+offer.getId());
         System.out.println(offer.getOfferDetails().getTitle());
         System.out.println(offer.getOfferDetails().getDescription());
         System.out.println("stan: " + offer.getOfferDetails().getItemCondition());

@@ -3,6 +3,7 @@ package com.aukcje.model;
 import com.aukcje.validator.ValidNotZeroOrBlank;
 import com.aukcje.validator.ValidPrice;
 import lombok.Data;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.validation.constraints.*;
 
@@ -10,7 +11,6 @@ import javax.validation.constraints.*;
 public class OfferAddModel {
 
     private Long id;
-
 
     @Size(min=2, message = "Tytuł musi mieć przynajmniej 3 znaki!")
    @Size(max=80, message = "Tytuł nie może mieć więcej niż 80 znaków.")

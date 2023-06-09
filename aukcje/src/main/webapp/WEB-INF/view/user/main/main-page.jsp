@@ -66,8 +66,12 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Mój profil</a></li>
+
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/oferta/dodaj">Nowa oferta</a></li>
+
+
                         <security:authorize access="hasRole('USER')">
-                            <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
+                            <li><a class="dropdown-item">Moje zamówienia</a></li>
                         </security:authorize>
                         <li>
                             <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">

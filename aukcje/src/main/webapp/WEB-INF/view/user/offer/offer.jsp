@@ -94,7 +94,7 @@
                             ${offerDTO.offerDetails.title}
                         </p>
 
-                        <h4 class="col-md-6 col-lg-7 col-xl-8">
+                        <h4 class="">
                             <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
                                 <c:choose>
                                     <c:when test="${index.index != 0}">

@@ -89,7 +89,6 @@
     <%--@elvariable id="itemConditionDTOS" type="java.util.List<com.aukcje.dto.ItemConditionDTO>"--%>
         <%--@elvariable id="offerTypeDTOS" type="java.util.List<com.aukcje.dto.OfferTypeDTO>"--%>
       <%--@elvariable id="badCategory" type="java.lang.String"--%>
-        <%--@elvariable id="offerDTO" type="com.aukcje.dto.OfferDTO"--%>
 
 
         <section class="central container col-11 col-sm-10 col-md-9 col-lg-8 col-xl-7">
@@ -98,7 +97,7 @@
             <div class="mx-3 mx-sm-4 mx-md-5 px-md-2 px-lg-3 px-xl-4">
 
                 <p class="display-3 text-center mt-3 mb-5">
-                    Dodaj przedmiot
+                    Edytuj przedmiot
                 </p>
 
             <form:form method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/oferta/dodaj/przetworz" modelAttribute="offerAddModel">

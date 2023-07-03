@@ -33,7 +33,7 @@ public class AddressController {
         model.addAttribute("countries", countryService.findAll());
         model.addAttribute("addressModel", new AddressModel());
 
-        return "/user/address/addressadd";
+        return "/views/user/address/addressadd";
     }
 
     @PostMapping("/dodaj/przetworz")
@@ -46,7 +46,7 @@ public class AddressController {
             model.addAttribute("addressAddModel", new AddressModel());
             model.addAttribute("countries", countryService.findAll());
 
-            return "/user/address/addressadd";
+            return "/views/user/address/addressadd";
         }
 
         addressService.save(addressModel, userService.findByUsername(principal.getName()).getId() );
@@ -66,7 +66,7 @@ public class AddressController {
             model.addAttribute("addressDTO", addressService.findById(addressId));
             model.addAttribute("addressModel", new AddressModel());
 
-            return "/user/address/addressedit";
+            return "/views/user/address/addressedit";
         }
 
         return "redirect:/uzytkownik/adres/dodaj";
@@ -81,7 +81,7 @@ public class AddressController {
             model.addAttribute("countries", countryService.findAll());
             model.addAttribute("addressModel", addressModel);
 
-            return "/user/address/addressedit";
+            return "/views/user/address/addressedit";
         }
 
         Long userId = userService.findByUsername(principal.getName()).getId();

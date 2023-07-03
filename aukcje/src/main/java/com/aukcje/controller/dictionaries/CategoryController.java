@@ -35,7 +35,7 @@ public class CategoryController {
         restCategoryController.setBaseUrl(url);
 
         System.out.println(categoryList);
-        return "/admin/category/category";
+        return "/views/admin/category/category";
     }
 
     @GetMapping("/dodaj")
@@ -43,7 +43,7 @@ public class CategoryController {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAll());
 
-        return "/admin/category/categoryadd";
+        return "/views/admin/category/categoryadd";
     }
 
     @PostMapping("/dodaj/przetworz")
@@ -77,7 +77,7 @@ public class CategoryController {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAllExcept(categoryId));
 
-        return "/admin/category/categoryedit";
+        return "/views/admin/category/categoryedit";
 
     }
 
@@ -90,7 +90,7 @@ public class CategoryController {
             model.addAttribute("categoryDTO", new CategoryModel());
             model.addAttribute("categories",  categoryService.findAllExcept(categoryModel.getId()));
 
-            return "/admin/category/categoryedit";
+            return "/views/admin/category/categoryedit";
         }
 
         categoryService.update(categoryModel);

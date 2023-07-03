@@ -39,7 +39,7 @@ public class UserController {
                              @RequestParam(value = "isDeleted", required = false) String isDeleted){
 
         model.addAttribute("users", userService.searchBySearchModel(userSearchModel));
-        return "/admin/user/usersearch";
+        return "/views/admin/user/usersearch";
     }
 
     @GetMapping("/zablokuj/{uzytkownikId}")
@@ -61,7 +61,7 @@ public class UserController {
         model.addAttribute("userEditModel", new UserEditModel());
         model.addAttribute("statuses", userStatusService.findAll());
 
-        return "/admin/user/useredit";
+        return "/views/admin/user/useredit";
     }
 
     @PostMapping("/edytuj/przetworz")
@@ -71,7 +71,7 @@ public class UserController {
         if(bindingResult.hasErrors()){
             model.addAttribute("userEditModel", userEditModel);
             model.addAttribute("statuses", userStatusService.findAll());
-            return "/admin/user/useredit";
+            return "/views/admin/user/useredit";
         }
 
         userService.updateEditUser(userEditModel);

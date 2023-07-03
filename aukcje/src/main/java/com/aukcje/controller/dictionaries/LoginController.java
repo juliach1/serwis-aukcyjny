@@ -31,13 +31,13 @@ public class LoginController {
 
     @GetMapping("/logowanie")
     public String showLoginForm(){
-        return "login";
+        return "/views/login";
     }
 
     @GetMapping("/rejestracja")
     public String showRegisterForm(Model model) {
         model.addAttribute("userRegisterModel", new UserRegisterModel());
-        return "register";
+        return "/views/register";
     }
 
 
@@ -48,14 +48,14 @@ public class LoginController {
             Model model) {
 
         if(theBindingResult.hasErrors()){
-            return "register";
+            return "/views/register";
         }
 
         UserDTO existingUser = userService.findByUsername(userRegisterModel.getUsername());
         if(existingUser != null){
             model.addAttribute("userRegisterModel", new UserRegisterModel());
             model.addAttribute("registrationError", "Użytkownik o podanej nazwie już istnieje! Wybierz inną nazwę.");
-            return "register";
+            return "/views/register";
         }
 
         userService.save(userRegisterModel);

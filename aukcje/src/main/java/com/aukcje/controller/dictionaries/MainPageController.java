@@ -47,7 +47,7 @@ public class MainPageController {
         model.addAttribute("auctionDTOS", offerService.findNewAuctions(PAGE_SIZE));
         model.addAttribute("buyNowDTOS", offerService.findNewBuyNow(PAGE_SIZE));
 
-        return "/user/main/main-page";
+        return "/views/user/main/main-page";
     }
 
     @GetMapping("/szukaj/przetworz")
@@ -72,7 +72,7 @@ public class MainPageController {
         model.addAttribute("pageSize", PAGE_SIZE);
         model.addAttribute("offerSearchDTO", offerSearchDTO);
 
-        return "/user/main/search-offer";
+        return "/views/user/main/search-offer";
     }
 
 }

@@ -1,3 +1,10 @@
+//-------------SET NAV ITEM SELECTED--------
+
+var pageNavLink =  document.getElementById('new-offer-nav-item');
+
+pageNavLink.classList.add('active');
+
+
 //--------------------CREATING CATEGORIES POPOVER--------------------
 
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))

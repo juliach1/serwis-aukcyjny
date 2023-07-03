@@ -24,53 +24,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark py-2 sticky-top" id="navbar">
-    <div class="container">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">
-            <a class="navbar-brand page-logo" href="#"> Sell<span class="page-logo-bold">B<i class="bi bi-basket page-logo-icon"></i>Y</span></a>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3 active" aria-current="page" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">STRONA GŁÓWNA</a>
-                </li>
-                <security:authorize access="hasRole('USER')">
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3" href="#">Koszyk</a>
-                    </li>
-                </security:authorize>
-
-                <security:authorize access="hasRole('ADMIN')">
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
-                    </li>
-                </security:authorize>
-
-                <security:authorize access="hasRole('ADMIN')">
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/kategoria/pobierz-wszystkie">Kategorie</a>
-                    </li>
-                </security:authorize>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Mój profil</a></li>
-                        <security:authorize access="hasRole('USER')">
-                            <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
-                        </security:authorize>
-                        <li><a class="dropdown-item text-danger" href="#">Wyloguj</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<%@include file="../fragments/navbar.jspf" %>
 
 <main>
     <section class="central register-container container col-sm-12 col-md-11 col-lg-8 col-xl-6">

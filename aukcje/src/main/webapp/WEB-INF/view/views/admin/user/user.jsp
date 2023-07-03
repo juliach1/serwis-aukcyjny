@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+=<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,54 +23,7 @@
 
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark py-2 sticky-top" id="navbar">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <a class="navbar-brand page-logo" href="#"> Sell<span class="page-logo-bold">B<i class="bi bi-basket page-logo-icon"></i>Y</span></a>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ms-auto">
-
-                <a class="nav-link px-lg-3" aria-current="page" href="index.html">STRONA GŁÓWNA</a>
-
-                <security:authorize access="hasRole('USER') ">
-                    <a class="nav-link px-lg-3" href="#">Koszyk</a>
-                </security:authorize>
-
-                <security:authorize access="hasRole('ADMIN')">
-                    <a class="nav-link px-lg-3 active" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
-                </security:authorize>
-
-                <security:authorize access="hasRole('ADMIN')">
-                    <a class="nav-link px-lg-3 active" href="${pageContext.request.contextPath}/admin/kategoria/pobierz-wszystkie">Kategorie</a>
-                </security:authorize>
-
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Mój profil</a></li>
-                        <security:authorize access="hasRole('USER')">
-                            <li><a class="dropdown-item" href="#">Moje zamówienia</a></li>
-                        </security:authorize>
-                        <li>
-                            <form:form action="${pageContext.request.contextPath}/logout" method="POST">
-                                <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
-                            </form:form>
-                        </li>
-                    </ul>
-                </li>
-
-            </div>
-        </div>
-    </div>
-</nav>
-
+<%@include file="../../../fragments/navbar.jspf" %>
 
 <main>
     <section class="central container col-sm-12 col-md-10 col-xl-8">
@@ -80,7 +33,6 @@
             <form:form method="get" action="${pageContext.request.contextPath}/admin/uzytkownik" class="pb-5">
 
                 <%--@elvariable id="searchModel" type="com.aukcje.model.UserSearchModel"--%>
-
 
                 <p class="display-3 text-center mt-3 mb-5">
                     Użytkownicy
@@ -180,5 +132,8 @@
 <%--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>--%>
 <%--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>--%>
 <script src="${pageContext.request.contextPath}/files/js/bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/files/js/admin/user/user.js"></script>
+
 </body>
 </html>

@@ -221,11 +221,9 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDTO categoryDTO = CategoryDTOMapper.instance.categoryDTO(category);
         Category parentCategory = categoryRepository.getParentCategoryBySubCategoryId(category.getId()).orElse(null);
         categoryDTO.setParentCategory((parentCategory != null) ? parentCategory.getName() : null);
-        System.out.println("RODZIC KATEGORII "+categoryDTO.getParentCategory());
 
         List<Category> subCategories = categoryRepository.getCategoriesByParentCategory(category);
         List<String> subCategoryNames = new ArrayList<>();
-        System.out.println("DZIECI :");
         for (Category subCategory : subCategories){
             subCategoryNames.add(subCategory.getName());
             System.out.print(subCategory.getName()+", ");
@@ -241,17 +239,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
 
         for(Category category: categories){
-            CategoryDTO categoryDTO = CategoryDTOMapper.instance.categoryDTO(category);
-            Category parentCategory = categoryRepository.getParentCategoryBySubCategoryId(category.getId()).orElse(null);
-            categoryDTO.setParentCategory(parentCategory != null ? parentCategory.getName() : null);
-
-            List<Category> subCategories = categoryRepository.getCategoriesByParentCategory(category);
-            List<String> subCategoryNames = new ArrayList<>();
-            for (Category subCategory : subCategories){
-                subCategoryNames.add(subCategory.getName());
-            }
-            categoryDTO.setSubCategories(subCategoryNames);
-
+            CategoryDTO categoryDTO = createCategoryDTO(category);
             categoryDTOS.add(categoryDTO);
         }
         return categoryDTOS;

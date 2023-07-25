@@ -7,7 +7,7 @@ public class CartOfferDTO {
 
     public long id;
 
-    public UserDTO userDTO;
+    public UserDTO user;
 
-    public OfferDTO offerDTO;
+    public OfferDTO offer;
 }

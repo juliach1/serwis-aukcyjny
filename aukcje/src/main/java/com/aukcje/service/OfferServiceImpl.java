@@ -24,12 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -135,35 +130,7 @@ public class OfferServiceImpl implements OfferService {
         offerDetails.setDescription(offerModel.getDescription());
         offerDetails.setItemCondition(itemCondition);
 
-        Offer offer = new Offer();
-        offer.setId(offerModel.getId());
-        offer.setCategory(category);
-        offer.setUser(user);
-        offer.setInsertDate(LocalDateTime.now());
-        offer.setViews(0l);
-        offer.setOfferStatus(offerStatus);
-        offer.setOfferType(offerType);
-        offer.setOfferDetails(offerDetails);
-        offer.setQuantity(offerModel.getQuantity());
-        offer.setPrice(Double.valueOf(offerModel.getPrice()));
-
-        if(offerModel.getLengthInDays() != null) {
-            offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
-        }else {
-
-        }
-        System.out.println("-----------DODAWANY OBIEKT-----------");
-
-        System.out.println("ID "+offer.getId());
-        System.out.println(offer.getOfferDetails().getTitle());
-        System.out.println(offer.getOfferDetails().getDescription());
-        System.out.println("stan: " + offer.getOfferDetails().getItemCondition());
-
-        System.out.println("kategoria: " + offer.getCategory());
-        System.out.println("użytkownik: " + offer.getUser());
-        System.out.println("kategoria: " + offer.getInsertDate());
-        System.out.println("status: " + offer.getOfferStatus());
-        System.out.println("typ: " + offer.getOfferType());
+        Offer offer =  OfferMapper.offer(offerModel, offerDetails, category, user, offerStatus, offerType);
 
         offerRepository.save(offer);
 
@@ -176,7 +143,6 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void update(OfferAddModel offerModel, Long userId, MultipartFile multipartFile) {
-//        Offer offer = OfferMapper.offer(offerModel, userId);
 
         save(offerModel, userId, multipartFile);
     }

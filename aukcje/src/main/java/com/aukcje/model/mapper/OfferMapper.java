@@ -2,10 +2,8 @@ package com.aukcje.model.mapper;
 
 import com.aukcje.entity.*;
 import com.aukcje.model.OfferAddModel;
-import com.aukcje.repository.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -18,14 +16,32 @@ import java.time.LocalDateTime;
 public abstract class OfferMapper {
 
     @Named("offer")
-    public static Offer offer(OfferAddModel offerModel, Long userId){
+    public static Offer offer(OfferAddModel offerModel, OfferDetails offerDetails, Category category, User user, OfferStatus offerStatus, OfferType offerType){
         Offer offer = new Offer();
+
+        offer.setId(offerModel.getId());
+        offer.setCategory(category);
+        offer.setUser(user);
+        offer.setInsertDate(LocalDateTime.now());
+        offer.setViews(0l);
+        offer.setOfferStatus(offerStatus);
+        offer.setOfferType(offerType);
+        offer.setOfferDetails(offerDetails);
+        offer.setQuantity(offerModel.getQuantity());
+        offer.setPrice(Double.valueOf(offerModel.getPrice()));
 
         offer.setPrice(Double.valueOf(offerModel.getPrice()));
         offer.setQuantity(offerModel.getQuantity());
         offer.setOfferDetails(offerDetails(offerModel));
         offer.setInsertDate(LocalDateTime.now());
         offer.setViews(0l);
+
+        offer.setOfferDetails(offerDetails);
+
+
+        if(offerModel.getLengthInDays() != null) {
+            offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
+        }
 
 
         return offer;

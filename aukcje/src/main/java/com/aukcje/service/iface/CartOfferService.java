@@ -10,5 +10,5 @@ public interface CartOfferService {
 
     List<CartOfferDTO> getAll(Long userId);
 
-    void add(Long userId, Long offerId);
+    void add(Long userId, Long offerId, Integer pcs);
 }

@@ -4,7 +4,11 @@ import com.aukcje.dto.CartOfferDTO;
 import com.aukcje.dto.mapper.CartOfferDTOMapper;
 import com.aukcje.entity.CartOffer;
 import com.aukcje.entity.Offer;
+import com.aukcje.entity.User;
+import com.aukcje.model.CartOfferModel;
 import com.aukcje.repository.CartOfferRepository;
+import com.aukcje.repository.OfferRepository;
+import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.CartOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,12 @@ public class CartOfferServiceImpl implements CartOfferService {
     @Autowired
     CartOfferRepository cartOfferRepository;
 
+    @Autowired
+    OfferRepository offerRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public List<CartOfferDTO> getAll(Long userId) {
         List<CartOffer> cartOffers = cartOfferRepository.findAllByUserId(userId);
@@ -27,10 +37,37 @@ public class CartOfferServiceImpl implements CartOfferService {
     }
 
     @Override
-    public void add(Long userId, Long offerId) {
+    public void add(Long userId, Long offerId, Integer quantity) {
+
+        if(userId != null && offerId != null) {
+
+            if (quantity == null) {
+                quantity = 1;
+            }
+            CartOfferModel cartOfferModel = new CartOfferModel(userId, offerId, quantity);
+            cartOfferRepository.save(getCart0fferFromCartOfferModel(cartOfferModel));
+        }
 
     }
 
+    private CartOffer getCart0fferFromCartOfferModel(CartOfferModel cartOfferModel){
+        CartOffer cartOffer = new CartOffer();
+
+        Offer offer = offerRepository.findById(cartOfferModel.getOfferId()).orElse(null);
+        User user = userRepository.findById(cartOfferModel.getOfferId()).orElse(null);
+
+        cartOffer.setQuantity(cartOfferModel.getQuantity());
+        cartOffer.setUser(user);
+        cartOffer.setOffer(offer);
+
+        System.out.println("Cart offer do zapisania: ");
+        System.out.println("ilość - "+cartOffer.getQuantity());
+        System.out.println("przedmiot - "+cartOffer.getOffer().getOfferDetails().getTitle());
+        System.out.println("user - "+cartOffer.getUser().getUsername());
+
+        return cartOffer;
+
+    }
     private CartOfferDTO createOfferDTO(CartOffer offer){
         return CartOfferDTOMapper.instance.cartOfferDTO(offer);
     }

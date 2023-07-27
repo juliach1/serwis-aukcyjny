@@ -29,6 +29,7 @@
 <%@include file="../../../fragments/navbar.jspf" %>
 
 <main>
+
     <%--@elvariable id="offerDTO" type="com.aukcje.dto.OfferDTO"--%>
 
     <section class="central container col-sm-12 col-md-9 col-xl-8">
@@ -188,7 +189,7 @@
 
                                         <div class="d-inline-flex justify-content-center mt-2 col-9">
                                             <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
-                                            <button type="submit" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                            <button type="submit"  href="${pageContext.request.contextPath}/koszyk/dodaj"  class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
                                                 do koszyka
                                             </button>
                                         </div>

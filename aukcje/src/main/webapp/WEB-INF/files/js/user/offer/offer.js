@@ -11,15 +11,13 @@ function changeObserveIcon(){
     obsIcon.classList.toggle('bi-eye-fill');
 };
 
-document.getElementById('photo-height-panel').height = Math.floor(document.getElementById('left-part').height);
-
-
 
 
 var btnQuantityUp =  document.getElementById('button-quantity-up');
 var btnQuantityDown = document.getElementById('button-quantity-down');
-var quantityInput = document.getElementById('quantity');
+var quantityInput = document.getElementById("quantity");
 var quantityValue = parseInt(quantityInput.getAttribute('value'));
+var quantityForCart = document.getElementById('cartPcs');
 
 btnQuantityUp.addEventListener("click", function () {
 
@@ -27,8 +25,10 @@ btnQuantityUp.addEventListener("click", function () {
         quantityValue = parseInt(quantityInput.getAttribute('max'));
     }else {
         quantityValue = parseInt(quantityInput.getAttribute('value')) + 1;
+        quantityForCart=quantityForCart+1;
     }
 
+    console.log("up");
     quantityInput.setAttribute('value',quantityValue);
 });
 
@@ -37,6 +37,19 @@ btnQuantityDown.addEventListener("click", function () {
         quantityValue = parseInt(quantityInput.getAttribute('min'));
     }else{
         quantityValue = parseInt(quantityInput.getAttribute('value')) - 1;
+        quantityForCart=quantityForCart-1;
     }
-    quantityInput.setAttribute('value',quantityValue);
+    console.log("down");
+    console.log(parseInt(quantityInput.getAttribute('value')));
+
 });
+
+document.getElementById('photo-height-panel').height = Math.floor(document.getElementById('left-part').height);
+
+function setQuantityForCart(number){
+    quantityForCart = number;
+}
+
+function addToCart(offerId){
+    window.location = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+}

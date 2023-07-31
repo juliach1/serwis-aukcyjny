@@ -102,11 +102,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findById(Long id) {
-//        User user = userRepository.findById(id).orElse(null);
-//        UserDTO userDTO = createUserDTO(user);
-//        userDTO.setUserStatus(user.getUserStatus().getName());
-//        return userDTO;
-
         return UserDTOMapper.instance.userDTO(userRepository.findById(id).orElseThrow());
     }
 

@@ -44,26 +44,20 @@ public class CartOfferServiceImpl implements CartOfferService {
             if (quantity == null) {
                 quantity = 1;
             }
-            CartOfferModel cartOfferModel = new CartOfferModel(userId, offerId, quantity);
+            CartOfferModel cartOfferModel = new CartOfferModel(offerId, userId, quantity);
             cartOfferRepository.save(getCart0fferFromCartOfferModel(cartOfferModel));
         }
 
     }
 
     private CartOffer getCart0fferFromCartOfferModel(CartOfferModel cartOfferModel){
-        CartOffer cartOffer = new CartOffer();
-
         Offer offer = offerRepository.findById(cartOfferModel.getOfferId()).orElse(null);
-        User user = userRepository.findById(cartOfferModel.getOfferId()).orElse(null);
+        User user = userRepository.findByUsername("root");
 
+        CartOffer cartOffer = new CartOffer();
         cartOffer.setQuantity(cartOfferModel.getQuantity());
         cartOffer.setUser(user);
         cartOffer.setOffer(offer);
-
-        System.out.println("Cart offer do zapisania: ");
-        System.out.println("ilość - "+cartOffer.getQuantity());
-        System.out.println("przedmiot - "+cartOffer.getOffer().getOfferDetails().getTitle());
-        System.out.println("user - "+cartOffer.getUser().getUsername());
 
         return cartOffer;
 

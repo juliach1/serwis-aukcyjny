@@ -53,9 +53,11 @@
 
                     <form:hidden path="categoryId" id="chosen-category-id"/>
                     <form:hidden path="isBaseCategoryChosen" id="base-category-chosen"/>
+                    <form:hidden path="categoryId" id="items-quantity"/>
 
 
-                    <div class="row row-cols-md-2 row-cols-1 pb-3">
+
+                <div class="row row-cols-md-2 row-cols-1 pb-3">
 
                         <div class="d-flex col mt-4 justify-content-center align-items-center">
                             <form:radiobutton id="buy-now-check" path="offerType" class="me-2" checked="checked" onchange="setPriceInputVisibility(this)" value="${offerTypeDTOS.get(0).name}"/> ${offerTypeDTOS.get(0).name}

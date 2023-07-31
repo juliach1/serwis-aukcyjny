@@ -53,12 +53,11 @@ public class CartController {
     }
 
 
-    //TODO: POMOCY!! jak mam obsłużyć geta z parametrami, jak je przekazać bez form, jak rzyć
     @GetMapping("/dodaj")
     public String addOfferToCart(Principal principal,
                                  @RequestParam(value = "ofertaId", required = false) Long offerId,
-                                 @RequestParam(value = "szt", required = false) Integer pcs,
-                                 BindingResult bindingResult){
+                                 @RequestParam(value = "szt", required = false) Integer pcs
+    ){
 
         UserDTO user = userService.findByUsername(principal.getName());
 

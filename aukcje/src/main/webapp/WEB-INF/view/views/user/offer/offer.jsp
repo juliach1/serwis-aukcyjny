@@ -25,7 +25,8 @@
 </head>
 
 
-<body>
+
+<body onload="setQuantityForCart(1)">
 <%@include file="../../../fragments/navbar.jspf" %>
 
 <main>
@@ -158,7 +159,8 @@
                 </section>
 
                 <section class="right-part col-md">
-                     <c:choose>
+
+                    <c:choose>
                             <c:when test="${offerDTO.offerType.name=='kup teraz'}">
                                 <div class="right-part-panel mb-3" id="buy-panel">
                                     <div class="text-center shadow px-2 py-3 py-md-4 py-lg-5">
@@ -175,7 +177,7 @@
                                                     <i class="bi bi-caret-down"></i>
                                                 </button>
 
-                                                <input type="number" class="form-control" id="quantity" placeholder="1" name="quantity" value="1" min="1" max="${offerDTO.quantity}">
+                                                <input type="number" class="form-control" id="quantity" aplaceholder="1" name="quantity" value="1" min="1" max="${offerDTO.quantity}" readonly>
 
                                                 <button id="button-quantity-up" type="button" class="btn button-quantity col">
                                                     <i class="bi bi-caret-up"></i>
@@ -189,9 +191,9 @@
 
                                         <div class="d-inline-flex justify-content-center mt-2 col-9">
                                             <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
-                                            <button type="submit"  href="${pageContext.request.contextPath}/koszyk/dodaj"  class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                                do koszyka
-                                            </button>
+                                                <button type="submit" onclick="addToCart(${offerDTO.id})" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                                    do koszyka
+                                                </button>
                                         </div>
 
                                         <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">

@@ -51,5 +51,11 @@ function setQuantityForCart(number){
 }
 
 function addToCart(offerId){
+    // let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.open( "GET", url, false ); // false for synchronous request
+    // xmlHttp.send( null );
+    // return xmlHttp.responseText;
     window.location = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
 }
+

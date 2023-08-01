@@ -1,8 +1,6 @@
 package com.aukcje.dto.mapper;
 
-import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPhotoDTO;
-import com.aukcje.entity.Offer;
 import com.aukcje.entity.OfferPhoto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;

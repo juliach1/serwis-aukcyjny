@@ -12,6 +12,9 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     Optional<Category> getById(Integer id);
+
+    Category findByName(String name);
+
     List<Category> findByIdNot(Integer id);
 
     List<Category> getCategoriesByParentCategory(Category category);
@@ -20,6 +23,5 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     @Query("SELECT c.parentCategory FROM Category c WHERE c.id = ?1")
     Optional<Category> getParentCategoryBySubCategoryId(Integer id);
-
 
 }

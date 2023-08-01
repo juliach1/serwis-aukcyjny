@@ -1,21 +1,14 @@
 package com.aukcje.controller.dictionaries;
 
-import com.aukcje.dto.CategoryDTO;
-import com.aukcje.dto.CategorySelectDTO;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferSearchDTO;
-import com.aukcje.entity.Offer;
 import com.aukcje.model.OfferSearchModel;
-import com.aukcje.model.UserEditModel;
-import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.OfferTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;

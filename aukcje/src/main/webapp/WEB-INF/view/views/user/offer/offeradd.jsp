@@ -174,9 +174,7 @@
 <script src="${pageContext.request.contextPath}/files/js/bstreeview.js"></script>
 
 <script>
-
     //---------------------CREATING CATEGORIES TREE--------------------
-
     var baseurl = '${pageContext.request.contextPath}'
     let url = baseurl.concat('/rest/categories/selection');
     var response;

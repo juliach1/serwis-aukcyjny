@@ -3,7 +3,6 @@ package com.aukcje.model;
 import com.aukcje.validator.ValidNotZeroOrBlank;
 import com.aukcje.validator.ValidPrice;
 import lombok.Data;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.validation.constraints.*;
 

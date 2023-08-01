@@ -1,11 +1,9 @@
 package com.aukcje.repository;
 
-import com.aukcje.entity.Address;
 import com.aukcje.entity.Offer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,10 +11,7 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
-    @Query("Select o from Offer o where o.offerType.id = ?1 and o.offerStatus.id = 1 order by o.insertDate desc")
-    Page<Offer> findNewByOfferTypeId(Integer typeId, Pageable pageable);
+    Page<Offer> findByOfferTypeIdOrderByInsertDateDesc(Integer typeId, Pageable pageable);
 
-    @Query("Select o from Offer o where o.user.id = ?1")
     List<Offer> findByUserId(Long userId);
-
 }

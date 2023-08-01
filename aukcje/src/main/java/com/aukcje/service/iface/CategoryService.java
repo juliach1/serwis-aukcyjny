@@ -1,6 +1,9 @@
 package com.aukcje.service.iface;
 
-import com.aukcje.dto.*;
+import com.aukcje.dto.CategoryDTO;
+import com.aukcje.dto.CategoryParentHierarchyDTO;
+import com.aukcje.dto.CategoryPathCategoryDTO;
+import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.entity.Category;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
@@ -31,17 +34,6 @@ public interface CategoryService {
      List<CategorySelectionParentHierarchyDTO> createCategoriesSelectionTree(String baseUrl);
         List<CategoryDTO> getRootCategories();
 
-//    List<CategorySelectDTO> createCategoriesNormalTree();
-
-
-//     CategorySelectDTO  createCategorySelectDTO(Category category);
-
-
-
-
-
-
-
-
+    CategoryDTO findByName(String parentCategory);
 
 }

@@ -1,18 +1,15 @@
 package com.aukcje.dto;
 
 import com.aukcje.enums.SortTypeEnum;
-import com.aukcje.service.OfferTypeServiceImpl;
 import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.OfferTypeService;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Data
 public class OfferSearchDTO {
+
+    //TODO: zmienić na private
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

@@ -2,7 +2,6 @@ package com.aukcje.validator;
 
 import javax.validation.Constraint;
 import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.Pattern;
 import java.lang.annotation.*;
 
 @Documented

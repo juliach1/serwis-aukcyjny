@@ -1,6 +1,5 @@
 package com.aukcje.repository;
 
-import com.aukcje.entity.Offer;
 import com.aukcje.entity.OfferStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 

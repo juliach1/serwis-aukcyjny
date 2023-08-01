@@ -1,17 +1,13 @@
 package com.aukcje.service;
 
 import com.aukcje.dto.UserDTO;
-import com.aukcje.dto.UserStatusDTO;
 import com.aukcje.dto.mapper.UserDTOMapper;
-import com.aukcje.dto.mapper.UserStatusDTOMapper;
 import com.aukcje.entity.Role;
 import com.aukcje.entity.User;
-import com.aukcje.entity.UserStatus;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.model.mapper.UserEditModelMapper;
-import com.aukcje.model.mapper.UserRegisterModelMapper;
 import com.aukcje.repository.CustomUserRepository;
 import com.aukcje.repository.RoleRepository;
 import com.aukcje.repository.UserRepository;
@@ -24,12 +20,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service

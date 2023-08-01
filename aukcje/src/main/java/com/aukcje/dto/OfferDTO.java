@@ -7,6 +7,9 @@ import java.util.List;
 
 @Data
 public class OfferDTO {
+
+    //TODO: zmienić na private
+
     public long id;
     public CategoryDTO categoryDTO;
     public OfferDetailsDTO offerDetails;

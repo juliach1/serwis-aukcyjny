@@ -1,26 +1,19 @@
 package com.aukcje.repository;
 
-import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
 import com.aukcje.entity.UserStatus;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.utils.Utils;
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class CustomUserRepositoryImpl implements CustomUserRepository{

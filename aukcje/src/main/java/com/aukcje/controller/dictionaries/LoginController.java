@@ -1,7 +1,6 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
-import com.aukcje.entity.User;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,7 @@ public class LoginController {
     public String showLoginForm(){
         return "/views/login";
     }
+    //TODO dodać: BLOKADA DLA ZABLOKOWANYCH USERÓW
 
     @GetMapping("/rejestracja")
     public String showRegisterForm(Model model) {

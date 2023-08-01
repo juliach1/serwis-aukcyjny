@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class CategorySelectDTO {
 
+    //TODO: zmienić na private
+
     public int id;
     public String name;
     public CategorySelectDTO parentCategory;

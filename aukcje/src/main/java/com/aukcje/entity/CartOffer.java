@@ -13,6 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class CartOffer {
 
+    //TODO: zmienić na private
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

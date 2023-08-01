@@ -11,7 +11,9 @@ import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.model.mapper.OfferMapper;
 import com.aukcje.repository.*;
-import com.aukcje.service.iface.*;
+import com.aukcje.service.iface.CategoryService;
+import com.aukcje.service.iface.OfferPhotoService;
+import com.aukcje.service.iface.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +26,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -250,7 +255,7 @@ public class OfferServiceImpl implements OfferService {
     private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {
         if(isInvalid(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
 
-        List<Offer> offers = offerRepository.findNewByOfferTypeId( offerTypeId, setPageSize(pageSize) ).toList() ;
+        List<Offer> offers = offerRepository.findByOfferTypeIdOrderByInsertDateDesc( offerTypeId, setPageSize(pageSize) ).toList() ;
         List<OfferDTO> offerDTOS = createOfferDTO( offers );
 
 

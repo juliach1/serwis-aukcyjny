@@ -2,11 +2,8 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
-import com.aukcje.model.AddressModel;
-import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
-import com.aukcje.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -46,8 +42,7 @@ public class OfferController {
     @GetMapping("/podglad/{ofertaId}")
     public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) {
 
-        //TODO dodac ograniczenie dla AKTYWNYCH
-        //przy nieaktywnych (sprzedanych, usunietych) - blad
+        //TODO dodać: ograniczenie dla AKTYWNYCH; przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO = offerService.findById(offerId);
 
         if (offerDTO.getEndDate() != null) {
@@ -70,6 +65,7 @@ public class OfferController {
 
     @GetMapping("/dodaj")
     public String addOffer(Model model) {
+        //TODO dodać: tylko dla zwykłych userów
         model.addAttribute("offerAddModel", new OfferAddModel());
         model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
         model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
@@ -96,7 +92,7 @@ public class OfferController {
             if (!categoryService.isChosenCategoryForOfferAddCorrect(offerAddModel)) {
                 System.out.println("BAZOWA KATEGORIA: " + offerAddModel.getIsBaseCategoryChosen());
 
-                //TODO POPRAWIC ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
+                //TODO poprawić: ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
                 bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
             }
 
@@ -156,7 +152,7 @@ public class OfferController {
             }
 
             if (!categoryService.isChosenCategoryForOfferAddCorrect(offerModel)) {
-                //TODO POPRAWIC ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
+                //TODO poprawić: ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
                 bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
             }
 

@@ -11,8 +11,6 @@ public interface UserEditModelMapper {
 
     UserEditModelMapper instance = Mappers.getMapper(UserEditModelMapper.class);
 
-    //mapowanie model na entity;
-    //pozwala na dodanie obiektu do bd
     @Mapping(target = "userStatus", ignore = true)
     User user(UserEditModel userModel);
 

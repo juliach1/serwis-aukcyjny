@@ -1,7 +1,6 @@
 package com.aukcje.service.iface;
 
 import com.aukcje.dto.UserStatusDTO;
-import com.aukcje.entity.UserStatus;
 
 import java.util.List;
 

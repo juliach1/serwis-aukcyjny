@@ -1,6 +1,5 @@
 package com.aukcje.utils;
 
-import com.aukcje.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

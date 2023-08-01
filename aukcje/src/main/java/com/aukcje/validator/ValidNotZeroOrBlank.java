@@ -1,11 +1,8 @@
 package com.aukcje.validator;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.Constraint;
 import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.lang.annotation.*;
 

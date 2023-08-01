@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 @Data
 public class CategoryModel {
 
+    //TODO: zmienić na private
+
     int id;
 
     @Size(max = 50, message = "Nazwa kategorii może mieć maksymalnie 50 znaków")

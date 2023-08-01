@@ -1,6 +1,5 @@
 package com.aukcje.repository;
 
-import com.aukcje.entity.Country;
 import com.aukcje.entity.ItemCondition;
 import org.springframework.data.jpa.repository.JpaRepository;
 

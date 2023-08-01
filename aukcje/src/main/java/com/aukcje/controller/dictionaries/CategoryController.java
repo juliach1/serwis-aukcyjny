@@ -3,6 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.CategoryDTO;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
+import com.aukcje.service.iface.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,6 +23,10 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private UserService userService;
+
 
     @Autowired
     private RestCategoryController restCategoryController;
@@ -61,9 +66,12 @@ public class CategoryController {
             return "redirect:/admin/kategoria/pobierz-wszystkie";
 
         }
+        CategoryDTO categoryDTO = categoryService.findByName(categoryModel.getParentCategory());
 
-        if(!categoryService.categoryAlreadyExists(categoryModel.getName())){
+        if(categoryDTO != null){
             categoryService.save(categoryModel);
+        }else {
+            //TODO [wyjątek]: bad parent category
         }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
@@ -93,14 +101,23 @@ public class CategoryController {
             return "/views/admin/category/categoryedit";
         }
 
-        categoryService.update(categoryModel);
+        CategoryDTO categoryDTO = categoryService.findByName(categoryModel.getParentCategory());
+
+        if(categoryDTO != null){
+            categoryService.update(categoryModel);
+        }else {
+            //TODO [wyjątek]: incorrect parent category
+        }
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }
 
     @GetMapping("/usun/{kategoriaId}")
-    public String deleteCategory(@PathVariable("kategoriaId") Integer categoryId){
+    public String deleteCategory(Principal principal,
+                                @PathVariable("kategoriaId") Integer categoryId){
 
+        //TODO dodać: CZY NA PEWNO USUNĄĆ?
         categoryService.delete(categoryId);
+
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }
 }

@@ -1,7 +1,6 @@
 package com.aukcje.service.iface;
 
 import com.aukcje.dto.OfferDTO;
-import com.aukcje.model.AddressModel;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import org.springframework.web.multipart.MultipartFile;

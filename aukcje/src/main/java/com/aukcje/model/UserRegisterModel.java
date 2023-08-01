@@ -3,13 +3,7 @@ package com.aukcje.model;
 import com.aukcje.validator.FieldMatch;
 import com.aukcje.validator.ValidEmail;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.validation.Constraint;
-import javax.validation.Valid;
 import javax.validation.constraints.*;
-import javax.validation.executable.ValidateOnExecution;
 
 @Data
 @FieldMatch.List({

@@ -15,7 +15,6 @@ public class CategorySelectionParentHierarchyDTO {
     private Boolean enabled = true;
     private CategorySelectionParentHierarchyStateDTO state = new CategorySelectionParentHierarchyStateDTO();
 
-
 //    String href;
 
     @JsonProperty("class")

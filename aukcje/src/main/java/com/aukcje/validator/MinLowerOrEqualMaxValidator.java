@@ -1,8 +1,6 @@
 package com.aukcje.validator;
 
-import com.aukcje.dto.OfferSearchDTO;
 import com.aukcje.model.OfferSearchModel;
-import org.springframework.beans.BeanWrapperImpl;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

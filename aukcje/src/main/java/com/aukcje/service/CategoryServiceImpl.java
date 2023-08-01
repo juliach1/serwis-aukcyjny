@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.AssertFalse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 @Transactional
 @Service
@@ -149,6 +152,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     public List<CategoryDTO> getRootCategories(){
         return createCategoryDTO(categoryRepository.getCategoriesByParentCategoryIsNull());
+    }
+
+    @Override
+    public CategoryDTO findByName(String categoryName) {
+        return createCategoryDTO(categoryRepository.findByName(categoryName));
     }
 
     @Override

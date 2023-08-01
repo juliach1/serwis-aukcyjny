@@ -5,16 +5,11 @@ import com.aukcje.dto.mapper.UserStatusDTOMapper;
 import com.aukcje.entity.UserStatus;
 import com.aukcje.repository.UserStatusRepository;
 import com.aukcje.service.iface.UserStatusService;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 //@RequiredArgsConstructor(onConstructor_ = {@Inject})

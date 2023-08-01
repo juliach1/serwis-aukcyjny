@@ -1,10 +1,11 @@
 package com.aukcje.dto;
 
-import com.aukcje.entity.UserStatus;
 import lombok.Data;
 
 @Data
 public class UserDTO {
+
+    //TODO: zmienić na private
 
     public long id;
     public String username;

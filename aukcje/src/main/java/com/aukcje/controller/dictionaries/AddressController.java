@@ -1,6 +1,6 @@
 package com.aukcje.controller.dictionaries;
 
-import com.aukcje.dto.AddressDTO;
+import com.aukcje.dto.CountryDTO;
 import com.aukcje.model.AddressModel;
 import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CountryService;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.security.Principal;
 
-//TODO: Dodać podgląd adresów
+
+//TODO dodać: podgląd adresów
 @Controller
 @RequestMapping("/uzytkownik/adres")
 public class AddressController {
@@ -49,7 +49,14 @@ public class AddressController {
             return "/views/user/address/addressadd";
         }
 
-        addressService.save(addressModel, userService.findByUsername(principal.getName()).getId() );
+        CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());
+
+        if(chosenCountry != null){
+            addressService.save(addressModel, userService.findByUsername(principal.getName()).getId() );
+        }else{
+            //TODO [wyjątek]: incorrect country
+        }
+
         return "redirect:/uzytkownik/adres/dodaj";
     }
 
@@ -67,6 +74,8 @@ public class AddressController {
             model.addAttribute("addressModel", new AddressModel());
 
             return "/views/user/address/addressedit";
+        }else {
+            //TODO [pytanie] : Lepiej rzuć wyjąte, czy zostawić tak - przenieść na dodawanie?
         }
 
         return "redirect:/uzytkownik/adres/dodaj";
@@ -84,8 +93,16 @@ public class AddressController {
             return "/views/user/address/addressedit";
         }
 
-        Long userId = userService.findByUsername(principal.getName()).getId();
-        addressService.updateAddress(addressModel, userId);
+
+        CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());
+
+        if(chosenCountry != null){
+            Long userId = userService.findByUsername(principal.getName()).getId();
+            addressService.updateAddress(addressModel, userId);
+        }else{
+            //TODO [wyjątek]: incorrect country ex
+        }
+
         return "redirect:/uzytkownik/adres/dodaj";
     }
 }

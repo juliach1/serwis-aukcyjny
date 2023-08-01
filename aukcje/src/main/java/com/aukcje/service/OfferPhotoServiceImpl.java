@@ -1,10 +1,7 @@
 package com.aukcje.service;
 
-import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPhotoDTO;
-import com.aukcje.dto.mapper.OfferDTOMapper;
 import com.aukcje.dto.mapper.OfferPhotoDTOMapper;
-import com.aukcje.entity.Offer;
 import com.aukcje.entity.OfferPhoto;
 import com.aukcje.repository.OfferPhotoRepository;
 import com.aukcje.service.iface.OfferPhotoService;

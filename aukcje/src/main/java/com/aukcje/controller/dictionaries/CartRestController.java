@@ -6,15 +6,11 @@ import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
@@ -47,7 +43,9 @@ public class CartRestController {
 
         }else{
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            //TODO : WYJĄTEK, nie można wykonać bo konto nieaktywne
+            /*TODO : WYJĄTEK, nie można wykonać bo konto nieaktywne
+                czy dodawać to? czy założyć, że po prostu nawet sie nie zaloguje?
+                */
         }
 
     }

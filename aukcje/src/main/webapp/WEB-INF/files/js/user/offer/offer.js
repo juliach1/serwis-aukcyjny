@@ -44,18 +44,50 @@ btnQuantityDown.addEventListener("click", function () {
 
 });
 
-document.getElementById('photo-height-panel').height = Math.floor(document.getElementById('left-part').height);
+// document.getElementById('photo-height-panel').height = Math.floor(document.getElementById('left-part').height);
 
 function setQuantityForCart(number){
     quantityForCart = number;
 }
 
 function addToCart(offerId){
-    // let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.open( "GET", url, false ); // false for synchronous request
-    // xmlHttp.send( null );
-    // return xmlHttp.responseText;
-    window.location = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+    let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+    if(xmlHttp.status === 202){
+        playAlert()
+    }
+
+    return xmlHttp.responseText;
 }
 
+function createNewAlert(alertId, parentId){
+    $("#"+parentId).append("<div id='"+alertId+"' class='alert alert-success alert-dismissible' data-timeout='5000' style='display:none; position:absolute; z-index: 10;'> <button type='button' className='btn-close' data-bs-dismiss='alert' aria-hidden='true'></button> Przedmiot został dodany do koszyka.</div>");
+}
+function showAlert(alertId){
+    $("#"+alertId).css("display", "");
+}
+
+function closeAlert(){
+    let alert_list = document.querySelectorAll('.alert')
+    alert_list.forEach(function(alert) {
+        new bootstrap.Alert(alert);
+
+        let alert_timeout = alert.getAttribute('data-timeout');
+        setTimeout(() => {
+            bootstrap.Alert.getInstance(alert).close();
+        }, +alert_timeout);
+    });
+}
+
+function playAlert(){
+
+    if($("#offer-header").find("div#added-to-cart-alert").length==0){
+        createNewAlert('added-to-cart-alert', 'offer-header');
+    }
+
+    showAlert('added-to-cart-alert');
+
+    closeAlert();
+}

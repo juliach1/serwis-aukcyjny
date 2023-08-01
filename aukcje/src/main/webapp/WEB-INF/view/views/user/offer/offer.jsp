@@ -39,8 +39,21 @@
 
             <header class="mb-3">
 
+                <section id="offer-header" class="d-flex align-items-end" style="position:relative;" >
 
-                <section class="d-flex align-items-end">
+<%--                    <div class="container" style="display:none; position:absolute; position: absolute; z-index: 10;" id="added-to-cart-alert">--%>
+<%--                        <div class="alert alert-success alert-dismissible">--%>
+<%--                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>--%>
+<%--                            Przedmiot został dodany do koszyka.--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+
+
+                        <div id="added-to-cart-alert" class="alert alert-success alert-dismissible" data-timeout="5000" style="display:none; position:absolute; z-index: 10;">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
+                            Przedmiot został dodany do koszyka.
+                        </div>
+
 
                     <div class="flex-column flex-fill col-md-6 col-lg-5 col-xl-4">
                         <p class="display-6">
@@ -194,9 +207,10 @@
                                                 <button type="submit" onclick="addToCart(${offerDTO.id})" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
                                                     do koszyka
                                                 </button>
+
                                         </div>
 
-                                        <button type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
+                                        <button id="addToCart" type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
                                             KUP TERAZ
                                         </button>
 

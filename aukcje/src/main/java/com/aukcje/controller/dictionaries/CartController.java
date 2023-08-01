@@ -52,26 +52,27 @@ public class CartController {
         return "";
     }
 
-
-    @GetMapping("/dodaj")
-    public String addOfferToCart(Principal principal,
-                                 @RequestParam(value = "ofertaId", required = false) Long offerId,
-                                 @RequestParam(value = "szt", required = false) Integer pcs,
-                                 Model model
-    ){
-
-        UserDTO user = userService.findByUsername(principal.getName());
-
-        if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
-            cartOfferService.add(user.getId(), offerId, pcs);
-
-        }else{
-            //TODO : WYJĄTEK, nie można wykonać bo konto nieaktywne
-        }
-        model.addAttribute("addedToCart", true);
-        return "";
-//        return "redirect:/oferta/podglad/"+offerId;
-
-    }
+//
+//    @GetMapping("/dodaj")
+//    public String addOfferToCart(Principal principal,
+//                                 @RequestParam(value = "ofertaId", required = false) Long offerId,
+//                                 @RequestParam(value = "szt", required = false) Integer pcs,
+//                                 Model model
+//    ){
+//
+//        UserDTO user = userService.findByUsername(principal.getName());
+//
+//        if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
+//            cartOfferService.add(user.getId(), offerId, pcs);
+//
+//        }else{
+//            //TODO : WYJĄTEK, nie można wykonać bo konto nieaktywne
+//            return "";
+//        }
+//        model.addAttribute("addedToCart", true);
+//        return "";
+////        return "redirect:/oferta/podglad/"+offerId;
+//
+//    }
 
 }

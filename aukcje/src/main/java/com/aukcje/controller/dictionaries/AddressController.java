@@ -1,6 +1,8 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CountryDTO;
+import com.aukcje.exception.customException.AddressEditPermissionDeniedException;
+import com.aukcje.exception.customException.IncorrectCountryException;
 import com.aukcje.model.AddressModel;
 import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CountryService;
@@ -40,7 +42,7 @@ public class AddressController {
     public String addAddressProcess(Principal principal,
                                     Model model,
                                     @Valid @ModelAttribute("addressModel") AddressModel addressModel,
-                                    BindingResult bindingResult){
+                                    BindingResult bindingResult) throws IncorrectCountryException {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("addressAddModel", new AddressModel());
@@ -54,16 +56,15 @@ public class AddressController {
         if(chosenCountry != null){
             addressService.save(addressModel, userService.findByUsername(principal.getName()).getId() );
         }else{
-            //TODO [wyjątek]: incorrect country
+            throw new IncorrectCountryException();
         }
-
         return "redirect:/uzytkownik/adres/dodaj";
     }
 
     @GetMapping("/edytuj/{adresId}")
     public String editAddress(Principal principal,
                               @PathVariable("adresId") Long addressId,
-                              Model model){
+                              Model model) throws AddressEditPermissionDeniedException {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
 
@@ -75,17 +76,15 @@ public class AddressController {
 
             return "/views/user/address/addressedit";
         }else {
-            //TODO [pytanie] : Lepiej rzuć wyjąte, czy zostawić tak - przenieść na dodawanie?
+            throw new AddressEditPermissionDeniedException();
         }
-
-        return "redirect:/uzytkownik/adres/dodaj";
     }
 
     @PostMapping("/edytuj/przetworz")
     public String editAddressProcess( Principal principal,
                                       Model model,
                                       @Valid @ModelAttribute("addressModel") AddressModel addressModel,
-                                      BindingResult bindingResult ){
+                                      BindingResult bindingResult ) throws IncorrectCountryException {
         if(bindingResult.hasErrors()){
             model.addAttribute("countries", countryService.findAll());
             model.addAttribute("addressModel", addressModel);
@@ -93,14 +92,13 @@ public class AddressController {
             return "/views/user/address/addressedit";
         }
 
-
         CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());
 
         if(chosenCountry != null){
             Long userId = userService.findByUsername(principal.getName()).getId();
             addressService.updateAddress(addressModel, userId);
         }else{
-            //TODO [wyjątek]: incorrect country ex
+            throw new IncorrectCountryException();
         }
 
         return "redirect:/uzytkownik/adres/dodaj";

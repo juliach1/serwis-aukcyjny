@@ -2,6 +2,9 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
+import com.aukcje.enums.OfferStatusEnum;
+import com.aukcje.exception.OfferEditPermissionDeniedException;
+import com.aukcje.exception.customException.InactiveOfferException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +43,16 @@ public class OfferController {
     UserService userService;
 
     @GetMapping("/podglad/{ofertaId}")
-    public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) {
+    public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException {
 
         //TODO dodać: ograniczenie dla AKTYWNYCH; przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO = offerService.findById(offerId);
+        String offerStatus = offerDTO.getOfferStatusDTO().getName();
+        String activeStatus = OfferStatusEnum.AKTYWNA.toString();
+
+        if(!Objects.equals( offerStatus, activeStatus )){
+            throw new InactiveOfferException();
+        }
 
         if (offerDTO.getEndDate() != null) {
             offerDTO.setDaysLeft((int) DAYS.between(LocalDateTime.now(), offerDTO.getEndDate()));
@@ -64,7 +73,7 @@ public class OfferController {
     }
 
     @GetMapping("/dodaj")
-    public String addOffer(Model model) {
+    public String addOffer(Model model, Principal principal) {
         //TODO dodać: tylko dla zwykłych userów
         model.addAttribute("offerAddModel", new OfferAddModel());
         model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
@@ -112,7 +121,7 @@ public class OfferController {
     @GetMapping("/edytuj/{ofertaId}")
     public String editOffer(Principal principal,
                             @PathVariable("ofertaId") Long offerId,
-                            Model model) {
+                            Model model) throws OfferEditPermissionDeniedException {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
         OfferAddModel offerAddModel = new OfferAddModel();
@@ -128,9 +137,9 @@ public class OfferController {
             model.addAttribute("offerDTO", offerDTO);
 
             return "/views/user/offer/offeredit";
+        }else{
+            throw new OfferEditPermissionDeniedException();
         }
-
-        return "redirect:/oferta/dodaj";
     }
 
     @PostMapping("/edytuj/przetworz")

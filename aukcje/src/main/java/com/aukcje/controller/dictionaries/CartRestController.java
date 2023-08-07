@@ -43,9 +43,6 @@ public class CartRestController {
 
         }else{
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            /*TODO : WYJĄTEK, nie można wykonać bo konto nieaktywne
-                czy dodawać to? czy założyć, że po prostu nawet sie nie zaloguje?
-                */
         }
 
     }

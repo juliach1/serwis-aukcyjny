@@ -22,22 +22,16 @@ public class RestCategoryController {
     @Setter
     private String baseUrl;
 
-
     @Transactional
     @GetMapping("/categories")
     public List<CategoryParentHierarchyDTO> getCategories(){
-        System.out.println("rest url: "+ baseUrl);
         return categoryService.createCategoriesTree(baseUrl);
     }
-
 
     @Transactional
     @GetMapping("/categories/selection")
     public List<CategorySelectionParentHierarchyDTO> getSelectionCategories(){
-        System.out.println("rest url: "+ baseUrl);
         return categoryService.createCategoriesSelectionTree(baseUrl);
     }
-
-
 
 }

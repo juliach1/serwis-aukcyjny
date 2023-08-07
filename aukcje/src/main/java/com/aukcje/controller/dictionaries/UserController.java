@@ -1,5 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.UserStatusDTO;
+import com.aukcje.exception.IncorrectUserStatusException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.UserService;
@@ -10,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin/uzytkownik")
@@ -18,9 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserStatusService userStatusService;
-
 
     @GetMapping("")
     public String searchUser(Model model,
@@ -60,17 +64,20 @@ public class UserController {
     @PostMapping("/edytuj/przetworz")
     public String editUserProcess(Model model,
                                   @Valid @ModelAttribute("userEditModel") UserEditModel userEditModel,
-                                  BindingResult bindingResult){
+                                  BindingResult bindingResult) throws IncorrectUserStatusException {
         if(bindingResult.hasErrors()){
             model.addAttribute("userEditModel", userEditModel);
             model.addAttribute("statuses", userStatusService.findAll());
             return "/views/admin/user/useredit";
         }
+        if(isUserStatusCorrect(userEditModel.getUserStatus())){
+            userService.updateEditUser(userEditModel);
+        }else {
+            throw new IncorrectUserStatusException();
+        }
 
-        userService.updateEditUser(userEditModel);
 
         return "redirect:/admin/uzytkownik";
-
     }
 
     @GetMapping("/usun/{uzytkownikId}")
@@ -79,7 +86,13 @@ public class UserController {
         return "redirect:/admin/uzytkownik";
     }
 
-
-
-
+    private boolean isUserStatusCorrect(Integer userStatus){
+        List<UserStatusDTO> userStatusDTOS = userStatusService.findAll();
+        for(UserStatusDTO userStatusDTO : userStatusDTOS){
+            if(Objects.equals( userStatusDTO.getId(), userStatus )){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,6 +1,8 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CategoryDTO;
+import com.aukcje.exception.NoSuchCategoryException;
+import com.aukcje.exception.customException.IncorrectParentException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.UserService;
@@ -39,7 +41,6 @@ public class CategoryController {
         String url = StringUtils.remove(httpServletRequest.getRequestURL().toString(), "/pobierz-wszystkie");
         restCategoryController.setBaseUrl(url);
 
-        System.out.println(categoryList);
         return "/views/admin/category/category";
     }
 
@@ -55,7 +56,7 @@ public class CategoryController {
     public String addCategoryProcess(Model model,
                                      @Valid @ModelAttribute("categoryModel") CategoryModel categoryModel,
                                      BindingResult bindingResult,
-                                     Errors error){
+                                     Errors error) throws IncorrectParentException {
         if(bindingResult.hasErrors() || categoryService.categoryAlreadyExists(categoryModel.getName())){
             if(categoryService.categoryAlreadyExists(categoryModel.getName())){
                 error.reject("categoryExists","Kategoria o podanej nazwie już istnieje");
@@ -71,7 +72,7 @@ public class CategoryController {
         if(categoryDTO != null){
             categoryService.save(categoryModel);
         }else {
-            //TODO [wyjątek]: bad parent category
+            throw new IncorrectParentException();
         }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
@@ -92,7 +93,7 @@ public class CategoryController {
     @PostMapping("/edytuj/przetworz")
     public String editCategoryProcess(Model model,
                                       @Valid @ModelAttribute("categoryModel") CategoryModel categoryModel,
-                                      BindingResult bindingResult){
+                                      BindingResult bindingResult) throws IncorrectParentException {
         if(bindingResult.hasErrors()){
             model.addAttribute("categoryModel", categoryModel);
             model.addAttribute("categoryDTO", new CategoryModel());
@@ -101,22 +102,31 @@ public class CategoryController {
             return "/views/admin/category/categoryedit";
         }
 
-        CategoryDTO categoryDTO = categoryService.findByName(categoryModel.getParentCategory());
+        CategoryDTO parentCategoryDTO = categoryService.findByName(categoryModel.getParentCategory());
 
-        if(categoryDTO != null){
+        if(parentCategoryDTO != null){
             categoryService.update(categoryModel);
         }else {
-            //TODO [wyjątek]: incorrect parent category
+            throw new IncorrectParentException();
         }
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }
 
     @GetMapping("/usun/{kategoriaId}")
     public String deleteCategory(Principal principal,
-                                @PathVariable("kategoriaId") Integer categoryId){
+                                @PathVariable("kategoriaId") Integer categoryId) throws NoSuchCategoryException {
 
-        //TODO dodać: CZY NA PEWNO USUNĄĆ?
-        categoryService.delete(categoryId);
+        CategoryDTO categoryDTO = categoryService.findById(categoryId);
+        if(categoryDTO!=null){
+            //TODO dodać: CZY NA PEWNO USUNĄĆ?
+            categoryService.delete(categoryId);
+        }else {
+
+            //TODO: [pytanie] czy powinnam robic to tutaj, czy w serwisie?
+            //tzn sprawdzać czy jest taka kategoria
+
+            throw new NoSuchCategoryException();
+        }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }

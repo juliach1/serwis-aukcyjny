@@ -6,7 +6,6 @@ import lombok.Data;
 public class OfferStatusDTO {
 
     //TODO: zmienić na private
-
-    public Long id;
+    public Integer id;
     public String name;
 }

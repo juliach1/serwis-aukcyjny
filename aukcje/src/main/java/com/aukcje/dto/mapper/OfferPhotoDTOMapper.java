@@ -1,6 +1,8 @@
 package com.aukcje.dto.mapper;
 
+import com.aukcje.dto.CategoryDTO;
 import com.aukcje.dto.OfferPhotoDTO;
+import com.aukcje.entity.Category;
 import com.aukcje.entity.OfferPhoto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
@@ -13,4 +15,8 @@ public interface OfferPhotoDTOMapper {
 
     @Mappings({})
     OfferPhotoDTO offerPhotoDTO(OfferPhoto offerPhoto);
+
+    default CategoryDTO map(Category category){
+        return CategoryDTOMapper.instance.categoryDTO(category);
+    }
 }

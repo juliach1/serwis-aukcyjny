@@ -9,6 +9,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mapper
 public interface CategoryDTOMapper {
 
@@ -26,5 +29,16 @@ public interface CategoryDTOMapper {
     @Mapping(target = "href", ignore = true)
     CategoryParentHierarchyDTO categoryParentHierarchyDTO(Category category);
 
+    default String map(Category value){
+        return value.getName();
+    }
+
+    default List<String> map(List<Category> value){
+        List<String> subCats = new ArrayList<>();
+        for (Category category : value){
+            subCats.add(category.getName());
+        }
+        return subCats;
+    }
 
 }

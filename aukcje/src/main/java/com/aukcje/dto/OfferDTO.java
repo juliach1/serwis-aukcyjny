@@ -10,8 +10,8 @@ public class OfferDTO {
 
     //TODO: zmienić na private
 
-    public long id;
-    public CategoryDTO categoryDTO;
+    public Long id;
+    public CategoryDTO category;
     public OfferDetailsDTO offerDetails;
     public OfferTypeDTO offerType;
     public UserDTO user;
@@ -21,8 +21,8 @@ public class OfferDTO {
     public LocalDateTime insertDate;
     public Integer daysLeft;
     public LocalDateTime endDate;
-    public OfferStatusDTO offerStatusDTO;
-    public List<OfferPhotoDTO> offerPhotoDTO;
+    public OfferStatusDTO offerStatus;
+    public List<OfferPhotoDTO> offerPhoto;
 
     public List<CategoryPathCategoryDTO> categoryPath;
 

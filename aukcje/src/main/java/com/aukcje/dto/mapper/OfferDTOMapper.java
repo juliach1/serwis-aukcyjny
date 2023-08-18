@@ -1,6 +1,8 @@
 package com.aukcje.dto.mapper;
 
+import com.aukcje.dto.CategoryDTO;
 import com.aukcje.dto.OfferDTO;
+import com.aukcje.entity.Category;
 import com.aukcje.entity.Offer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,5 +16,9 @@ public interface OfferDTOMapper {
 
     @Mapping(target = "daysLeft", ignore = true)
     OfferDTO offerDTO(Offer offer);
+
+    default CategoryDTO map(Category category){
+        return CategoryDTOMapper.instance.categoryDTO(category);
+    }
 
 }

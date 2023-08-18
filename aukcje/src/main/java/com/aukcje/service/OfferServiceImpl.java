@@ -5,6 +5,7 @@ import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPhotoDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.dto.mapper.OfferDTOMapper;
+import com.aukcje.dto.mapper.OfferStatusDTOMapper;
 import com.aukcje.entity.*;
 import com.aukcje.enums.OfferTypeEnum;
 import com.aukcje.model.OfferAddModel;
@@ -80,8 +81,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDTO findById(Long id) {
         OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElse(new Offer()) );
-
-        offerDTO.setOfferPhotoDTO( offerPhotoService.findByOfferId(id) );
+        offerDTO.setOfferPhoto( offerPhotoService.findByOfferId(id) );
 
         return offerDTO;
     }
@@ -274,14 +274,13 @@ public class OfferServiceImpl implements OfferService {
         OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
         Category category = offer.getCategory();
         System.out.println("-----------KATEGORIA: "+category.getName());
+        System.out.println("-----------STATUS: "+offerDTO.getOfferStatus());
+        System.out.println("-----------STATUS encja: "+offer.getOfferStatus().getName());
 
         List<CategoryPathCategoryDTO> categoryPathCategoryDTOS = categoryService.getCategoryPath(category);
-
         offerDTO.setCategoryPath(categoryPathCategoryDTOS);
-
-        //TODO: SPRAWDZIĆ, DLACZEGO CATEGORYDTO NIE DODAJE SIĘ W OFFERDTOMAPPER!
-        offerDTO.setCategoryDTO(CategoryDTOMapper.instance.categoryDTO(category));
-
+        offerDTO.setCategory(CategoryDTOMapper.instance.categoryDTO(category));
+        offerDTO.setOfferStatus(OfferStatusDTOMapper.instance.offerStatusDTO(offer.getOfferStatus()));
         return offerDTO ;
     }
 

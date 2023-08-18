@@ -104,10 +104,10 @@
                     <div id="photos-carousel" class="carousel slide" data-bs-ride="true">
                         <c:choose>
 
-                            <c:when test="${offerDTO.offerPhotoDTO.size() > 0}">
+                            <c:when test="${offerDTO.offerPhoto.size() > 0}">
 
                                 <div class="carousel-indicators">
-                                    <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                                    <c:forEach begin="0" end="${offerDTO.offerPhoto.size()-1}" varStatus="index">
 
                                     <c:choose>
                                         <c:when test="${index.index == 0}">
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="carousel-inner">
-                                    <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                                    <c:forEach begin="0" end="${offerDTO.offerPhoto.size()-1}" varStatus="index">
                                         <c:choose>
                                             <c:when test="${index.index == 0}">
                                                 <div class="carousel-item active">

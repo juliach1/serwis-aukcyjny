@@ -65,24 +65,12 @@ public class CategoryServiceImpl implements CategoryService {
             revList.add(categoryPathCategoryDTOS.get(i));
         }
 
-        System.out.println("-----ŚCIEŻKA KATEGORII: ");
-        for (CategoryPathCategoryDTO categoryDTO : revList){
-            System.out.println(categoryDTO.name);
-        }
         return revList;
     }
 
     @Override
     @Transactional
     public List<CategoryDTO> findAll() {
-        List<Category> categoryList = categoryRepository.findAll();
-        System.out.println(categoryList.get(0).getName());
-
-        for(Category temp : categoryList){
-            System.out.println("ID: " + temp.getId());
-            System.out.println("Nazwa rodzica: " + (temp.getParentCategory() == null ? "Null" : temp.getParentCategory().getName()));
-            System.out.println("Nazwa: "+ temp.getName());
-        }
         return createCategoryDTO(categoryRepository.findAll());
     }
 
@@ -204,7 +192,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     private String createHrefForCategory(Category category, String baseUrl) {
         String href = baseUrl + "/edytuj/" + category.getId();
-        System.out.println("href:"+href);
 
         return href;
     }
@@ -234,8 +221,6 @@ public class CategoryServiceImpl implements CategoryService {
         List<String> subCategoryNames = new ArrayList<>();
         for (Category subCategory : subCategories){
             subCategoryNames.add(subCategory.getName());
-            System.out.print(subCategory.getName()+", ");
-
         }
         categoryDTO.setSubCategories(subCategoryNames);
 

@@ -29,7 +29,7 @@
 
 <%--                        <security:authorize access="hasRole('USER')">--%>
                             <li class="nav-item">
-                                <a id="cart-nav-link" class="nav-link px-lg-3" href="#">Koszyk</a>
+                                <a id="cart-nav-link" class="nav-link px-lg-3" href="${pageContext.request.contextPath}/koszyk">Koszyk</a>
                             </li>
 <%--                        </security:authorize>--%>
 

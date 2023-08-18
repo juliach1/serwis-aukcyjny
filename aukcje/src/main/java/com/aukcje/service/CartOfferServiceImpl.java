@@ -13,6 +13,7 @@ import com.aukcje.service.iface.CartOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,18 +36,46 @@ public class CartOfferServiceImpl implements CartOfferService {
         return createOfferDTO(cartOffers);
     }
 
+    @Transactional
     @Override
-    public void add(Long userId, Long offerId, Integer quantity) {
+    public void add(Long userId, Long offerId, Integer quantityToAdd) {
 
         if(userId != null && offerId != null) {
 
-            if (quantity == null) {
-                quantity = 1;
+            if (quantityToAdd == null) {
+                quantityToAdd = 1;
             }
-            CartOfferModel cartOfferModel = new CartOfferModel(offerId, userId, quantity);
-            cartOfferRepository.save(getCart0fferFromCartOfferModel(cartOfferModel));
-        }
 
+            CartOffer existingCartOffer = cartOfferRepository.findByOfferIdAndUserId(offerId, userId);
+            Offer offer = offerRepository.getOne(offerId);
+
+            CartOffer offerToSave;
+
+            if(existingCartOffer!=null){
+                Integer currentQuantity = existingCartOffer.getQuantity();
+                Integer offerQuantity = offer.getQuantity();
+                Integer possibleQuantityToAdd = offerQuantity - currentQuantity;
+
+                System.out.println("LICZBA PRZEDMIOTÓW: " + offerQuantity);
+                System.out.println("AKTUALNIE W KOSZYKU: " + currentQuantity);
+                System.out.println("MOŻNA DODAĆ: " + possibleQuantityToAdd);
+                if(quantityToAdd<=possibleQuantityToAdd){
+                    existingCartOffer.setQuantity(currentQuantity+quantityToAdd);
+                }else {
+                    existingCartOffer.setQuantity(currentQuantity+possibleQuantityToAdd);
+                }
+
+                offerToSave = existingCartOffer;
+
+                System.out.println("NEW QUANTITY: " + offerToSave.getQuantity());
+
+
+            }else {
+                CartOfferModel cartOfferModel = new CartOfferModel(offerId, userId, quantityToAdd);
+                offerToSave = getCart0fferFromCartOfferModel(cartOfferModel);
+            }
+            cartOfferRepository.save(offerToSave);
+        }
     }
 
     private CartOffer getCart0fferFromCartOfferModel(CartOfferModel cartOfferModel){
@@ -59,7 +88,6 @@ public class CartOfferServiceImpl implements CartOfferService {
         cartOffer.setOffer(offer);
 
         return cartOffer;
-
     }
     private CartOfferDTO createOfferDTO(CartOffer offer){
         return CartOfferDTOMapper.instance.cartOfferDTO(offer);

@@ -2,6 +2,7 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.UserStatusEnum;
+import com.aukcje.exception.customException.CartOfferNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
@@ -30,7 +31,7 @@ public class CartRestController {
     @GetMapping("/dodaj")
     public void addOfferToCart(HttpServletResponse response,
                                   Principal principal,
-                                  @RequestParam(value = "ofertaId", required = false) Long offerId,
+                                  @RequestParam(value = "ofertaId") Long offerId,
                                   @RequestParam(value = "szt", required = false) Integer pcs,
                                   Model model
     ){
@@ -38,12 +39,34 @@ public class CartRestController {
         UserDTO user = userService.findByUsername(principal.getName());
 
         if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
+            if(pcs == null) pcs = 1;
+            System.out.println("dodawanie do koszyka");
             cartOfferService.add(user.getId(), offerId, pcs);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
 
         }else{
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
+    }
 
+
+    @GetMapping("/usun")
+    public void deleteCartOffer(Principal principal,
+                                  @RequestParam(value = "ofertaKoszykaId") Long cartOfferId,
+                                  @RequestParam(value = "szt", required = false) Integer pcs
+    ) throws CartOfferNotFoundException {
+
+        UserDTO user = userService.findByUsername(principal.getName());
+        if(cartOfferService.isCartOfferAssignedToUser(user.id, cartOfferId)){
+            if(pcs == null){
+                System.out.println("USUWANIE WSZYSTKICH");
+                cartOfferService.delete(cartOfferId);   //usuń wszystkie dla danej oferty
+            }else{        //usuń jedną
+                if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
+                    System.out.println("USUWANIE JEDNEGO");
+                    cartOfferService.changeQuantity(cartOfferId, pcs);
+                }
+            }
+        }else throw new CartOfferNotFoundException();
     }
 }

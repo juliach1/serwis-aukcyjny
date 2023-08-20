@@ -14,4 +14,5 @@ public interface CartOfferRepository  extends JpaRepository<CartOffer, Long> {
     List<CartOffer> findAllByUserId(Long userId);
 
     CartOffer findByOfferIdAndUserId(Long id, Long userId);
+
 }

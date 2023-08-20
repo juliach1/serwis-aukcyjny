@@ -14,5 +14,7 @@ public interface CartOfferService {
 
     void delete(Long cartOfferId);
 
+    void changeQuantity(Long cartOfferId, Integer pcs);
+
     boolean isCartOfferAssignedToUser(Long userId, Long cartOfferId);
 }

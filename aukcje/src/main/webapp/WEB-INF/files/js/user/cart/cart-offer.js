@@ -1,121 +1,94 @@
-
 /* QUANTITY & ITEM PRICE CHANGE */
-
-let btnsQuantityUp =  document.querySelectorAll('.button-quantity-up');
-let btnsQuantityDown = document.querySelectorAll('.button-quantity-down');
 let cartOfferCards = document.querySelectorAll('.cart-offer-card');
-let obsButton = document.querySelectorAll('.observe-button');
 
-let allItemsPrice = parseFloat(document.getElementById('allItemsPrice'));
 let allItemsPriceText = document.getElementById('all-items-price');
+let allItemsPrice = parseFloat(allItemsPriceText);
 
-obsButton.forEach(function (obsBtn){
-    const objectId = obsBtn.id.split("_")[1]; // Pobranie id obiektu z id
+let allItemsPcsText = document.getElementById('all-pcs');
+let allItemsPcs = parseInt(allItemsPcsText.textContent);
+
+
+/* OBSERVATION */
+function changeObservationStatus(objectId){
     let obsIcon = document.getElementById('observe-icon_'+objectId)
-
-    obsBtn.addEventListener("click", function (){
-        console.log("BUTTON "+objectId+" clicked")
-
-        changeObserveIcon(
-        );
-    })
-
+    changeObserveIcon();
     function changeObserveIcon(){
         obsIcon.classList.toggle('bi-eye');
         obsIcon.classList.toggle('bi-eye-fill');
-    };
-})
+    }
+}
 
-btnsQuantityUp.forEach(function (button) {
-   button.addEventListener("click", function () {
+/*QUANTITY CHANGES*/
+function incrementQuantity(objectId){
+    const quantityInput = document.getElementById("quantity_"+objectId);
+    let quantityValue = parseInt(quantityInput.getAttribute("value"));
+    let maxValue = parseInt(quantityInput.getAttribute('max'));
+    let cartOfferPrice = document.getElementById("price_"+objectId);
+    let cartOffer = document.getElementById("cart-offer_"+objectId);
+    const onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
+    let offerId = parseInt(cartOffer.getAttribute("data-offer-id_"+objectId));
 
-       var objectId = button.id.split("_")[1]; // Pobranie id obiektu z id przycisku
-       var quantityInput = document.getElementById("quantity_"+objectId);
-       var quantityValue = parseInt(quantityInput.getAttribute("value"));
-       var maxValue = parseInt(quantityInput.getAttribute('max'));
+    if(quantityValue>=maxValue) {
+        quantityValue = maxValue;
+    }else {
+        addOneToCart(offerId);
+        quantityValue = parseInt(quantityInput.getAttribute('value')) + 1
+    }
+    quantityInput.setAttribute('value',quantityValue);
 
-       var cartOfferPrice = document.getElementById("price_"+objectId);
-       var onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
+    let newPrice = onePcPrice * quantityValue;
+    cartOfferPrice.innerHTML = newPrice.toFixed(2);
+    let priceSpan = createPriceSpan(newPrice);
+    cartOfferPrice.appendChild(priceSpan);
 
-       if(quantityValue>=maxValue) {
-            quantityValue = parseInt(quantityInput.getAttribute('max'));
-        }else {
-            quantityValue = parseInt(quantityInput.getAttribute('value')) + 1
-       }
-       quantityInput.setAttribute('value',quantityValue);
+    calculateNewAllItemsPrice();
+    changeAllItemsPrice();
+}
 
-       let newPrice = onePcPrice * quantityValue;
+function decrementQuantity(objectId) {
+    var quantityInput = document.getElementById("quantity_"+objectId);
+    var quantityValue = parseInt(quantityInput.getAttribute("value"));
+    var minValue = parseInt(quantityInput.getAttribute('min'));
+    var cartOfferPrice = document.getElementById("price_"+objectId);
+    let cartOffer = document.getElementById("cart-offer_"+objectId);
+    var onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
 
-       cartOfferPrice.innerHTML = newPrice.toFixed(2);
-       let priceSpan = createPriceSpan(newPrice);
-       cartOfferPrice.appendChild(priceSpan);
-
-       calculateNewAllItemsPrice();
-       changeAllItemsPrice();
-
-
-       console.log("NEW all items price "+allItemsPrice);
-    });
-})
-
-
-btnsQuantityDown.forEach(function (button) {
-    button.addEventListener("click", function () {
-
-        var objectId = button.id.split("_")[1]; // Pobranie id obiektu z id przycisku
-        var quantityInput = document.getElementById("quantity_"+objectId);
-        var quantityValue = parseInt(quantityInput.getAttribute("value"));
-        var minValue = parseInt(quantityInput.getAttribute('min'));
-        var cartOfferPrice = document.getElementById("price_"+objectId);
-
-
-        var onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
-
-        if(quantityValue<=minValue) {
-            quantityValue = parseInt(quantityInput.getAttribute('min'));
-        }else {
-            quantityValue = parseInt(quantityInput.getAttribute('value')) - 1;
-        }
-
+    if(quantityValue<=minValue) {
+        cartOffer.style.display = 'none';
+        removeAllFromCart(objectId);
+        allItemsPcs--;
+        changeAllItemsQuantity();
+    }else {
+        quantityValue = parseInt(quantityInput.getAttribute('value')) - 1;
+        removeOneFromCart(objectId);
         quantityInput.setAttribute('value',quantityValue);
-
 
         let newPrice = onePcPrice * quantityValue;
         cartOfferPrice.innerHTML = newPrice.toFixed(2);
 
         let priceSpan = createPriceSpan(newPrice);
-
         cartOfferPrice.appendChild(priceSpan);
-
-        calculateNewAllItemsPrice();
-        changeAllItemsPrice();
-
-        console.log("NEW all items price "+allItemsPrice);
-    });
-})
-
-function createPriceSpan(price){
-    var priceSpan = document.createElement('span')
-    priceSpan.innerHTML = " zł"
-
-    return priceSpan;
+    }
+    calculateNewAllItemsPrice();
+    changeAllItemsPrice();
 }
 
 
-/* FULL PRICE CHANGE */
 
+/* PRICE CHANGES */
 function calculateNewAllItemsPrice(){
     allItemsPrice = 0;
 
     cartOfferCards.forEach((card) => {
-        const objectId = card.id.split("_")[1]; // Pobranie id obiektu z id przycisku
+        if( card.style.display !== 'none'){
+            const objectId = card.id.split("_")[1]; // Pobranie id obiektu z id przycisku
+            const cartOfferPrice = document.getElementById("price_"+objectId);
+            const onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
+            const quantityInput = document.getElementById("quantity_"+objectId);
+            let quantityValue = parseInt(quantityInput.getAttribute("value"));
 
-        const cartOfferPrice = document.getElementById("price_"+objectId);
-        const onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+objectId));
-        const quantityInput = document.getElementById("quantity_"+objectId);
-        let quantityValue = parseInt(quantityInput.getAttribute("value"));
-
-        allItemsPrice = allItemsPrice + onePcPrice * quantityValue;
+            allItemsPrice = allItemsPrice + onePcPrice * quantityValue;
+        }
     });
 }
 
@@ -126,15 +99,58 @@ function changeAllItemsPrice() {
     allItemsPriceText.appendChild( priceSpan );
 }
 
+function createPriceSpan(price){
+    var priceSpan = document.createElement('span')
+    priceSpan.innerHTML = " zł"
+    return priceSpan;
+}
+
+/* QUANTITY CHANGES */
+function changeAllItemsQuantity() {
+    allItemsPcsText.textContent = allItemsPcs;
+    console.log('zmieniono ilosc')
+}
+
 /* ADDING TO CART */
-function addToCart(offerId){
-    let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+
+function addOneToCart(offerId){
+    let url = "/koszyk/dodaj?ofertaId="+offerId;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, false ); // false for synchronous request
     xmlHttp.send( null );
-    if(xmlHttp.status === 202){
-        playAlert()
-    }
+
+    return xmlHttp.responseText;
+}
+
+/* REMOVING FROM CART */
+
+function removeCartOffer(objectId) {
+    let cartOffer = document.getElementById("cart-offer_" + objectId);
+    cartOffer.style.display = 'none';
+
+    allItemsPcs--;
+    changeAllItemsQuantity();
+
+    calculateNewAllItemsPrice();
+    changeAllItemsPrice()
+
+    removeAllFromCart(objectId);
+}
+
+function removeOneFromCart(offerId){
+    let url = "/koszyk/usun?szt=1&ofertaKoszykaId="+offerId;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+
+    return xmlHttp.responseText;
+}
+
+function removeAllFromCart(offerId){
+    let url = "/koszyk/usun?ofertaKoszykaId="+offerId;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
 
     return xmlHttp.responseText;
 }

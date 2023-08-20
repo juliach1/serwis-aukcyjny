@@ -84,6 +84,20 @@ public class CartOfferServiceImpl implements CartOfferService {
 
     @Override
     @Transactional
+    public void changeQuantity(Long cartOfferId, Integer pcs) {
+        CartOffer cartOffer = cartOfferRepository.getOne(cartOfferId);
+        int newQuantity = cartOffer.getQuantity()-pcs;
+
+        if(newQuantity <= 0){
+            cartOfferRepository.deleteById(cartOfferId);
+        }else{
+            cartOffer.setQuantity(newQuantity);
+            cartOfferRepository.save(cartOffer);
+        }
+    }
+
+    @Override
+    @Transactional
     public boolean isCartOfferAssignedToUser(Long userId, Long cartOfferId) {
         CartOfferDTO cartOfferDTO = getOne(cartOfferId);
 

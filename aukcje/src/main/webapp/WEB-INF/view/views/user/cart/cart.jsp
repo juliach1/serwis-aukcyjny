@@ -40,12 +40,12 @@
                     <div class="col-md-8">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <h5 class="mb-0">Liczba ofert w koszyku: ${cartOfferDTOS.size()}.</h5>
+                                <h5 class="mb-0">Liczba ofert w koszyku: <h5 id="all-pcs">${cartOfferDTOS.size()}</h5> </h5>
                             </div>
                             <div class="card-body">
 
                                 <c:forEach var = "cartOffer" items = "${cartOfferDTOS}">
-                                    <div id="cart-offer_${cartOffer.id}" class="row cart-offer-card">
+                                    <div id="cart-offer_${cartOffer.id}" data-offer-id_${cartOffer.id}="${cartOffer.offer.id}" class="row cart-offer-card">
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                         <!-- Image -->
                                         <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
@@ -67,8 +67,8 @@
 
                                         <div class="d-flex align-items-center">
 
-                                            <a class="text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${cartOffer.id}" href="${pageContext.request.contextPath}/koszyk/usun/${cartOffer.id}" role="button"> <i id="remove-icon-${cartOffer.id}" class="remove-icon bi bi-trash3"></i> </a>
-                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${cartOffer.id}" href="#"> <i id="observe-icon_${cartOffer.id}" class="observe-icon bi bi-eye"></i> </a>
+                                            <a class="remove-button text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${cartOffer.id}" onclick="removeCartOffer(${cartOffer.id})" role="button"> <i id="remove-icon-${cartOffer.id}" class="remove-icon bi bi-trash3"></i> </a>
+                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${cartOffer.id}" onclick="changeObservationStatus(${cartOffer.id})"> <i id="observe-icon_${cartOffer.id}" class="observe-icon bi bi-eye"></i> </a>
                                         </div>
                                        <!-- Data -->
                                     </div>
@@ -77,13 +77,13 @@
                                         <!-- Quantity -->
                                         <div class="d-flex justify-content-center">
                                             <div id="quantity-selection_${cartOffer.id}" class="d-inline-flex justify-content-center col-4 col-md-2">
-                                                <button id="button-quantity-down_${cartOffer.id}" type="button" class="btn button-quantity-down col">
+                                                <button id="button-quantity-down_${cartOffer.id}"  onclick="decrementQuantity(${cartOffer.id})" type="button" class="btn button-quantity-down col">
                                                     <i class="bi bi-caret-down"></i>
                                                 </button>
 
                                                 <input type="number" class="quantity form-control" id="quantity_${cartOffer.id}" name="quantity" value="${cartOffer.quantity}" min="1" max="${cartOffer.offer.quantity}" readonly>
 
-                                                <button id="button-quantity-up_${cartOffer.id}" type="button" class="btn button-quantity-up col">
+                                                <button id="button-quantity-up_${cartOffer.id}" onclick="incrementQuantity(${cartOffer.id})" type="button" class="btn button-quantity-up col">
                                                     <i class="bi bi-caret-up"></i>
                                                 </button>
                                             </div>
@@ -95,10 +95,8 @@
                                             <h1 id="price_${cartOffer.id}" class="price" data-pc-price_${cartOffer.id}="${cartOffer.offer.price}">${cartOffer.offer.price * cartOffer.quantity}<span>${cartOffer.offer.price*10 % 1 == 0 ? '0' : ''} zł</span></h1>
                                         </div>
                                     </div>
-                                </div>
-
-                                    <hr class="my-4" />
-
+                                        <hr class="my-4" />
+                                    </div>
                                 </c:forEach>
 
                             </div>

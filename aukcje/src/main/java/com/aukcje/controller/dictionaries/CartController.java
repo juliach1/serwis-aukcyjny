@@ -3,6 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.CartOfferDTO;
 import com.aukcje.dto.CategoryDTO;
 import com.aukcje.dto.UserDTO;
+import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.NoSuchCategoryException;
 import com.aukcje.exception.customException.CartOfferNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
@@ -14,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 
@@ -47,19 +51,24 @@ public class CartController {
         return "/views/user/cart/cart";
     }
 
-    @GetMapping("/usun/{pozycjaKoszykaId}")
-    public String deleteCategory(Principal principal,
-                                 @PathVariable("pozycjaKoszykaId") Long cartOfferId) throws CartOfferNotFoundException {
-
-        UserDTO userDTO = userService.findByUsername(principal.getName());
-
-        if( cartOfferService.isCartOfferAssignedToUser(userDTO.getId(), cartOfferId)){
-            cartOfferService.delete(cartOfferId);
-        }else {
-            throw new CartOfferNotFoundException();
-        }
-
-        return "redirect:/koszyk";
-    }
+//    @GetMapping("/usun")
+//    public String deleteCartOffer(Principal principal,
+//                                  @RequestParam(value = "ofertaKoszykaId") Long cartOfferId,
+//                                  @RequestParam(value = "szt", required = false) Integer pcs
+//                                  ) throws CartOfferNotFoundException {
+//
+//        UserDTO user = userService.findByUsername(principal.getName());
+//        if(cartOfferService.isCartOfferAssignedToUser(user.id, cartOfferId)){
+//            if(pcs == null){
+//                cartOfferService.delete(cartOfferId);   //usuń wszystkie dla danej oferty
+//            }else{        //usuń jedną
+//                if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
+//                    cartOfferService.changeQuantity(cartOfferId, pcs);
+//                }
+//            }
+//        }else throw new CartOfferNotFoundException();
+//
+//        return "redirect:/koszyk";
+//    }
 
 }

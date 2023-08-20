@@ -13,7 +13,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 
@@ -195,7 +195,6 @@
                                                 <button id="button-quantity-up" type="button" class="btn button-quantity col">
                                                     <i class="bi bi-caret-up"></i>
                                                 </button>
-
                                             </div>
 
                                         </div>
@@ -231,7 +230,9 @@
                                         <div class="current-price mb-4">
                                             <c:choose>
                                                 <c:when test="${highestValueUserAuction.value > 0 }">
-                                                    <h1>${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span> </h1>
+                                                    <div class="d-inline-flex">
+                                                        <h1>${offerDTO.price}</h1> <h1 class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</h1>
+                                                    </div>
 
                                                     <h1>${highestValueUserAuction.value}<span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
                                                 </c:when>

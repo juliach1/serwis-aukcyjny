@@ -6,8 +6,6 @@
 <!DOCTYPE html>
 <html>
 
-<%--<head></head>--%>
-
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark py-2 sticky-top" id="navbar">
             <div class="container">

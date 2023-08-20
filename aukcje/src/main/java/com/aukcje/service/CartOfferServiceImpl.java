@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CartOfferServiceImpl implements CartOfferService {
@@ -34,6 +35,11 @@ public class CartOfferServiceImpl implements CartOfferService {
         List<CartOffer> cartOffers = cartOfferRepository.findAllByUserId(userId);
 
         return createOfferDTO(cartOffers);
+    }
+
+    @Override
+    public CartOfferDTO getOne(Long cartOfferId) {
+        return createOfferDTO(cartOfferRepository.getOne(cartOfferId));
     }
 
     @Transactional
@@ -56,19 +62,12 @@ public class CartOfferServiceImpl implements CartOfferService {
                 Integer offerQuantity = offer.getQuantity();
                 Integer possibleQuantityToAdd = offerQuantity - currentQuantity;
 
-                System.out.println("LICZBA PRZEDMIOTÓW: " + offerQuantity);
-                System.out.println("AKTUALNIE W KOSZYKU: " + currentQuantity);
-                System.out.println("MOŻNA DODAĆ: " + possibleQuantityToAdd);
                 if(quantityToAdd<=possibleQuantityToAdd){
                     existingCartOffer.setQuantity(currentQuantity+quantityToAdd);
                 }else {
                     existingCartOffer.setQuantity(currentQuantity+possibleQuantityToAdd);
                 }
-
                 offerToSave = existingCartOffer;
-
-                System.out.println("NEW QUANTITY: " + offerToSave.getQuantity());
-
 
             }else {
                 CartOfferModel cartOfferModel = new CartOfferModel(offerId, userId, quantityToAdd);
@@ -78,9 +77,24 @@ public class CartOfferServiceImpl implements CartOfferService {
         }
     }
 
+    @Override
+    public void delete(Long cartOfferId) {
+        cartOfferRepository.deleteById(cartOfferId);
+    }
+
+    @Override
+    @Transactional
+    public boolean isCartOfferAssignedToUser(Long userId, Long cartOfferId) {
+        CartOfferDTO cartOfferDTO = getOne(cartOfferId);
+
+        return Objects.equals(userId, cartOfferDTO.getUser().getId());
+    }
+
+
     private CartOffer getCart0fferFromCartOfferModel(CartOfferModel cartOfferModel){
         Offer offer = offerRepository.findById(cartOfferModel.getOfferId()).orElse(null);
-        User user = userRepository.findByUsername("root");
+
+        User user = userRepository.findById(cartOfferModel.getUserId()).orElse(null);
 
         CartOffer cartOffer = new CartOffer();
         cartOffer.setQuantity(cartOfferModel.getQuantity());
@@ -89,7 +103,7 @@ public class CartOfferServiceImpl implements CartOfferService {
 
         return cartOffer;
     }
-    private CartOfferDTO createOfferDTO(CartOffer offer){
+    public CartOfferDTO createOfferDTO(CartOffer offer){
         return CartOfferDTOMapper.instance.cartOfferDTO(offer);
     }
 

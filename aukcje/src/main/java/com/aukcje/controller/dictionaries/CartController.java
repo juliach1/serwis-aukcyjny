@@ -1,6 +1,10 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CartOfferDTO;
+import com.aukcje.dto.CategoryDTO;
+import com.aukcje.dto.UserDTO;
+import com.aukcje.exception.NoSuchCategoryException;
+import com.aukcje.exception.customException.CartOfferNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.util.List;
@@ -25,45 +30,36 @@ public class CartController {
     @Autowired
     UserStatusService userStatusService;
 
-
     @GetMapping("")
     public String getCart(Principal principal, Model model){
-
         Long userId = userService.findByUsername(principal.getName()).getId();
-
         List<CartOfferDTO> cartOfferDTOS = cartOfferService.getAll(userId);
 
-//        model.addAttribute("cartOfferDTOS", cartOfferDTOS);
+        double fullPrice = 0.0;
 
-        for(CartOfferDTO cartOffer : cartOfferDTOS){
-            System.out.println("CART OFFER DTOS:");
-            System.out.println("offer: " + cartOffer.getOffer().id);
-            System.out.println("user: " + cartOffer.getUser().id);
+        for(CartOfferDTO cartOfferDTO : cartOfferDTOS){
+            fullPrice += (cartOfferDTO.getOffer().getPrice() * cartOfferDTO.getQuantity());
         }
 
-        return "";
+        model.addAttribute("cartOfferDTOS", cartOfferDTOS);
+        model.addAttribute("allItemsPrice", fullPrice);
+
+        return "/views/user/cart/cart";
     }
 
-//
-//    @GetMapping("/dodaj")
-//    public String addOfferToCart(Principal principal,
-//                                 @RequestParam(value = "ofertaId", required = false) Long offerId,
-//                                 @RequestParam(value = "szt", required = false) Integer pcs,
-//                                 Model model
-//    ){
-//
-//        UserDTO user = userService.findByUsername(principal.getName());
-//
-//        if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
-//            cartOfferService.add(user.getId(), offerId, pcs);
-//
-//        }else{
-//            return "";
-//        }
-//        model.addAttribute("addedToCart", true);
-//        return "";
-////        return "redirect:/oferta/podglad/"+offerId;
-//
-//    }
+    @GetMapping("/usun/{pozycjaKoszykaId}")
+    public String deleteCategory(Principal principal,
+                                 @PathVariable("pozycjaKoszykaId") Long cartOfferId) throws CartOfferNotFoundException {
+
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+
+        if( cartOfferService.isCartOfferAssignedToUser(userDTO.getId(), cartOfferId)){
+            cartOfferService.delete(cartOfferId);
+        }else {
+            throw new CartOfferNotFoundException();
+        }
+
+        return "redirect:/koszyk";
+    }
 
 }

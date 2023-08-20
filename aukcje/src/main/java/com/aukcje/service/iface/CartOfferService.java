@@ -8,5 +8,11 @@ public interface CartOfferService {
 
     List<CartOfferDTO> getAll(Long userId);
 
+    CartOfferDTO getOne(Long cartOfferId);
+
     void add(Long userId, Long offerId, Integer pcs);
+
+    void delete(Long cartOfferId);
+
+    boolean isCartOfferAssignedToUser(Long userId, Long cartOfferId);
 }

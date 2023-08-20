@@ -7,9 +7,11 @@ public class CartOfferDTO {
 
     //TODO: zmienić na private
 
-    public long id;
+    public Long id;
 
     public UserDTO user;
 
     public OfferDTO offer;
+
+    public Integer quantity;
 }

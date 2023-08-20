@@ -20,16 +20,6 @@
     color: white;
 }
 
-
-
-.right-part-panel{
-    /*background: #c7c2d7;*/
-    /*background: radial-gradient(circle, rgba(199,194,215,1) 0%, rgba(182,172,215,1) 61%);*/
-    /*background: radial-gradient(circle, rgba(212,208,227,1) 0%, rgba(193,187,212,1) 61%);;*/
-    /*background: radial-gradient(circle, rgba(212,208,227,1) 0%, rgba(186,178,210,1) 61%);*/
-}
-
-
 .observe-button{
     align-content: center;
     align-self: center;
@@ -37,18 +27,6 @@
 
 .observe-icon:hover{
     color: orangered;
-}
-
-.button-quantity {
-    height: 4rem;
-    font-size: 1.6rem;
-    /*display: inline;*/
-    color: black;
-}
-
-.button-quantity:hover{
-    color: white;
-    background-color: #7A5785;
 }
 
 
@@ -75,12 +53,6 @@
     background-color: #B093B8;
     background-color: #9a6599;
     border-color: #c8afd0;
-}
-
-
-
-#quantity{
-    min-width: 50px;
 }
 
 .button-arrow{

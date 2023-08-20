@@ -40,7 +40,7 @@ btnQuantityDown.addEventListener("click", function () {
         quantityForCart=quantityForCart-1;
     }
     console.log("down");
-    console.log(parseInt(quantityInput.getAttribute('value')));
+    quantityInput.setAttribute('value',quantityValue);
 
 });
 

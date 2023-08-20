@@ -46,6 +46,11 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
         userFavoriteOffer.setOffer(offer);
         userFavoriteOffer.setInsertTime(LocalDateTime.now());
 
+        System.out.println("SAVED OFFER: ");
+        System.out.println("USER ID "+userFavoriteOffer.getUser().getId());
+        System.out.println("OFFER ID "+userFavoriteOffer.getOffer().getId());
+        System.out.println("INSERT DATE "+userFavoriteOffer.getInsertTime());
+
         userFavoriteOfferRepository.save(userFavoriteOffer);
     }
 

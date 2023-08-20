@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user-favorite-offer")
+@Table(name = "user_favorite_offer")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -27,6 +27,6 @@ public class UserFavoriteOffer {
     @JoinColumn(name="ID_OFFER")
     private Offer offer;
 
-    @JoinColumn(name="INSERT_TIME")
+    @Column(name="INSERT_TIME")
     private LocalDateTime insertTime;
 }

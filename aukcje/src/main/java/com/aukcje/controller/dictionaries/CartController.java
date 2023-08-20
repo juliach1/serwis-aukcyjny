@@ -51,24 +51,4 @@ public class CartController {
         return "/views/user/cart/cart";
     }
 
-//    @GetMapping("/usun")
-//    public String deleteCartOffer(Principal principal,
-//                                  @RequestParam(value = "ofertaKoszykaId") Long cartOfferId,
-//                                  @RequestParam(value = "szt", required = false) Integer pcs
-//                                  ) throws CartOfferNotFoundException {
-//
-//        UserDTO user = userService.findByUsername(principal.getName());
-//        if(cartOfferService.isCartOfferAssignedToUser(user.id, cartOfferId)){
-//            if(pcs == null){
-//                cartOfferService.delete(cartOfferId);   //usuń wszystkie dla danej oferty
-//            }else{        //usuń jedną
-//                if( user.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.name()) ){
-//                    cartOfferService.changeQuantity(cartOfferId, pcs);
-//                }
-//            }
-//        }else throw new CartOfferNotFoundException();
-//
-//        return "redirect:/koszyk";
-//    }
-
 }

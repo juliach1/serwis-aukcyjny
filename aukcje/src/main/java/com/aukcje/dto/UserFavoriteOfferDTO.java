@@ -9,5 +9,5 @@ public class UserFavoriteOfferDTO {
     private Long id;
     private UserDTO user;
     private OfferDTO offer;
-    private LocalDateTime localDateTime;
+    private LocalDateTime insertTime;
 }

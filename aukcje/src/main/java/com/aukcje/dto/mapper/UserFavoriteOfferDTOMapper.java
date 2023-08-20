@@ -5,6 +5,8 @@ import com.aukcje.entity.*;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDateTime;
+
 public interface UserFavoriteOfferDTOMapper {
     UserFavoriteOfferDTOMapper instance = Mappers.getMapper(UserFavoriteOfferDTOMapper.class);
 

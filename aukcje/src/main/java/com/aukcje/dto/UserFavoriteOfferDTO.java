@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class UserFavoriteOfferServiceDTO {
+public class UserFavoriteOfferDTO {
     private Long id;
     private UserDTO user;
     private OfferDTO offer;

@@ -7,18 +7,16 @@ import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.service.iface.UserFavoriteOfferService;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestController
 @RequestMapping("/ulubione")
-public class UserFavoriteOfferController {
+public class UserFavoriteOfferRestController {
 
     @Autowired
     private UserFavoriteOfferService userFavoriteOfferService;
@@ -35,6 +33,17 @@ public class UserFavoriteOfferController {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         if (userDTO.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.toString())){
             userFavoriteOfferService.add(offerId, userDTO.getId());
+        }
+    }
+
+    @GetMapping("/usun")
+    public void removeOfferFromFavorites(
+            Principal principal,
+            @RequestParam(value = "ofertaId") Long offerId
+    ) throws UserNotFoundException, OfferNotFoundException {
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+        if (userDTO.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.toString())){
+            userFavoriteOfferService.remove(offerId, userDTO.getId());
         }
     }
 }

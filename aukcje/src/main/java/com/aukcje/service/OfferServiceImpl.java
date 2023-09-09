@@ -10,7 +10,10 @@ import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.model.mapper.OfferMapper;
 import com.aukcje.repository.*;
-import com.aukcje.service.iface.*;
+import com.aukcje.service.iface.CartOfferService;
+import com.aukcje.service.iface.OfferPhotoService;
+import com.aukcje.service.iface.OfferService;
+import com.aukcje.service.iface.UserFavoriteOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -123,16 +126,11 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Long save(OfferAddModel offerModel, Long userId, MultipartFile multipartFile) {
-        ItemCondition itemCondition = itemConditionRepository.findByName(offerModel.getItemCondition());
         Category category = categoryRepository.findById(offerModel.getCategoryId()).orElse(null);
         User user = userRepository.findById(userId).orElse(null);
         OfferStatus offerStatus = offerStatusRepository.findById(1).orElse(null);
         OfferType offerType = offerTypeRepository.findByName(offerModel.getOfferType());
-
-        OfferDetails offerDetails = new OfferDetails();
-        offerDetails.setTitle(offerModel.getTitle());
-        offerDetails.setDescription(offerModel.getDescription());
-        offerDetails.setItemCondition(itemCondition);
+        OfferDetails offerDetails = getOfferDetails(offerModel);
 
         Offer offer =  OfferMapper.offer(offerModel, offerDetails, category, user, offerStatus, offerType);
         offerRepository.save(offer);
@@ -141,6 +139,16 @@ public class OfferServiceImpl implements OfferService {
             addPhoto(offer.getId(), multipartFile);
         }
         return offer.getId();
+    }
+
+    private OfferDetails getOfferDetails(OfferAddModel offerModel){
+        ItemCondition itemCondition = itemConditionRepository.findByName(offerModel.getItemCondition());
+        OfferDetails offerDetails = new OfferDetails();
+
+        offerDetails.setTitle(offerModel.getTitle());
+        offerDetails.setDescription(offerModel.getDescription());
+        offerDetails.setItemCondition(itemCondition);
+        return offerDetails;
     }
 
     @Override

@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
         uses = {
                 // My other mappers...
         })
-public abstract class OfferMapper {
+public interface OfferMapper {
 
     @Named("offer")
-    public static Offer offer(OfferAddModel offerModel, OfferDetails offerDetails, Category category, User user, OfferStatus offerStatus, OfferType offerType){
+    static Offer offer(OfferAddModel offerModel, OfferDetails offerDetails, Category category, User user, OfferStatus offerStatus, OfferType offerType){
         Offer offer = new Offer();
 
         offer.setId(offerModel.getId());
@@ -29,29 +29,18 @@ public abstract class OfferMapper {
         offer.setOfferDetails(offerDetails);
         offer.setQuantity(offerModel.getQuantity());
         offer.setPrice(Double.valueOf(offerModel.getPrice()));
-
         offer.setPrice(Double.valueOf(offerModel.getPrice()));
         offer.setQuantity(offerModel.getQuantity());
-        offer.setOfferDetails(offerDetails(offerModel));
         offer.setInsertDate(LocalDateTime.now());
         offer.setViews(0l);
 
         offer.setOfferDetails(offerDetails);
 
-
         if(offerModel.getLengthInDays() != null) {
             offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
         }
 
-
         return offer;
     }
-
-    private static OfferDetails offerDetails(OfferAddModel offerAddModel){
-        OfferDetails offerDetails = new OfferDetails();
-        offerDetails.setTitle(offerAddModel.getTitle());
-        offerDetails.setDescription(offerAddModel.getDescription());
-
-        return offerDetails;
-    }
 }
+

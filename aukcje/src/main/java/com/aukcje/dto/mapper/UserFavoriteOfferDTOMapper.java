@@ -1,14 +1,18 @@
 package com.aukcje.dto.mapper;
 
-import com.aukcje.dto.*;
-import com.aukcje.entity.*;
+import com.aukcje.dto.OfferDTO;
+import com.aukcje.dto.UserDTO;
+import com.aukcje.dto.UserFavoriteOfferDTO;
+import com.aukcje.entity.Offer;
+import com.aukcje.entity.User;
+import com.aukcje.entity.UserFavoriteOffer;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserFavoriteOfferDTOMapper {
+
     UserFavoriteOfferDTOMapper instance = Mappers.getMapper(UserFavoriteOfferDTOMapper.class);
 
     @Mappings({})

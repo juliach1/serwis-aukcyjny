@@ -24,6 +24,8 @@ public interface OfferService {
 
     Boolean isOfferAssignedToUser(Long userId, Long offerId);
 
+    void setIsFavorite(List<OfferDTO> offerDTOS, Long userId);
+
     Long save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
 
     void update(OfferAddModel offerModel, Long userId, MultipartFile file);

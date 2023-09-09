@@ -3,6 +3,7 @@ package com.aukcje.dto.mapper;
 import com.aukcje.dto.*;
 import com.aukcje.entity.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
@@ -16,5 +17,9 @@ public interface UserFavoriteOfferDTOMapper {
     default UserDTO map(User user){
         return UserDTOMapper.instance.userDTO(user);
     }
-    default OfferDTO map(Offer offer){ return OfferDTOMapper.instance.offerDTO(offer);}
+    default OfferDTO map(Offer offer) {
+        OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
+        offerDTO.setIsFavorite(true);
+        return offerDTO;
+    }
 }

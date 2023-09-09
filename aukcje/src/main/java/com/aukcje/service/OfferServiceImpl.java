@@ -3,6 +3,7 @@ package com.aukcje.service;
 import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPhotoDTO;
+import com.aukcje.dto.UserFavoriteOfferDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.dto.mapper.OfferDTOMapper;
 import com.aukcje.dto.mapper.OfferStatusDTOMapper;
@@ -284,19 +285,21 @@ public class OfferServiceImpl implements OfferService {
         return PageRequest.of(0, size);
     }
 
+    public void setIsFavorite(List<OfferDTO> offerDTOS, Long userId){
+        for (OfferDTO offerDTO : offerDTOS){
+            UserFavoriteOfferDTO offer = userFavoriteOfferService.geByUserIdAndOfferId(userId, offerDTO.getId());
+            offerDTO.setIsFavorite(offer != null);
+
+            if(offer!=null){
+                System.out.println("Offer "+offerDTO.getId()+" IS on user "+userId+" favorite list.");
+            }else{
+                System.out.println("Offer "+offerDTO.getId()+" IS NOT on user "+userId+" favorite list.");
+            }
+        }
+    }
 
     private OfferDTO createOfferDTO(Offer offer){
-        OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
-        Category category = offer.getCategory();
-        System.out.println("-----------KATEGORIA: "+category.getName());
-        System.out.println("-----------STATUS: "+offerDTO.getOfferStatus());
-        System.out.println("-----------STATUS encja: "+offer.getOfferStatus().getName());
-
-        List<CategoryPathCategoryDTO> categoryPathCategoryDTOS = categoryService.getCategoryPath(category);
-        offerDTO.setCategoryPath(categoryPathCategoryDTOS);
-        offerDTO.setCategory(CategoryDTOMapper.instance.categoryDTO(category));
-        offerDTO.setOfferStatus(OfferStatusDTOMapper.instance.offerStatusDTO(offer.getOfferStatus()));
-        return offerDTO ;
+        return OfferDTOMapper.instance.offerDTO(offer);
     }
 
     private List<OfferDTO> createOfferDTO(List<Offer> offers){
@@ -307,6 +310,7 @@ public class OfferServiceImpl implements OfferService {
         }
         return offerDTOS;
     }
+
 
 
 }

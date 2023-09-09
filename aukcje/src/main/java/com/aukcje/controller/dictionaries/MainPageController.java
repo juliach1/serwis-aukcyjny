@@ -41,15 +41,21 @@ public class MainPageController {
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
 
+        List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getAllByUserId(userDTO.getId(), PAGE_SIZE);
+        List<OfferDTO> auctionDTOS = offerService.findNewAuctions(PAGE_SIZE);
+        List<OfferDTO> buyNowDTOS = offerService.findNewBuyNow(PAGE_SIZE);
+
+        offerService.setIsFavorite(auctionDTOS, userDTO.getId());
+        offerService.setIsFavorite(buyNowDTOS, userDTO.getId());
 
         model.addAttribute("pageSize", PAGE_SIZE);
 
         model.addAttribute("offerSearchModel", new OfferSearchModel());
         model.addAttribute("offerSearchDTO", offerSearchDTO);
 
-        model.addAttribute("favoriteDTOS", userFavoriteOfferService.getAllByUserId(userDTO.getId(), PAGE_SIZE));
-        model.addAttribute("auctionDTOS", offerService.findNewAuctions(PAGE_SIZE));
-        model.addAttribute("buyNowDTOS", offerService.findNewBuyNow(PAGE_SIZE));
+        model.addAttribute("favoriteDTOS", userFavoriteOfferDTOS);
+        model.addAttribute("auctionDTOS", auctionDTOS);
+        model.addAttribute("buyNowDTOS", buyNowDTOS);
 
         return "/views/user/main/main-page";
     }

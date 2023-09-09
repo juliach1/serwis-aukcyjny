@@ -23,8 +23,8 @@ public class OfferDTO {
     public LocalDateTime endDate;
     public OfferStatusDTO offerStatus;
     public List<OfferPhotoDTO> offerPhoto;
-
     public List<CategoryPathCategoryDTO> categoryPath;
+    private Boolean isFavorite;
 
 
 }

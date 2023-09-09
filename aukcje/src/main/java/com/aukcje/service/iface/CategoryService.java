@@ -22,6 +22,8 @@ public interface CategoryService {
 
     CategoryDTO findById(Integer id);
 
+    CategoryDTO findById(String categoryName);
+
     void save(CategoryModel categoryModel);
 
     void update(CategoryModel categoryModel);
@@ -31,9 +33,8 @@ public interface CategoryService {
     boolean categoryAlreadyExists(String name);
 
     List<CategoryParentHierarchyDTO> createCategoriesTree(String baseUrl);
-     List<CategorySelectionParentHierarchyDTO> createCategoriesSelectionTree(String baseUrl);
-        List<CategoryDTO> getRootCategories();
 
-    CategoryDTO findByName(String parentCategory);
+    List<CategorySelectionParentHierarchyDTO> createCategoriesSelectionTree(String baseUrl);
 
+    List<CategoryDTO> getRootCategories();
 }

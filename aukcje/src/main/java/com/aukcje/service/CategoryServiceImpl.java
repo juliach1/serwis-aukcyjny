@@ -110,13 +110,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void update(CategoryModel categoryModel) {
-        Category category = CategoryAddModelMapper.instance.category(categoryModel);
+        Category category = categoryRepository.findByName(categoryModel.getName());
 
         if(!categoryModel.getParentCategory().equals("placeholder")){
             Integer parentId = Integer.parseInt(categoryModel.getParentCategory());
             Category parentCategory = categoryRepository.findById(parentId).orElseThrow();
 
             category.setParentCategory(parentCategory);
+        }else {
+            category.setParentCategory(null);
         }
         categoryRepository.save(category);
     }
@@ -143,8 +145,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO findByName(String categoryName) {
-        return createCategoryDTO(categoryRepository.findByName(categoryName));
+    public CategoryDTO findById(String id) {
+        return findById(Integer.parseInt(id));
     }
 
     @Override

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin/kategoria")
@@ -63,16 +64,17 @@ public class CategoryController {
             }
             model.addAttribute("categoryModel", categoryModel);
             model.addAttribute("categories", categoryService.findAll());
-
             return "redirect:/admin/kategoria/pobierz-wszystkie";
-
         }
-        CategoryDTO categoryDTO = categoryService.findByName(categoryModel.getParentCategory());
 
-        if(categoryDTO != null){
-            categoryService.save(categoryModel);
+        CategoryDTO parentCategoryDTO;
+        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")){
+            categoryService.update(categoryModel);
         }else {
-            throw new IncorrectParentException();
+            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
+            if(parentCategoryDTO != null)
+                categoryService.update(categoryModel);
+            else throw new IncorrectParentException();
         }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
@@ -102,13 +104,16 @@ public class CategoryController {
             return "/views/admin/category/categoryedit";
         }
 
-        CategoryDTO parentCategoryDTO = categoryService.findByName(categoryModel.getParentCategory());
-
-        if(parentCategoryDTO != null){
+        CategoryDTO parentCategoryDTO;
+        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")){
             categoryService.update(categoryModel);
         }else {
-            throw new IncorrectParentException();
+            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
+            if(parentCategoryDTO != null)
+                categoryService.update(categoryModel);
+            else throw new IncorrectParentException();
         }
+
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }
 

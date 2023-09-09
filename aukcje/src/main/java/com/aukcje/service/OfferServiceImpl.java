@@ -1,12 +1,9 @@
 package com.aukcje.service;
 
-import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPhotoDTO;
 import com.aukcje.dto.UserFavoriteOfferDTO;
-import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.dto.mapper.OfferDTOMapper;
-import com.aukcje.dto.mapper.OfferStatusDTOMapper;
 import com.aukcje.entity.*;
 import com.aukcje.enums.OfferTypeEnum;
 import com.aukcje.model.OfferAddModel;
@@ -16,7 +13,6 @@ import com.aukcje.repository.*;
 import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,10 +50,6 @@ public class OfferServiceImpl implements OfferService {
     @Autowired
     private OfferTypeRepository offerTypeRepository;
 
-
-    @Autowired
-    private CategoryService categoryService;
-
     @Autowired
     private CustomOfferRepository customOfferRepository;
 
@@ -80,19 +72,16 @@ public class OfferServiceImpl implements OfferService {
     @Autowired
     private ServletContext servletContext;
 
-
     @Override
     public OfferDTO findById(Long id) {
         OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElse(new Offer()) );
         offerDTO.setOfferPhoto( offerPhotoService.findByOfferId(id) );
-
         return offerDTO;
     }
 
     @Override
     public List<OfferDTO> findByUserId(Long userId) {
         List<Offer> offers = offerRepository.findByUserId(userId);
-
         return createOfferDTO(offers);
     }
 
@@ -119,15 +108,14 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Boolean isOfferAssignedToUser(Long userId, Long offerId) {
-
         List<Offer> offers = offerRepository.findByUserId(userId);
         Optional<Offer> offer = offerRepository.findById(offerId);
 
-        if(offer.isEmpty()) return false;
-
-        for(Offer tempOffer : offers){
-            if(tempOffer.getId().equals(offerId)){
-                return true;
+        if(offer.isPresent()){
+            for(Offer tempOffer : offers){
+                if(tempOffer.getId().equals(offerId)){
+                    return true;
+                }
             }
         }
         return false;
@@ -147,13 +135,11 @@ public class OfferServiceImpl implements OfferService {
         offerDetails.setItemCondition(itemCondition);
 
         Offer offer =  OfferMapper.offer(offerModel, offerDetails, category, user, offerStatus, offerType);
-
         offerRepository.save(offer);
 
         if(Objects.nonNull(multipartFile)){
             addPhoto(offer.getId(), multipartFile);
         }
-
         return offer.getId();
     }
 
@@ -171,11 +157,7 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.deleteById(offerId);
     }
 
-
     private void addPhoto(long offerId, MultipartFile multipartFile){
-        System.out.println("File received: !");
-        System.out.println("FileName: " +multipartFile.getName());
-        System.out.println("FileSize: " +multipartFile.getSize());
 
         // exit if filesize < 1
         if(!(multipartFile.getSize() > 1)){
@@ -183,7 +165,6 @@ public class OfferServiceImpl implements OfferService {
         }
 
         Offer offer = offerRepository.findById(offerId).orElse(null);
-
         if(Objects.isNull(offer)){
             return;
         }
@@ -195,7 +176,6 @@ public class OfferServiceImpl implements OfferService {
 
         String path;
         String pathTarget;
-
         if(photoNr.equals(1L)){
             path = createFolderForOffer(offerPath(), offerId) + "\\" + photoNr + ".png";
             pathTarget = createFolderForOffer(offerPathTarget(), offerId) + "\\" + photoNr + ".png";
@@ -217,14 +197,12 @@ public class OfferServiceImpl implements OfferService {
         offerPhoto.setSequence(offerNextPhotoOrder(offer));
 
         offerPhotoRepository.save(offerPhoto);
-
     }
 
     private Integer offerNextPhotoOrder(Offer nieruchomosc){
         int next = 1;
-        if(offerPhotoService.findByOfferId(nieruchomosc.getId()).isEmpty()){
-            return next;
-        }
+
+        if(offerPhotoService.findByOfferId(nieruchomosc.getId()).isEmpty()) return next;
 
         for(OfferPhotoDTO photo : offerPhotoService.findByOfferId(nieruchomosc.getId())){
             if(photo.getSequence() > next){
@@ -258,7 +236,6 @@ public class OfferServiceImpl implements OfferService {
         return servletContext.getRealPath("/WEB-INF/files/img/offers");
     }
 
-
     private String createFolderForOffer(String path, long offerId){
         String createdPath = path +"\\"+ offerId;
         File folder = new File(createdPath);
@@ -266,7 +243,6 @@ public class OfferServiceImpl implements OfferService {
 
         return createdPath;
     }
-
 
     private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {
         if(isInvalid(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
@@ -281,6 +257,7 @@ public class OfferServiceImpl implements OfferService {
     private Boolean isInvalid(Integer pageSize){
         return pageSize == null || pageSize<=0;
     }
+
     private Pageable setPageSize(Integer size){
         return PageRequest.of(0, size);
     }
@@ -289,12 +266,6 @@ public class OfferServiceImpl implements OfferService {
         for (OfferDTO offerDTO : offerDTOS){
             UserFavoriteOfferDTO offer = userFavoriteOfferService.geByUserIdAndOfferId(userId, offerDTO.getId());
             offerDTO.setIsFavorite(offer != null);
-
-            if(offer!=null){
-                System.out.println("Offer "+offerDTO.getId()+" IS on user "+userId+" favorite list.");
-            }else{
-                System.out.println("Offer "+offerDTO.getId()+" IS NOT on user "+userId+" favorite list.");
-            }
         }
     }
 
@@ -310,7 +281,4 @@ public class OfferServiceImpl implements OfferService {
         }
         return offerDTOS;
     }
-
-
-
 }

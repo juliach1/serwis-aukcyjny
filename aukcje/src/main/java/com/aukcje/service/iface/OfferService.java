@@ -20,16 +20,16 @@ public interface OfferService {
 
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);
 
-    Boolean isOfferTypeAuction(OfferDTO offer);
-
-    Boolean isOfferAssignedToUser(Long userId, Long offerId);
-
-    void setIsFavorite(List<OfferDTO> offerDTOS, Long userId);
-
     Long save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
 
     void update(OfferAddModel offerModel, Long userId, MultipartFile file);
 
     void delete(Long offerId);
+
+    Boolean isOfferTypeAuction(OfferDTO offer);
+
+    Boolean isOfferAssignedToUser(Long userId, Long offerId);
+
+    void setIsFavorite(List<OfferDTO> offerDTOS, Long userId);
 
 }

@@ -114,114 +114,119 @@
 
             <section id="offers" class="mt-4">
 
-<%--                <div class="favorite-offers row px-md-3">--%>
-<%--                    <p class="display-5 text-left mt-5">--%>
-<%--                        Ulubione ogłoszenia--%>
-<%--                    </p>--%>
-<%--                        <c:forEach begin="0" end="${pageSize-1}" varStatus="loop">--%>
+                <section class="favorite row px-md-3">
 
-<%--                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">--%>
-<%--                                <div class="card g-5 mx-2">--%>
-<%--                                    <div class="card-body">--%>
-<%--                                        <h4 class="card-title">John Doe</h4>--%>
-<%--                                        <p class="card-text">Some example text.</p>--%>
-<%--                                        <a href="#" class="btn btn-primary">See Profile</a>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </c:forEach>--%>
-
-<%--                    <p class="text h3 mt-4 text-end">--%>
-<%--                        Zobacz wszystkie ulubione...--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-
-
-
-
-                <div class="buynow row px-md-3">
                     <p class="display-5 text-left mt-5">
-                        Najnowsze "Kup teraz"
+                        Twoje ulubione
                     </p>
-                        <c:forEach begin="0" end="${pageSize-1}" varStatus="index">
-                            <jsp:useBean id="buyNowDTOS" scope="request" type="java.util.List<com.aukcje.dto.OfferDTO>"/>
-                            <c:if test="${buyNowDTOS.size() > index.index}">
 
-                                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
-
-                                    <div class="card g-5 mx-2">
-                                        <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${buyNowDTOS.get(index.index).id}">
-
-                                        <div class="m-0 p-0">
-                                            <div class="img-container">
-                                                <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${buyNowDTOS.get(index.index).id}/1.png" alt="Card image">
+                    <c:forEach var = "offerDTO" items = "${favoriteDTOS}">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+                            <div class="card g-5 mx-2">
+                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${offerDTO.offer.id}"></a>
+                                <div class="m-0 p-0">
+                                    <div class="img-container">
+                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.offer.id}/1.png" alt="Card image">
+                                    </div>
+                                    <div class="card-body text-center mb-0 pb-0">
+                                        <p class="offertype-text mb-1 ">${offerDTO.offer.offerType.id == 1 ? "KUP TERAZ" : "AUKCJA"}</p>
+                                        <p class="m-0">Cena:</p>
+                                        <h4 class="card-title price">${offerDTO.offer.price}<span class="text-center">${offerDTO.offer.price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="offer-title-card">
+                                                <p class="card-text text-start item-title pb-0">${offerDTO.offer.offerDetails.title}</p>
                                             </div>
-                                            <div class="card-body text-center">
-                                                <p class="offertype-text mb-1 ">KUP TERAZ</p>
-                                                <p class="m-0">Cena:</p>
-                                                <h4 class="card-title price">${buyNowDTOS.get(index.index).price}<span class="text-center">${buyNowDTOS.get(index.index).price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
-<%--                                                <h4 class="card-title price text-center">${buyNowDTOS.get(index.index).price}zł</h4>--%>
-                                                <div class="d-flex flex-row pt-3">
-                                                    <p class="card-text text-left item-title pb-0 align-self-center">${buyNowDTOS.get(index.index).offerDetails.title}</p>
-                                                    <a class="text-right ms-auto" id="observe-button-${buyNowDTOS.get(index.index).id}" href="#"> <i id="observe-icon-${buyNowDTOS.get(index.index).id}" class="observe-icon bi bi-eye"></i> </a>
-                                                </div>
+                                            <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
+                                                <a id="observe-button-${offerDTO.offer.id}" onclick="changeObservationStatus(${offerDTO.offer.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.offer.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
                                             </div>
                                         </div>
-                                        </a>
                                     </div>
-
-
+                                </div>
                             </div>
-
-                            </c:if>
-                        </c:forEach>
-                    </div>
-
+                        </div>
+                    </c:forEach>
 
                     <p class="text h3 mt-4 text-end">
                         Zobacz wszystkie kup teraz...
                     </p>
-                </div>
 
-                <div class="auctions row px-md-3">
+                </section>
+
+                <section class="buynow row px-md-3">
+
+                    <p class="display-5 text-left mt-5">
+                        Najnowsze "Kup teraz"
+                    </p>
+
+                    <c:forEach var = "offerDTO" items = "${buyNowDTOS}">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
+                            <div class="card g-5 mx-2">
+                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${offerDTO.id}"></a>
+                                <div class="m-0 p-0">
+                                    <div class="img-container">
+                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/1.png" alt="Card image">
+                                    </div>
+                                    <div class="card-body text-center mb-0 pb-0">
+                                        <p class="offertype-text mb-1 ">${offerDTO.offerType.id == 1 ? "KUP TERAZ" : "AUKCJA"}</p>
+                                        <p class="m-0">Cena:</p>
+                                        <h4 class="card-title price">${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="offer-title-card">
+                                                <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
+                                            </div>
+                                            <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
+                                                <a id="observe-button-${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+
+                    <p class="text h3 mt-4 text-end">
+                        Zobacz wszystkie kup teraz...
+                    </p>
+
+                </section>
+
+                <section class="auctions row px-md-3">
+
                     <p class="display-5 text-left mt-5">
                         Najnowsze aukcje
                     </p>
 
-                    <c:forEach begin="0" end="${pageSize-1}" varStatus="index">
-                        <jsp:useBean id="auctionDTOS" scope="request" type="java.util.List<com.aukcje.dto.OfferDTO>"/>
-                        <c:if test="${auctionDTOS.size() > index.index}">
-
+                    <c:forEach var = "offerDTO" items = "${auctionDTOS}">
                         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
-
                             <div class="card g-5 mx-2">
-                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${auctionDTOS.get(index.index).id}">
+                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${offerDTO.id}"></a>
+                                <div class="m-0 p-0">
                                     <div class="img-container">
-                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${auctionDTOS.get(index.index).id}/1.png" alt="Card image">
+                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/1.png" alt="Card image">
                                     </div>
-                                    <div class="card-body text-center">
-                                        <p class="offertype-text mb-1 ">AUKCJA</p>
-                                        <p class="m-0">Aktualna cena:</p>
-                                        <h4 class="card-title price">${auctionDTOS.get(index.index).price}<span class="text-center">${auctionDTOS.get(index.index).price*10 % 1 == 0 ? '0' : ''} zł</span> </h4>
-
-                                    <%--                                        <h4 class="card-title price">${auctionDTOS.get(index.index).price}zł</h4>--%>
-                                        <div class="d-flex flex-row pt-3">
-                                            <p class="card-text item-title pb-0 align-self-center text-right">${auctionDTOS.get(index.index).offerDetails.title}</p>
-                                            <a class="text-right ms-auto" id="observe-button-${auctionDTOS.get(index.index).id}" href="#"> <i id="observe-icon-${auctionDTOS.get(index.index).id}" class="observe-icon bi bi-eye"></i> </a>
+                                    <div class="card-body text-center mb-0 pb-0">
+                                        <p class="offertype-text mb-1 ">${offerDTO.offerType.id == 1 ? "KUP TERAZ" : "AUKCJA"}</p>
+                                        <p class="m-0">Cena:</p>
+                                        <h4 class="card-title price">${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="offer-title-card">
+                                                <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
+                                            </div>
+                                            <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
+                                                <a id="observe-button-${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                            </div>
                                         </div>
-
                                     </div>
-                                </a>
+                                </div>
                             </div>
-
                         </div>
-                        </c:if>
                     </c:forEach>
+
                     <p class="text h3 mt-4 text-end">
                         Zobacz wszystkie aukcje...
                     </p>
-                </div>
+
+                </section>
 
             </section>
 
@@ -235,6 +240,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/files/js/user/main/main-page.js"></script>
+<script src="${pageContext.request.contextPath}/files/js/user/offer/offeractions.js"></script>
+
 
 </body>
 </html>

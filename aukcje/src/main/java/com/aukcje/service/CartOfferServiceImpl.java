@@ -84,6 +84,12 @@ public class CartOfferServiceImpl implements CartOfferService {
 
     @Override
     @Transactional
+    public void deleteAllByOfferId(Long offerId) {
+        cartOfferRepository.deleteAllByOfferId(offerId);
+    }
+
+    @Override
+    @Transactional
     public void changeQuantity(Long cartOfferId, Integer pcs) {
         CartOffer cartOffer = cartOfferRepository.getOne(cartOfferId);
         int newQuantity = cartOffer.getQuantity()-pcs;

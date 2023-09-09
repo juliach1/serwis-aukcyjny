@@ -67,8 +67,8 @@
 
                                         <div class="d-flex align-items-center">
 
-                                            <a class="remove-button text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${cartOffer.id}" onclick="removeCartOffer(${cartOffer.id})" role="button"> <i id="remove-icon-${cartOffer.id}" class="remove-icon bi bi-trash3"></i> </a>
-                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${cartOffer.id}" onclick="changeObservationStatus(${cartOffer.id})"> <i id="observe-icon_${cartOffer.id}" class="observe-icon bi bi-eye"></i> </a>
+                                            <a class="remove-button text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${cartOffer.id}" onclick="removeCartOffer(${cartOffer.id})" role="button"> <i id="remove-icon-${cartOffer.id}" class="card-action-icon remove-icon bi bi-trash3"></i> </a>
+                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${cartOffer.id}" onclick="changeObservationStatus(${cartOffer.id})"> <i id="observe-icon_${cartOffer.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
                                         </div>
                                        <!-- Data -->
                                     </div>

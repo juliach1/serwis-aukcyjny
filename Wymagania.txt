@@ -1,14 +1,16 @@
 Must:
 + zakładanie konta i logowanie 2d 
 + dodawanie ogłoszeń 2d
++ usuwanie ogłoszeń
 + wyszukiwarka (filtrowanie) 2d
 + podgląd oferty 1d
-- edycja ogłoszeń 
++ edycja ogłoszeń 
++ koszyk 3d
 - kup teraz 1d
 - licytowanie 2d
-+ koszyk 3d
 - składanie zamówień 2d
 - dodawanie ofert do ulubionych/obserwowanych
+- przeglądanie ulubionych/obserwowanych
 
 Should:
 + slider ze zdjęciami w podglądzie oferty 1d

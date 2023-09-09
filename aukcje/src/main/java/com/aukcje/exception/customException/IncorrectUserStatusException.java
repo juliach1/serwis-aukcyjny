@@ -1,6 +1,8 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
 
-public class IncorrectUserStatusException extends CustomizedException{
+import com.aukcje.exception.CustomizedException;
+
+public class IncorrectUserStatusException extends CustomizedException {
 
     public IncorrectUserStatusException() {
         super("Wybrano nieprawidłowy status użytkownika");

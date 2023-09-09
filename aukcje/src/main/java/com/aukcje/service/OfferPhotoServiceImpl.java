@@ -22,6 +22,11 @@ public class OfferPhotoServiceImpl implements OfferPhotoService{
         return createOfferPhotoDTO( offerPhotoRepository.getByOfferId(offerId) );
     }
 
+    @Override
+    public void deleteByOfferId(Long offerId) {
+        offerPhotoRepository.deleteByOfferId(offerId);
+    }
+
     private OfferPhotoDTO createOfferPhotoDTO(OfferPhoto offerPhoto){
         return OfferPhotoDTOMapper.instance.offerPhotoDTO(offerPhoto);
     }

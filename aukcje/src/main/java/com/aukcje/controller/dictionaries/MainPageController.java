@@ -2,15 +2,16 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferSearchDTO;
+import com.aukcje.dto.UserDTO;
+import com.aukcje.dto.UserFavoriteOfferDTO;
 import com.aukcje.model.OfferSearchModel;
-import com.aukcje.service.iface.CategoryService;
-import com.aukcje.service.iface.OfferService;
-import com.aukcje.service.iface.OfferTypeService;
+import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,21 +23,31 @@ public class MainPageController {
 
     @Autowired
     private OfferService offerService;
+
     @Autowired
     private OfferTypeService offerTypeService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserFavoriteOfferService userFavoriteOfferService;
 
     private final Integer PAGE_SIZE = 12;
 
     @GetMapping("")
-    public String showMainPage(Model model) {
+    public String showMainPage(Principal principal, Model model) {
 
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
+        UserDTO userDTO = userService.findByUsername( principal.getName());
+
 
         model.addAttribute("pageSize", PAGE_SIZE);
 
         model.addAttribute("offerSearchModel", new OfferSearchModel());
         model.addAttribute("offerSearchDTO", offerSearchDTO);
 
+        model.addAttribute("favoriteDTOS", userFavoriteOfferService.getAllByUserId(userDTO.getId(), PAGE_SIZE));
         model.addAttribute("auctionDTOS", offerService.findNewAuctions(PAGE_SIZE));
         model.addAttribute("buyNowDTOS", offerService.findNewBuyNow(PAGE_SIZE));
 

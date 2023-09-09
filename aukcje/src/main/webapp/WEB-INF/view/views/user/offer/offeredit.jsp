@@ -30,7 +30,7 @@
 </head>
 
 
-<body onload="setChosenCategoryId(${offerDTO.categoryDTO.id})">
+<body onload="setChosenCategoryId(${offerDTO.category.id})">
 
 <%@include file="../../../fragments/navbar.jspf" %>
 
@@ -110,12 +110,12 @@
                                     </div>
                                     <p id="chosen-category-display" class="align-self-end ms-3">
                                         <c:choose>
-                                            <c:when test="${ empty offerDTO.categoryDTO.id }">
-                                                ${offerDTO.categoryDTO.name}
+                                            <c:when test="${ empty offerDTO.category.id }">
+                                                ${offerDTO.category.name}
                                                 Wybrana kategoria
                                             </c:when>
                                             <c:otherwise>
-                                                ${offerDTO.categoryDTO.name}
+                                                ${offerDTO.category.name}
                                             </c:otherwise>
                                         </c:choose>
                                     </p>
@@ -165,8 +165,8 @@
 
                     <div class="d-flex flex-row">
 
-                        <c:if test="${offerDTO.offerPhotoDTO.size()-1 >= 0}">
-                            <c:forEach begin="0" end="${offerDTO.offerPhotoDTO.size()-1}" varStatus="index">
+                        <c:if test="${offerDTO.offerPhoto.size()-1 >= 0}">
+                            <c:forEach begin="0" end="${offerDTO.offerPhoto.size()-1}" varStatus="index">
                                 <img class="edit-offer-img" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/${index.index+1}.png" class="img-thumbnail" alt="Zdjęcie przedmiotu">
                             </c:forEach>
                         </c:if>

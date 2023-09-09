@@ -2,8 +2,9 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
+import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.OfferStatusEnum;
-import com.aukcje.exception.OfferEditPermissionDeniedException;
+import com.aukcje.exception.customException.OfferEditPermissionDeniedException;
 import com.aukcje.exception.customException.InactiveOfferException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -30,6 +32,7 @@ public class OfferController {
 
     @Autowired
     CategoryService categoryService;
+
     @Autowired
     UserAuctionService userAuctionService;
 
@@ -41,6 +44,18 @@ public class OfferController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping("/moje-oferty")
+    public String userOffers(Principal principal, Model model){
+
+        UserDTO user = userService.findByUsername(principal.getName());
+        List<OfferDTO> userOffers = offerService.findByUserId(user.getId());
+
+        model.addAttribute("offerDTOS", userOffers);
+
+        return "/views/user/offer/user-offers";
+
+    }
 
     @GetMapping("/podglad/{ofertaId}")
     public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException {
@@ -173,8 +188,6 @@ public class OfferController {
         System.out.println("ZAPISYWANIE " + offerModel.getId());
         Long newOfferId = offerService.save(offerModel, userId, file);
 
-
         return "redirect:/oferta/podglad/" + newOfferId;
-
     }
 }

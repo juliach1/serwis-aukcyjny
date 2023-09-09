@@ -10,4 +10,6 @@ import java.util.List;
 public interface OfferPhotoRepository extends JpaRepository<OfferPhoto, Long> {
 
     List<OfferPhoto> getByOfferId(Long offerId);
+
+    void deleteByOfferId(Long offerId);
 }

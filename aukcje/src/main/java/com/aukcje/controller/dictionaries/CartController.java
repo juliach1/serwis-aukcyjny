@@ -1,11 +1,6 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CartOfferDTO;
-import com.aukcje.dto.CategoryDTO;
-import com.aukcje.dto.UserDTO;
-import com.aukcje.enums.UserStatusEnum;
-import com.aukcje.exception.NoSuchCategoryException;
-import com.aukcje.exception.customException.CartOfferNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
@@ -13,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 

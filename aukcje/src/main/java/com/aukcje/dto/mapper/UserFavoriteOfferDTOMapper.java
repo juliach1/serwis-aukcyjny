@@ -2,11 +2,11 @@ package com.aukcje.dto.mapper;
 
 import com.aukcje.dto.*;
 import com.aukcje.entity.*;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-import java.time.LocalDateTime;
-
+@Mapper
 public interface UserFavoriteOfferDTOMapper {
     UserFavoriteOfferDTOMapper instance = Mappers.getMapper(UserFavoriteOfferDTOMapper.class);
 

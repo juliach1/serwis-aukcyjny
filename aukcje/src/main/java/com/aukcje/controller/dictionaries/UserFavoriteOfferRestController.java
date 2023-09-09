@@ -1,6 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
+import com.aukcje.dto.UserFavoriteOfferDTO;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
@@ -46,4 +47,32 @@ public class UserFavoriteOfferRestController {
             userFavoriteOfferService.remove(offerId, userDTO.getId());
         }
     }
+
+    @GetMapping("/zmien")
+    public void offerToFavorites(
+            Principal principal,
+            @RequestParam(value = "ofertaId") Long offerId
+    ) throws UserNotFoundException, OfferNotFoundException {
+
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+        if (userDTO.getUserStatus().getName().equals(UserStatusEnum.AKTYWNY.toString())){
+
+            UserFavoriteOfferDTO userFavoriteOfferDTO = userFavoriteOfferService.geByUserIdAndOfferId(userDTO.getId(), offerId);
+            System.out.println("-----ULUBIONE - NOWA OPCJA: ----");
+            System.out.println("userId: "+userDTO.getId());
+            System.out.println("offerId: "+offerId);
+
+            if(userFavoriteOfferDTO == null){
+                System.out.println("Nie istnieje!");
+                userFavoriteOfferService.add(offerId, userDTO.getId());
+                System.out.println("DODANIE DO ULUBIONYCH");
+            }else {
+                System.out.println("Istnieje! Id to: "+userFavoriteOfferDTO.getId());
+                userFavoriteOfferService.remove(offerId, userDTO.getId());
+                System.out.println("USUNIĘCIE Z ULUBIONYCH");
+
+            }
+        }
+    }
+
 }

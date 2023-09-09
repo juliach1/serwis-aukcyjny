@@ -1,4 +1,6 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
+
+import com.aukcje.exception.CustomizedException;
 
 public class OfferEditPermissionDeniedException extends CustomizedException {
 

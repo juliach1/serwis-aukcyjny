@@ -12,9 +12,7 @@ import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.model.mapper.OfferMapper;
 import com.aukcje.repository.*;
-import com.aukcje.service.iface.CategoryService;
-import com.aukcje.service.iface.OfferPhotoService;
-import com.aukcje.service.iface.OfferService;
+import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -40,7 +39,14 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Autowired
+    private CartOfferService cartOfferService;
+
+    @Autowired
+    private UserFavoriteOfferService userFavoriteOfferService;
+
+    @Autowired
     private OfferStatusRepository offerStatusRepository;
+
     @Autowired
     private OfferPhotoService offerPhotoService;
 
@@ -54,7 +60,6 @@ public class OfferServiceImpl implements OfferService {
     @Autowired
     private CustomOfferRepository customOfferRepository;
 
-
     @Autowired
     private ItemConditionRepository itemConditionRepository;
 
@@ -66,10 +71,6 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private OfferPhotoRepository offerPhotoRepository;
-
-
-
-
 
     private final Integer DEFAULT_PAGE_SIZE = 12;
     @Value("${files.path}")
@@ -86,6 +87,14 @@ public class OfferServiceImpl implements OfferService {
 
         return offerDTO;
     }
+
+    @Override
+    public List<OfferDTO> findByUserId(Long userId) {
+        List<Offer> offers = offerRepository.findByUserId(userId);
+
+        return createOfferDTO(offers);
+    }
+
 
     @Override
     public List<OfferDTO> findNewAuctions(Integer pageSize) {
@@ -110,7 +119,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Boolean isOfferAssignedToUser(Long userId, Long offerId) {
 
-        Page<Offer> offers = offerRepository.findByUserId(userId);
+        List<Offer> offers = offerRepository.findByUserId(userId);
         Optional<Offer> offer = offerRepository.findById(offerId);
 
         if(offer.isEmpty()) return false;
@@ -149,12 +158,17 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void update(OfferAddModel offerModel, Long userId, MultipartFile multipartFile) {
-
         save(offerModel, userId, multipartFile);
     }
 
-
-
+    @Override
+    @Transactional
+    public void delete(Long offerId) {
+        offerPhotoService.deleteByOfferId(offerId);
+        cartOfferService.deleteAllByOfferId(offerId);
+        userFavoriteOfferService.deleteByOfferId(offerId);
+        offerRepository.deleteById(offerId);
+    }
 
 
     private void addPhoto(long offerId, MultipartFile multipartFile){

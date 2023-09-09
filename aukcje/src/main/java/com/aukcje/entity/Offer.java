@@ -55,6 +55,4 @@ public class Offer {
 
     @Column(name="END_DATE")
     LocalDateTime endDate;
-
-
 }

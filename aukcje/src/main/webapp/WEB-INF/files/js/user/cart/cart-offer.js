@@ -108,7 +108,6 @@ function createPriceSpan(price){
 /* QUANTITY CHANGES */
 function changeAllItemsQuantity() {
     allItemsPcsText.textContent = allItemsPcs;
-    console.log('zmieniono ilosc')
 }
 
 /* ADDING TO CART */

@@ -13,8 +13,12 @@ import com.aukcje.repository.UserFavoriteOfferRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.UserFavoriteOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Temporal;
+import javax.transaction.Transactional;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,8 +36,15 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
     private OfferRepository offerRepository;
 
     @Override
-    public List<UserFavoriteOfferDTO> getAllByUserId(Long userId) {
-        return createUserFavoriteOfferDTO(userFavoriteOfferRepository.findByUserId(userId));
+    public List<UserFavoriteOfferDTO> getAllByUserId(Long userId, Integer pageSize) {
+        List<UserFavoriteOffer> offers = userFavoriteOfferRepository.findByUserId( userId, setPageSize(pageSize) ).toList() ;
+        return createUserFavoriteOfferDTO(offers);
+    }
+
+    @Override
+    public UserFavoriteOfferDTO geByUserIdAndOfferId(Long userId, Long offerId) {
+        System.out.println(createUserFavoriteOfferDTO(userFavoriteOfferRepository.findByUserIdAndOfferId(userId, offerId)));
+        return createUserFavoriteOfferDTO(userFavoriteOfferRepository.findByUserIdAndOfferId(userId, offerId));
     }
 
     @Override
@@ -55,11 +66,18 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
     }
 
     @Override
+    @Transactional
     public void remove(Long offerId, Long userId) {
-        UserFavoriteOffer favoriteOffer = userFavoriteOfferRepository.findByUserIdAndOfferId(offerId, userId);
+        UserFavoriteOffer favoriteOffer = userFavoriteOfferRepository.findByUserIdAndOfferId(userId, offerId);
         if(favoriteOffer != null){
             userFavoriteOfferRepository.deleteByUserIdAndOfferId(userId, offerId);
         }
+    }
+
+    @Override
+    @Transactional
+    public void deleteByOfferId(Long offerId) {
+        userFavoriteOfferRepository.deleteByOfferId(offerId);
     }
 
     private List<UserFavoriteOfferDTO> createUserFavoriteOfferDTO(List<UserFavoriteOffer> userFavoriteOffers){
@@ -71,5 +89,9 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
     }
     private UserFavoriteOfferDTO createUserFavoriteOfferDTO(UserFavoriteOffer userFavoriteOffer){
         return UserFavoriteOfferDTOMapper.instance.userFavoriteOfferDTO(userFavoriteOffer);
+    }
+
+    private Pageable setPageSize(Integer size){
+        return PageRequest.of(0, size);
     }
 }

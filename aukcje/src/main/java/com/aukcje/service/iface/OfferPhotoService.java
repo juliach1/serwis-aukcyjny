@@ -7,4 +7,6 @@ import java.util.List;
 public interface OfferPhotoService {
 
     List<OfferPhotoDTO> findByOfferId(Long offerId);
+
+    void deleteByOfferId(Long offerId);
 }

@@ -1,6 +1,8 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
 
-public class NoSuchCategoryException extends CustomizedException{
+import com.aukcje.exception.CustomizedException;
+
+public class NoSuchCategoryException extends CustomizedException {
     public NoSuchCategoryException() {
         super("Nie znaleziono kategorii");
     }

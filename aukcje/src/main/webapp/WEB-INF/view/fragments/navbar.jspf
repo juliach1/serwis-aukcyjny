@@ -52,6 +52,8 @@
 
                                     <li><a id="new-offer-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/dodaj">Nowa oferta</a></li>
 
+                                    <li><a id="my-offers-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/moje-oferty">Moje oferty</a></li>
+
                                     <li><a id="my-orders-item" class="dropdown-item">Moje zamówienia</a></li>
 
                                     <li>

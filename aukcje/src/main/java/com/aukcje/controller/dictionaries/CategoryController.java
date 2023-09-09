@@ -1,7 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CategoryDTO;
-import com.aukcje.exception.NoSuchCategoryException;
+import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.exception.customException.IncorrectParentException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
@@ -31,7 +31,7 @@ public class CategoryController {
 
 
     @Autowired
-    private RestCategoryController restCategoryController;
+    private CategoryRestController categoryRestController;
 
 
     @GetMapping("/pobierz-wszystkie")
@@ -39,7 +39,7 @@ public class CategoryController {
     public String getCategories(HttpServletRequest httpServletRequest){
         List<CategoryDTO> categoryList = categoryService.findAll();
         String url = StringUtils.remove(httpServletRequest.getRequestURL().toString(), "/pobierz-wszystkie");
-        restCategoryController.setBaseUrl(url);
+        categoryRestController.setBaseUrl(url);
 
         return "/views/admin/category/category";
     }

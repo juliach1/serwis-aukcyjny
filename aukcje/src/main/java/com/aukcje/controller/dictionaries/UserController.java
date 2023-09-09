@@ -1,7 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserStatusDTO;
-import com.aukcje.exception.IncorrectUserStatusException;
+import com.aukcje.exception.customException.IncorrectUserStatusException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.UserService;

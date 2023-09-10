@@ -147,7 +147,7 @@
                     </c:forEach>
 
                     <p class="text h3 mt-4 text-end">
-                        Zobacz wszystkie ulubione...
+                        <a href="${pageContext.request.contextPath}/uzytkownik/ulubione">Zobacz wszystkie ulubione...</a>
                     </p>
 
                 </section>

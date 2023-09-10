@@ -29,12 +29,9 @@ public class MainPageController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserFavoriteOfferService userFavoriteOfferService;
-
     private final Integer PAGE_SIZE = 12;
 
-    @GetMapping("")
+    @GetMapping()
     public String showMainPage(Principal principal, Model model) {
 
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);

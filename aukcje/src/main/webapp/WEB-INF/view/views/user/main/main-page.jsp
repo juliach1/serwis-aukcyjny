@@ -175,7 +175,7 @@
                                                 <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
                                             </div>
                                             <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
-                                                <a id="observe-button_${offerDTO.id}" onclick="moveFromCartToFavoriteOffers(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
+                                                <a id="observe-button_${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +213,7 @@
                                                 <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
                                             </div>
                                             <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
-                                                <a id="observe-button_${offerDTO.id}" onclick="moveFromCartToFavoriteOffers(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
+                                                <a id="observe-button_${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
                                             </div>
                                         </div>
                                     </div>

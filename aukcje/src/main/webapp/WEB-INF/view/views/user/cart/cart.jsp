@@ -16,11 +16,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/files/css/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/files/css/user/cart/cart.css">
-
 
 </head>
 
@@ -43,7 +41,6 @@
                                 <h5 class="mb-0">Liczba ofert w koszyku: <h5 id="all-pcs">${cartOfferDTOS.size()}</h5> </h5>
                             </div>
                             <div class="card-body">
-
                                 <c:forEach var = "cartOffer" items = "${cartOfferDTOS}">
                                     <div id="cart-offer_${cartOffer.id}" data-offer-id_${cartOffer.id}="${cartOffer.offer.id}" class="row cart-offer-card">
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
@@ -136,7 +133,7 @@
                                     </li>
                                 </ul>
 
-                                <button type="button" class="btn btn-primary btn-lg btn-block">
+                                <button id="purchaseBtn" type="button" class="btn btn-primary btn-lg btn-block">
                                     Do kasy
                                 </button>
                             </div>

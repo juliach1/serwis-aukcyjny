@@ -21,22 +21,9 @@ function moveFromCartToFavoriteOffers(objectId, offerId){
         obsButton.setAttribute('title', "Przenieś do obserwowanych");
         addOneToCart(objectId);
     }
-    changeObserveIcon();
+    changeObserveIcon(obsIcon);
 
-    function changeObserveIcon(){
-        obsIcon.classList.toggle('bi-eye');
-        obsIcon.classList.toggle('bi-eye-fill');
-    }
-}
 
-function addObservation(objectId){
-    let url = "/ulubione/dodaj?ofertaId="+objectId;
-    console.log(url);
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false ); // false for synchronous request
-    xmlHttp.send( null );
-
-    return xmlHttp.responseText;
 }
 
 /*QUANTITY CHANGES*/
@@ -132,7 +119,6 @@ function changeAllItemsQuantity() {
 }
 
 /* ADDING TO CART */
-
 function addOneToCart(offerId){
     let url = "/koszyk/dodaj?ofertaId="+offerId;
     var xmlHttp = new XMLHttpRequest();
@@ -143,7 +129,6 @@ function addOneToCart(offerId){
 }
 
 /* REMOVING FROM CART */
-
 function removeCartOffer(objectId) {
     let cartOffer = document.getElementById("cart-offer_" + objectId);
     cartOffer.style.display = 'none';

@@ -19,7 +19,11 @@ function changeObservationStatus(objectId){
             obsButton.setAttribute('title', "Dodaj do obserwowanych");
         }
     }
+}
 
+function changeObserveIcon(obsIcon){
+    obsIcon.classList.toggle('bi-eye');
+    obsIcon.classList.toggle('bi-eye-fill');
 }
 
 function toggleObservation(objectId){
@@ -31,6 +35,15 @@ function toggleObservation(objectId){
     return xmlHttp.responseText;
 }
 
+function addObservation(objectId){
+    let url = "/ulubione/dodaj?ofertaId="+objectId;
+    console.log(url);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+
+    return xmlHttp.responseText;
+}
 
 /* REMOVAL */
 function deleteOffer(offerId){
@@ -41,4 +54,3 @@ function deleteOffer(offerId){
 
      return xmlHttp.responseText;
 }
-

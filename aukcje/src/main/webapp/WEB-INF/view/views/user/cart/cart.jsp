@@ -1,6 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,6 +26,7 @@
 
 <%@include file="../../../fragments/navbar.jspf" %>
 <jsp:useBean id="cartOfferDTOS" scope="request" type="java.util.List<com.aukcje.dto.CartOfferDTO>"/>
+<jsp:useBean id="addressDTOS" scope="request" type="java.util.List<com.aukcje.dto.AddressDTO>"/>
 <%--@elvariable id="allItemsPrice" type="java.lang.Double"--%>
 
 <main>
@@ -118,7 +118,47 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+
                         <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Adres dostawy: </h5>
+                            </div>
+
+                            <div class="card-body">
+
+                                    <ul class="list-group list-group-flush">
+                                        <c:choose>
+                                            <c:when test="${empty addressDTOS}">
+                                                <p class="text-danger">Brak dostępnych adresów.</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:forEach var = "address" items = "${addressDTOS}" varStatus="index">
+                                                    <c:if test="${index.index!=0}">
+                                                        <hr class="my-4" />
+                                                    </c:if>
+                                                    <li class="d-flex align-items-center mx-4">
+                                                        <div class="pr-3">
+                                                            <input type="radio" name="addressSelection" value="${address.id}">
+                                                        </div>
+                                                        <div class="col ms-4 text-end">
+                                                            <div class="address text-right">
+                                                                <p class="mb-0">${address.firstName} ${address.lastName}</p>
+                                                                <p class="mb-0">${address.country.name}</p>
+                                                                <p class="mb-0">${address.city}, ${address.postalCode}</p>
+                                                                <p class="mb-0">${address.streetName}</p>
+                                                                <p class="mb-0">tel. ${address.phone}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <p id="addressNotSelectedError" class="error" style="display: none">Wybierz adres</p>
+                                    </ul>
+                            </div>
+                        </div>
+
+                        <div class="-card mb4">
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Podsumowanie koszyka</h5>
                             </div>

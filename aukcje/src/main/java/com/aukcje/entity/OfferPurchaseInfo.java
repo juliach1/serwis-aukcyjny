@@ -28,7 +28,7 @@ public class OfferPurchaseInfo {
     private User buyer;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="ID_BUYER")
+    @JoinColumn(name="ID_OFFER")
     private Offer offer;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

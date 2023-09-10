@@ -1,6 +1,8 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.AddressDTO;
 import com.aukcje.dto.CartOfferDTO;
+import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
@@ -26,10 +28,14 @@ public class CartController {
     @Autowired
     UserStatusService userStatusService;
 
+    @Autowired
+    AddressService addressService;
+
     @GetMapping("")
     public String getCart(Principal principal, Model model){
         Long userId = userService.findByUsername(principal.getName()).getId();
         List<CartOfferDTO> cartOfferDTOS = cartOfferService.getAll(userId);
+        List<AddressDTO> addressDTOS = addressService.findByUserId(userId);
 
         double fullPrice = 0.0;
 
@@ -39,6 +45,7 @@ public class CartController {
 
         model.addAttribute("cartOfferDTOS", cartOfferDTOS);
         model.addAttribute("allItemsPrice", fullPrice);
+        model.addAttribute("addressDTOS", addressDTOS);
 
         return "/views/user/cart/cart";
     }

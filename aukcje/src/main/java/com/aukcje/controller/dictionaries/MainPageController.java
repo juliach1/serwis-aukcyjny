@@ -70,7 +70,6 @@ public class MainPageController {
         offerSearchModel.setMinSmallerThanMax(offerSearchModel.isMinSmallerThanMax());
 
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
-
         List<OfferDTO> offers = offerService.findByOfferSearchModel(offerSearchModel);
 
         model.addAttribute("offers", offers);

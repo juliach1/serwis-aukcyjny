@@ -3,7 +3,6 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferSearchDTO;
 import com.aukcje.dto.UserDTO;
-import com.aukcje.dto.UserFavoriteOfferDTO;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class MainPageController {
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
 
-        List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getAllByUserId(userDTO.getId(), PAGE_SIZE);
+        List<OfferDTO> favoriteDTOS = offerService.findFavoriteForUser(userDTO.getId(), PAGE_SIZE);
         List<OfferDTO> auctionDTOS = offerService.findNewAuctions(PAGE_SIZE);
         List<OfferDTO> buyNowDTOS = offerService.findNewBuyNow(PAGE_SIZE);
 
@@ -53,7 +52,7 @@ public class MainPageController {
         model.addAttribute("offerSearchModel", new OfferSearchModel());
         model.addAttribute("offerSearchDTO", offerSearchDTO);
 
-        model.addAttribute("favoriteDTOS", userFavoriteOfferDTOS);
+        model.addAttribute("favoriteDTOS", favoriteDTOS);
         model.addAttribute("auctionDTOS", auctionDTOS);
         model.addAttribute("buyNowDTOS", buyNowDTOS);
 

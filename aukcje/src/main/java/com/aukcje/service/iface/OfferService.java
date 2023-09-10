@@ -3,7 +3,6 @@ package com.aukcje.service.iface;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
-import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -19,6 +18,8 @@ public interface OfferService {
     List<OfferDTO> findNewBuyNow(Integer pageSize);
 
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);
+
+    List<OfferDTO> findFavoriteForUser(Long userId, Integer pageSize);
 
     Long save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
 

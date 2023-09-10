@@ -9,13 +9,34 @@ let allItemsPcs = parseInt(allItemsPcsText.textContent);
 
 
 /* OBSERVATION */
-function changeObservationStatus(objectId){
+function moveFromCartToFavoriteOffers(objectId, offerId){
     let obsIcon = document.getElementById('observe-icon_'+objectId)
+    let obsButton = document.getElementById('observe-button_'+objectId);
+
+    if(obsButton.getAttribute('title') === "Przenieś do obserwowanych"){
+        obsButton.setAttribute('title', "Przenieś do koszyka");
+        addObservation(offerId);
+        removeCartOffer(objectId);
+    }else{
+        obsButton.setAttribute('title', "Przenieś do obserwowanych");
+        addOneToCart(objectId);
+    }
     changeObserveIcon();
+
     function changeObserveIcon(){
         obsIcon.classList.toggle('bi-eye');
         obsIcon.classList.toggle('bi-eye-fill');
     }
+}
+
+function addObservation(objectId){
+    let url = "/ulubione/dodaj?ofertaId="+objectId;
+    console.log(url);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+
+    return xmlHttp.responseText;
 }
 
 /*QUANTITY CHANGES*/

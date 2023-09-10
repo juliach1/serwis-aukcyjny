@@ -15,4 +15,5 @@ public interface UserFavoriteOfferService {
 
     void deleteAllByOfferId(Long offerId);
 
+    void add(Long offerId, Long userId) throws UserNotFoundException, OfferNotFoundException;
 }

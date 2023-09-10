@@ -2,12 +2,22 @@
 /* OBSERVATION */
 function changeObservationStatus(objectId){
     let obsIcon = document.getElementById('observe-icon_'+objectId)
-    changeObserveIcon(objectId);
+    let obsButton = document.getElementById('observe-button_'+objectId);
+
+    changeObserveIcon();
+    changeObserveButtonTitle();
     toggleObservation(objectId);
 
-    function changeObserveIcon(objectId){
+    function changeObserveIcon(){
         obsIcon.classList.toggle('bi-eye');
         obsIcon.classList.toggle('bi-eye-fill');
+    }
+    function changeObserveButtonTitle(){
+        if(obsButton.getAttribute('title') === "Dodaj do obserwowanych"){
+            obsButton.setAttribute('title', "Usuń z obserwowanych");
+        }else{
+            obsButton.setAttribute('title', "Dodaj do obserwowanych");
+        }
     }
 
 }

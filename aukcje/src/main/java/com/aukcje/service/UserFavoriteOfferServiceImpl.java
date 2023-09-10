@@ -62,16 +62,19 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
             add(offerId, userId);
     }
 
-    private void add(Long offerId, Long userId) throws UserNotFoundException, OfferNotFoundException {
+    @Override
+    public void add(Long offerId, Long userId) throws UserNotFoundException, OfferNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Offer offer = offerRepository.findById(offerId).orElseThrow(OfferNotFoundException::new);
 
-        UserFavoriteOffer userFavoriteOffer = new UserFavoriteOffer();
-        userFavoriteOffer.setUser(user);
-        userFavoriteOffer.setOffer(offer);
-        userFavoriteOffer.setInsertTime(LocalDateTime.now());
+        if(userFavoriteOfferRepository.findByUserIdAndOfferId(userId, offerId)==null){
+            UserFavoriteOffer userFavoriteOffer = new UserFavoriteOffer();
+            userFavoriteOffer.setUser(user);
+            userFavoriteOffer.setOffer(offer);
+            userFavoriteOffer.setInsertTime(LocalDateTime.now());
+            userFavoriteOfferRepository.save(userFavoriteOffer);
+        }
 
-        userFavoriteOfferRepository.save(userFavoriteOffer);
     }
 
     private void delete(Long offerId, Long userId) {

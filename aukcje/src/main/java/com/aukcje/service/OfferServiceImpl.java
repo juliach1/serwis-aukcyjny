@@ -88,7 +88,6 @@ public class OfferServiceImpl implements OfferService {
         return createOfferDTO(offers);
     }
 
-
     @Override
     public List<OfferDTO> findNewAuctions(Integer pageSize) {
         return findNewByOfferTypeId(2, pageSize);
@@ -122,6 +121,12 @@ public class OfferServiceImpl implements OfferService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<OfferDTO> findFavoriteForUser(Long userId, Integer pageSize){
+        List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getAllByUserId(userId, pageSize);
+        return getFromUserFavoriteOfferDTOS(userFavoriteOfferDTOS);
     }
 
     @Override
@@ -163,6 +168,14 @@ public class OfferServiceImpl implements OfferService {
         cartOfferService.deleteAllByOfferId(offerId);
         userFavoriteOfferService.deleteAllByOfferId(offerId);
         offerRepository.deleteById(offerId);
+    }
+
+    private List<OfferDTO> getFromUserFavoriteOfferDTOS(List<UserFavoriteOfferDTO> userFavoriteOfferDTOS){
+        List<OfferDTO> offers = new ArrayList<>();
+        for(UserFavoriteOfferDTO userFavoriteOffer : userFavoriteOfferDTOS){
+            offers.add(userFavoriteOffer.getOffer());
+        }
+        return offers;
     }
 
     private void addPhoto(long offerId, MultipartFile multipartFile){

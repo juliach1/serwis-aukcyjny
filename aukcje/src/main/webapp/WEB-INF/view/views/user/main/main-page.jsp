@@ -123,21 +123,21 @@
                     <c:forEach var = "offerDTO" items = "${favoriteDTOS}">
                         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-2">
                             <div class="card g-5 mx-2">
-                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${offerDTO.offer.id}"></a>
+                                <a class="stretched-link" href="${pageContext.request.contextPath}/oferta/podglad/${offerDTO.id}"></a>
                                 <div class="m-0 p-0">
                                     <div class="img-container">
-                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.offer.id}/1.png" alt="Card image">
+                                        <img class="card-img-top" src="${pageContext.request.contextPath}/files/img/offers/${offerDTO.id}/1.png" alt="Card image">
                                     </div>
                                     <div class="card-body text-center mb-0 pb-0">
-                                        <p class="offertype-text mb-1 ">${offerDTO.offer.offerType.id == 1 ? "KUP TERAZ" : "AUKCJA"}</p>
+                                        <p class="offertype-text mb-1 ">${offerDTO.offerType.id == 1 ? "KUP TERAZ" : "AUKCJA"}</p>
                                         <p class="m-0">Cena:</p>
-                                        <h4 class="card-title price">${offerDTO.offer.price}<span class="text-center">${offerDTO.offer.price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
+                                        <h4 class="card-title price">${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''}zł</span> </h4>
                                         <div class="d-flex flex-row align-items-center">
                                             <div class="offer-title-card">
-                                                <p class="card-text text-start item-title pb-0">${offerDTO.offer.offerDetails.title}</p>
+                                                <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
                                             </div>
                                             <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
-                                                <a id="observe-button-${offerDTO.offer.id}" onclick="changeObservationStatus(${offerDTO.offer.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.offer.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                                <a id="observe-button_${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@
                                                 <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
                                             </div>
                                             <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
-                                                <a id="observe-button-${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                                <a id="observe-button_${offerDTO.id}" onclick="moveFromCartToFavoriteOffers(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +213,7 @@
                                                 <p class="card-text text-start item-title pb-0">${offerDTO.offerDetails.title}</p>
                                             </div>
                                             <div class="d-inline-flex ms-auto ps-3" style="z-index: 2; position: relative;">
-                                                <a id="observe-button-${offerDTO.id}" onclick="changeObservationStatus(${offerDTO.id})" title="Dodaj do obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                                <a id="observe-button_${offerDTO.id}" onclick="moveFromCartToFavoriteOffers(${offerDTO.id})" title="${offerDTO.isFavorite ? 'Usuń z' : 'Dodaj do'} obserwowanych"> <i id="observe-icon_${offerDTO.id}" class="card-action-icon observe-icon bi bi-eye${offerDTO.isFavorite ? '-fill' : ''}"></i> </a>
                                             </div>
                                         </div>
                                     </div>

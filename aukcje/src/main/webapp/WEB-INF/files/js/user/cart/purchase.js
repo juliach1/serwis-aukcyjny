@@ -1,18 +1,29 @@
 
 const offerCards =  document.querySelectorAll('.cart-offer-card');
-
+var dataToSend = [];
 function buyItems(){
     console.log("BUY ITEMS BUTTON CLICKED. ITEMS BOUGHT:")
     offerCards.forEach(
         function (card){
+
             let cartOfferId = card.id.split("_")[1]; // Pobranie id pozycji koszyka
-            let offerId = card.getAttribute('data-offer-id_'+cartOfferId);
+            let offerId = parseInt(card.getAttribute('data-offer-id_'+cartOfferId));
             const quantityInput = document.getElementById("quantity_"+cartOfferId);
             let quantityValue = parseInt(quantityInput.getAttribute("value"));
+            let onePcprice = parseFloat(document.getElementById("data-pc-price_"+cartOfferId));
 
+            dataToSend.push({
+                offerId: offerId,
+                quantity: quantityValue,
+                price: (onePcprice*quantityValue).toFixed()
+            });
             console.log("Offer id: " + offerId + " quantity to buy: "+quantityValue)
-        }
-    )
+        });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/zakup/przetworz", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(dataToSend));
 }
 
 

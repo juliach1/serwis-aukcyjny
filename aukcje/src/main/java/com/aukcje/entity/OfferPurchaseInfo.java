@@ -28,6 +28,10 @@ public class OfferPurchaseInfo {
     private User buyer;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="ID_BUYER")
+    private Offer offer;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="ID_ADDRESS")
     private Address address;
 
@@ -40,5 +44,8 @@ public class OfferPurchaseInfo {
 
     @Column(name="PRICE")
     private Double price;
+
+    @Column(name="QUANTITY")
+    private Integer quantity;
 
 }

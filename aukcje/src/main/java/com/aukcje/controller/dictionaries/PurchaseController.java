@@ -1,33 +1,31 @@
 package com.aukcje.controller.dictionaries;
 
-import com.aukcje.dto.OfferDTO;
-import com.aukcje.dto.UserDTO;
-import com.aukcje.model.OfferAddModel;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import com.aukcje.model.OfferPurchaseModel;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Objects;
 
+@Controller
 @RequestMapping("/zakup")
 public class PurchaseController {
-//
-//    @PostMapping("/przetworz")
-//    public String newPurchase(Principal principal, Model model){
-//
-//        UserDTO user = userService.findByUsername(principal.getName());
-//        List<OfferDTO> userOffers = offerService.findByUserId(user.getId());
-//
-//        model.addAttribute("offerDTOS", userOffers);
-//
-//        return "/views/user/offer/user-offers";
-//
-//    }
+
+    @PostMapping("/przetworz")
+    public String newPurchase(Principal principal, @RequestBody List<OfferPurchaseModel> offerPurchaseModel){
+
+        System.out.println("ZAKUPIONO PRZEDMIOTY: ");
+        for (OfferPurchaseModel offerPurchaseModel1 : offerPurchaseModel){
+            System.out.println("ID: "+offerPurchaseModel1.getOfferId());
+            System.out.println("liczba: "+offerPurchaseModel1.getQuantity());
+        }
+
+
+
+        return "redirect:/uzytkownik/strona-glowna";
+    }
 
 //    @PostMapping("/dodaj/przetworz")
 //    public String addOfferProcess(Model model, Principal principal,

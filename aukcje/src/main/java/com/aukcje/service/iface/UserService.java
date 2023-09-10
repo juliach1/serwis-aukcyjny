@@ -20,11 +20,9 @@ public interface UserService extends UserDetailsService {
 
     List<UserDTO> searchBySearchModel(UserSearchModel userSearchModel);
 
-
     void setUserBlocked(Long userId);
 
     void setUserActive(Long userId);
-
 
     UserDTO findById(Long id);
 
@@ -38,7 +36,5 @@ public interface UserService extends UserDetailsService {
 
      void setUserDeleted(Long userId);
 
-
-    @Override
-    UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
+     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 }

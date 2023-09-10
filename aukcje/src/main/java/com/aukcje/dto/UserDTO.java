@@ -1,6 +1,9 @@
 package com.aukcje.dto;
 
+import com.aukcje.enums.UserStatusEnum;
 import lombok.Data;
+
+import java.util.Objects;
 
 @Data
 public class UserDTO {
@@ -15,5 +18,9 @@ public class UserDTO {
     public Integer averageRate;
     public String avatarPath;
     public UserStatusDTO userStatus;
+
+    public boolean isActive(){
+        return Objects.equals(userStatus.getName(), UserStatusEnum.AKTYWNY.toString());
+    }
 
 }

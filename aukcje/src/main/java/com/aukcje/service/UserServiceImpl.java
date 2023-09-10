@@ -4,6 +4,7 @@ import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserDTOMapper;
 import com.aukcje.entity.Role;
 import com.aukcje.entity.User;
+import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;

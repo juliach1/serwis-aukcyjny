@@ -1,4 +1,22 @@
 
+const offerCards =  document.querySelectorAll('.cart-offer-card');
+
+function buyItems(){
+    console.log("BUY ITEMS BUTTON CLICKED. ITEMS BOUGHT:")
+    offerCards.forEach(
+        function (card){
+            let cartOfferId = card.id.split("_")[1]; // Pobranie id pozycji koszyka
+            let offerId = card.getAttribute('data-offer-id_'+cartOfferId);
+            const quantityInput = document.getElementById("quantity_"+cartOfferId);
+            let quantityValue = parseInt(quantityInput.getAttribute("value"));
+
+            console.log("Offer id: " + offerId + " quantity to buy: "+quantityValue)
+        }
+    )
+}
+
+
+
  document.getElementByC("purchaseBtn").addEventListener("click", function() {
 
     // Pobierz wszystkie pozycje w koszyku

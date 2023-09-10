@@ -1,8 +1,8 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CategoryDTO;
-import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.exception.customException.IncorrectParentException;
+import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.UserService;
@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;

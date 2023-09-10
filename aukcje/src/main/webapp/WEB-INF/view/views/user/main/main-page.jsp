@@ -147,7 +147,7 @@
                     </c:forEach>
 
                     <p class="text h3 mt-4 text-end">
-                        Zobacz wszystkie kup teraz...
+                        Zobacz wszystkie ulubione...
                     </p>
 
                 </section>

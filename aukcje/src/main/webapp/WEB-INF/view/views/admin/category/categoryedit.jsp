@@ -52,12 +52,13 @@
                 <div class="col-md-6">
                     <label for="parentCategorySelect" class="form-label">Kategoria nadrzędna</label>
                     <form:select type="text" path="parentCategory" class="form-control form-select display" id="parentCategorySelect" placeholder="Wybierz kategorię...">
+                        <option value="placeholder" ${categoryDTO.parentCategory == null ? 'selected="selected"' : ''}>Wybierz kategorię...</option>
                         <c:forEach var = "categoryList" items = "${categories}">
                             <option value="${categoryList.id}" ${categoryList.name == categoryDTO.parentCategory ? 'selected="selected"' : ''}>
+<%--                                <c:if test="${categoryList.parentCategory != null}"> &emsp; </c:if> <span class="fw-bold"> ${categoryList.name} </span>--%>
                                 <c:if test="${categoryList.parentCategory != null}"> ${categoryList.parentCategory} --> </c:if> <span class="fw-bold"> ${categoryList.name} </span>
                             </option>
                         </c:forEach>
-                        <option value="placeholder" ${categoryDTO.parentCategory == null ? 'selected="selected"' : ''}>Wybierz kategorię...</option>
 
                     </form:select>
                     <form:errors path="parentCategory" cssClass="error"/>

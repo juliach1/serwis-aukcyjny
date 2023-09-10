@@ -34,6 +34,7 @@
 
             <%--@elvariable id="categories" type="com.aukcje.dto.CategoryDTO"--%>
             <%--@elvariable id="categoryModel" type="src/main/java/com/aukcje/model/CategoryModel.java"--%>
+            <%--@elvariable id="categoryDTO" type="com.aukcje.dto.CategoryDTO.java"--%>
 
             <form:form method="post" action="${pageContext.request.contextPath}/admin/kategoria/dodaj/przetworz" modelAttribute="categoryModel">
             <p class="display-3 text-center mt-3 mb-5">
@@ -56,7 +57,9 @@
                     <form:select type="text" path="parentCategory" class="form-control form-select display" id="parentCategorySelect" placeholder="Wybierz kategorię...">
                         <option value="placeholder" selected="selected">Wybierz kategorię...</option>
                         <c:forEach var = "categoryVar" items = "${categories}">
-                            <option value="${categoryVar.id}"> ${categoryVar.name} </option>
+                            <option value="${categoryVar.id}">
+                                <c:if test="${categoryVar.parentCategory != null}"> ${categoryVar.parentCategory} --> </c:if> <span class="fw-bold"> ${categoryVar.name} </span>
+                            </option>
                         </c:forEach>
                     </form:select>
                     <form:errors path="parentCategory" cssClass="error"/>

@@ -31,18 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean isChosenCategoryForOfferAddCorrect(OfferAddModel offerAddModel) {
-
-        //       boolean var1 = anyCategoryChosen(offerAddModel.getCategoryId());
-//        boolean var2 = baseCategoryChosen(offerAddModel.getIsBaseCategoryChosen());
         return anyCategoryChosen(offerAddModel.getCategoryId()) && baseCategoryChosen(offerAddModel.getIsBaseCategoryChosen());
     }
 
-
     private Boolean baseCategoryChosen(Boolean baseCatChosen){
        return  !Objects.isNull(baseCatChosen) && baseCatChosen;
-    }
-    private Boolean categoryExist(Integer id){
-        return categoryRepository.getById(id).isPresent();
     }
 
     private Boolean anyCategoryChosen(Integer id){

@@ -161,7 +161,7 @@ public class OfferServiceImpl implements OfferService {
     public void delete(Long offerId) {
         offerPhotoService.deleteByOfferId(offerId);
         cartOfferService.deleteAllByOfferId(offerId);
-        userFavoriteOfferService.deleteByOfferId(offerId);
+        userFavoriteOfferService.deleteAllByOfferId(offerId);
         offerRepository.deleteById(offerId);
     }
 

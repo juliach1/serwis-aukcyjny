@@ -1,25 +1,25 @@
 package com.aukcje.enums;
 
 public enum SortTypeEnum {
-    NAJNOWSZE {
+    NEWEST {
         @Override
         public String toString(){
             return "Najnowsze";
         }
     },
-    CENA_OD_NAJNIZSZEJ {
+    PRICE_ASCENDING {
         @Override
         public String toString(){
             return "Cena (od najniższej)";
         }
     },
-    CENA_OD_NAJWYZSZEJ{
+    PRICE_DESCENDING {
         @Override
         public String toString(){
             return "Cena (od najwyższej)";
         }
     },
-    POPULARNOSC{
+    POPULARITY {
         @Override
         public String toString(){
             return "Popularność";

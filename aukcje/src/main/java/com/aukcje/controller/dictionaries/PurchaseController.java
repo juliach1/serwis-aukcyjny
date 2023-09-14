@@ -1,6 +1,12 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
+import com.aukcje.exception.OfferNotActiveException;
+import com.aukcje.exception.PurchaseStatusNotFoundException;
+import com.aukcje.exception.customException.AddressNotFoundException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserService;
@@ -29,11 +35,11 @@ public class PurchaseController {
             Principal principal,
             @RequestBody List<OfferPurchaseModel> offerPurchaseModel,
             @RequestParam("adresId") Long addressId
-    ){
+    ) throws UserNotFoundException, OfferNotActiveException, AddressNotFoundException, OfferNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
         System.out.println("W PRZETWARZANIU KONTEOLERA KUPOWANIA");
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.id, addressId);
+        offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);
 
         return "redirect:/uzytkownik/strona-glowna";
     }

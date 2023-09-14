@@ -29,10 +29,10 @@ public class OfferSearchDTO {
         categoryIdNames = new HashMap<>();
 
         sortTypes = new ArrayList<>();
-        sortTypes.add(SortTypeEnum.NAJNOWSZE.toString());
-        sortTypes.add(SortTypeEnum.CENA_OD_NAJNIZSZEJ.toString());
-        sortTypes.add(SortTypeEnum.CENA_OD_NAJWYZSZEJ.toString());
-        sortTypes.add(SortTypeEnum.POPULARNOSC.toString());
+        sortTypes.add(SortTypeEnum.NEWEST.toString());
+        sortTypes.add(SortTypeEnum.PRICE_ASCENDING.toString());
+        sortTypes.add(SortTypeEnum.PRICE_DESCENDING.toString());
+        sortTypes.add(SortTypeEnum.POPULARITY.toString());
 
         List<OfferTypeDTO> offerTypeDTOS = offerTypeService.findAll();
         for (OfferTypeDTO offerTypeDTO : offerTypeDTOS){

@@ -31,13 +31,15 @@ function createDataToSend(card){
     let cartOfferId = card.id.split("_")[1]; // Pobranie id pozycji koszyka
     let offerId = parseInt(card.getAttribute('data-offer-id_'+cartOfferId));
     const quantityInput = document.getElementById("quantity_"+cartOfferId);
+    let cartOfferPrice = document.getElementById("price_"+cartOfferId);
     let quantityValue = parseInt(quantityInput.getAttribute("value"));
-    let onePcprice = parseFloat(document.getElementById("data-pc-price_"+cartOfferId));
+    const onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+cartOfferId));
 
+    console.log("one pc price: "+onePcPrice)
     dataToSend.push({
         offerId: offerId,
         quantity: quantityValue,
-        price: (onePcprice*quantityValue).toFixed(),
+        price: (onePcPrice*quantityValue).toFixed(),
     });
 }
 

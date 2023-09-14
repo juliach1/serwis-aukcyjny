@@ -63,7 +63,7 @@ public class OfferController {
         //TODO dodać: ograniczenie dla AKTYWNYCH; przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO = offerService.findById(offerId);
         String offerStatus = offerDTO.getOfferStatus().getName();
-        String activeStatus = OfferStatusEnum.AKTYWNA.toString();
+        String activeStatus = OfferStatusEnum.ACTIVE.toString();
 
         if(!Objects.equals( offerStatus, activeStatus )){
             throw new InactiveOfferException();

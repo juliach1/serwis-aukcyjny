@@ -36,13 +36,13 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
         List<Predicate> statusPredicates = new ArrayList<>();
         Path<UserStatus> statusPath = root.get("userStatus").get("name");
         if(userSearchModel.getIsActive() != null && userSearchModel.getIsActive()){
-            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.AKTYWNY.name() ));
+            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.ACTIVE.name() ));
         }
         if(userSearchModel.getIsBlocked() != null && userSearchModel.getIsBlocked()){
-            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.ZBANOWANY.name() ));
+            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.BANNED.name() ));
         }
         if(userSearchModel.getIsDeleted() != null && userSearchModel.getIsDeleted()){
-            statusPredicates.add( criteriaBuilder.equal( statusPath, UserStatusEnum.USUNIĘTY.name() ));
+            statusPredicates.add( criteriaBuilder.equal( statusPath, UserStatusEnum.DELETED.name() ));
         }
 
         List<Predicate> phrasePredicates = new ArrayList<>();

@@ -1,20 +1,26 @@
 package com.aukcje.service;
 
-import com.aukcje.entity.Address;
-import com.aukcje.entity.Offer;
-import com.aukcje.entity.OfferPurchaseInfo;
-import com.aukcje.entity.User;
+import com.aukcje.entity.*;
+import com.aukcje.enums.OfferStatusEnum;
+import com.aukcje.enums.PurchaseStatusEnum;
+import com.aukcje.exception.OfferNotActiveException;
+import com.aukcje.exception.PurchaseStatusNotFoundException;
+import com.aukcje.exception.customException.AddressNotFoundException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.OfferPurchaseModel;
-import com.aukcje.repository.AddressRepository;
-import com.aukcje.repository.OfferRepository;
-import com.aukcje.repository.UserRepository;
+import com.aukcje.repository.*;
+import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.OfferPurchaseService;
+import com.aukcje.service.iface.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OfferPurchaseServiceImpl implements OfferPurchaseService {
@@ -28,34 +34,77 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private PurchaseStatusRepository purchaseStatusRepository;
+
+    @Autowired
+    private OfferPurchaseInfoRepository offerPurchaseInfoRepository;
+
+    @Autowired
+    private OfferStatusRepository offerStatusRepository;
+
+    @Autowired
+    private OfferService offerService;
+
+    @Autowired
+    private CartOfferService cartOfferService;
+
     @Override
-    public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) {
+    public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
+        List<OfferPurchaseInfo> offerPurchaseInfo = checkAndCreatePurchaseInfos(offerPurchaseModels, buyerId, addressId);
+        save0fferPurchases(offerPurchaseInfo);
+    }
+
+    private void save0fferPurchases(List<OfferPurchaseInfo> offerPurchaseInfos){
+        for (OfferPurchaseInfo offerPurchaseInfo : offerPurchaseInfos){
+
+            Offer offer = offerPurchaseInfo.getOffer();
+            cartOfferService.deleteAllByOfferId(offer.getId());
+            offerRepository.save(offerPurchaseInfo.getOffer());
+            offerPurchaseInfoRepository.save(offerPurchaseInfo);
+        }
+    }
+
+    private List<OfferPurchaseInfo> checkAndCreatePurchaseInfos(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, OfferNotFoundException, AddressNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
         List<OfferPurchaseInfo> offerPurchaseInfos = new ArrayList<>();
+        User buyer = userRepository.findById(buyerId).orElseThrow(() -> new UserNotFoundException("Nie znaleziono konta sprzedawcy"));
+        Address address = addressRepository.findById(addressId).orElseThrow( AddressNotFoundException::new );
+        PurchaseStatusEnum statusNew = PurchaseStatusEnum.NEW;
+        PurchaseStatus purchaseStatus = purchaseStatusRepository.findById( statusNew.getId() ).orElseThrow(() -> new PurchaseStatusNotFoundException( statusNew.toString() ));
 
         for(OfferPurchaseModel offerPurchaseModel: offerPurchaseModels){
-            OfferPurchaseInfo offerPurchaseInfo = new OfferPurchaseInfo();
-
-            //TODO ZAMIENIĆ NA MAPPER
             Offer offer = offerRepository.findById(offerPurchaseModel.getOfferId()).orElse(null);
-            User seller = userRepository.findById(offer != null ? offer.getUser().getId() : -100).orElse(null);
-            User buyer = userRepository.findById(buyerId).orElse(null);
-            Address address = addressRepository.findById(addressId).orElse(null);
+            if(offer == null || !Objects.equals(offer.getOfferStatus().getId(), OfferStatusEnum.ACTIVE.getId())){
+                throw new OfferNotFoundException();
+            }else if(offer.getUser() == null) {
+                throw new UserNotFoundException("Nie znaleziono konta kupującego");
+            }
+            offer.setOfferStatus(offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(() -> new OfferStatusNotFoundException( OfferStatusEnum.ENDED.name() )));
+            User seller = offer.getUser();
 
-            LocalDateTime purchaseTime = LocalDateTime.now();
+            OfferPurchaseInfo offerPurchaseInfo = OfferPurchaseInfo.builder()
+                    .purchaseTime(LocalDateTime.now())
+                    .address(address)
+                    .seller(seller)
+                    .buyer(buyer)
+                    .offer(offer)
+                    .quantity(offerPurchaseModel.getQuantity())
+                    .price(offerPurchaseModel.getPrice())
+                    .purchaseStatus(purchaseStatus)
+                    .build();
 
-            //todo address
-                    //todo purchase status
-
-            offerPurchaseInfo.setPurchaseTime(purchaseTime);
-            offerPurchaseInfo.setSeller(seller);
-            offerPurchaseInfo.setBuyer(buyer);
-            offerPurchaseInfo.setOffer(offer);
-            offerPurchaseInfo.setAddress(address);
-            offerPurchaseInfo.setQuantity(offerPurchaseModel.getQuantity());
-            offerPurchaseInfo.setPrice(offerPurchaseModel.getPrice());
+            System.out.println("--------------Tworzenie OPI--------------------");
+            System.out.println(offerPurchaseInfo.getPurchaseTime());
+            System.out.println(offerPurchaseInfo.getAddress().getCity());
+            System.out.println(offerPurchaseInfo.getSeller()+seller.getUsername());
+            System.out.println(offerPurchaseInfo.getBuyer()+seller.getUsername());
+            System.out.println("offer: " + offerPurchaseInfo.getOffer().getId());
+            System.out.println("quantity: " + offerPurchaseInfo.getQuantity());
+            System.out.println("price: " + offerPurchaseInfo.getPrice());
+            System.out.println("purchaseStatus: " + offerPurchaseInfo.getPurchaseStatus());
 
             offerPurchaseInfos.add(offerPurchaseInfo);
         }
-        System.out.println("OFFERPURCHASEINFOS SIZE: "+offerPurchaseInfos.size());
+        return offerPurchaseInfos;
     }
 }

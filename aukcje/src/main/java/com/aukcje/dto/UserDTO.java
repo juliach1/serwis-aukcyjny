@@ -20,7 +20,7 @@ public class UserDTO {
     public UserStatusDTO userStatus;
 
     public boolean isActive(){
-        return Objects.equals(userStatus.getName(), UserStatusEnum.AKTYWNY.toString());
+        return Objects.equals(userStatus.getName(), UserStatusEnum.ACTIVE.toString());
     }
 
 }

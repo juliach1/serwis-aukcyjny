@@ -93,7 +93,7 @@ public class CustomOfferRepositoryImpl implements CustomOfferRepository {
     private Predicate createOfferStatusPredicate(OfferSearchModel offerSearchModel) {
          Path<String> offerStatusPath = root.get("offerStatus").get("name");
 
-         return criteriaBuilder.equal(offerStatusPath, OfferStatusEnum.AKTYWNA.toString());
+         return criteriaBuilder.equal(offerStatusPath, OfferStatusEnum.ACTIVE.toString());
     }
     private List<Predicate> createPhrasePredicates(OfferSearchModel offerSearchModel) {
 
@@ -115,11 +115,11 @@ public class CustomOfferRepositoryImpl implements CustomOfferRepository {
     private List<Predicate> createOfferTypePredicates(OfferSearchModel offerSearchModel) {
         List<Predicate> offerTypePredicates = new ArrayList<>();
         Path<OfferType> typePath = root.get("offerType").get("name");
-        if (offerSearchModel.getOfferTypes() == null || offerSearchModel.getOfferTypes().contains(OfferTypeEnum.KUP_TERAZ.toString()) || offerSearchModel.getOfferTypes().isEmpty()) {
-            offerTypePredicates.add(criteriaBuilder.equal(typePath, OfferTypeEnum.KUP_TERAZ.toString()));
+        if (offerSearchModel.getOfferTypes() == null || offerSearchModel.getOfferTypes().contains(OfferTypeEnum.BUY_NOW.toString()) || offerSearchModel.getOfferTypes().isEmpty()) {
+            offerTypePredicates.add(criteriaBuilder.equal(typePath, OfferTypeEnum.BUY_NOW.toString()));
         }
-        if (offerSearchModel.getOfferTypes() == null ||offerSearchModel.getOfferTypes().contains(OfferTypeEnum.AUKCJA.toString()) || offerSearchModel.getOfferTypes().isEmpty()) {
-            offerTypePredicates.add(criteriaBuilder.equal(typePath, OfferTypeEnum.AUKCJA.toString()));
+        if (offerSearchModel.getOfferTypes() == null ||offerSearchModel.getOfferTypes().contains(OfferTypeEnum.AUCTION.toString()) || offerSearchModel.getOfferTypes().isEmpty()) {
+            offerTypePredicates.add(criteriaBuilder.equal(typePath, OfferTypeEnum.AUCTION.toString()));
         }
 
         return offerTypePredicates;

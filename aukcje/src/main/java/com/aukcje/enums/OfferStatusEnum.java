@@ -1,7 +1,7 @@
 package com.aukcje.enums;
 
 public enum OfferStatusEnum {
-    AKTYWNA{
+    ACTIVE {
         @Override
         public String toString(){
             return "aktywna";
@@ -11,7 +11,7 @@ public enum OfferStatusEnum {
         }
     },
 
-    ZAKONCZONA{
+    ENDED {
         @Override
         public String toString(){
             return "zakończona";
@@ -21,17 +21,15 @@ public enum OfferStatusEnum {
         }
     },
 
-    WSTRZYMANA{
+    SUSPENDED {
         @Override
         public String toString(){
             return "wstrzymana";
         }
-        public Integer getId(){
-            return 3;
-        }
+        public Integer getId(){ return 3; }
     },
 
-    USUNIETA{
+    REMOVED {
         @Override
         public String toString(){
             return "usunięta";
@@ -39,6 +37,10 @@ public enum OfferStatusEnum {
         public Integer getId(){
             return 4;
         }
+    };
+
+    public Integer getId(){
+        return 0;
     }
 
 }

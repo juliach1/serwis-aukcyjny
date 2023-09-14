@@ -51,6 +51,7 @@ function setQuantityForCart(number){
 }
 
 function addToCart(offerId){
+    console.log("Dodawanie do koszyka "+quantityForCart+" sztuk przedmiotu "+offerId)
     let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, false ); // false for synchronous request

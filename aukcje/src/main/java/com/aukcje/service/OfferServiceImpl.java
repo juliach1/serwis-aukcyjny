@@ -105,7 +105,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Boolean isOfferTypeAuction(OfferDTO offer) {
-        return OfferTypeEnum.AUKCJA.toString().equals(offer.offerType.getName());
+        return OfferTypeEnum.AUCTION.toString().equals(offer.offerType.getName());
     }
 
     @Override

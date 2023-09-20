@@ -2,6 +2,7 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserStatusDTO;
 import com.aukcje.exception.customException.IncorrectUserStatusException;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.UserService;
@@ -53,7 +54,7 @@ public class UserController {
 
     @GetMapping("/edytuj/{uzytkownikId}")
     public String editUser(@PathVariable(value = "uzytkownikId") Long userId,
-                                            Model model){
+                                            Model model) throws UserNotFoundException {
         model.addAttribute("userDTO", userService.findById(userId));
         model.addAttribute("userEditModel", new UserEditModel());
         model.addAttribute("statuses", userStatusService.findAll());

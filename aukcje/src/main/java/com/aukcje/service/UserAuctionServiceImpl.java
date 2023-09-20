@@ -2,6 +2,7 @@ package com.aukcje.service;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
+import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserAuctionDTOMapper;
 import com.aukcje.entity.Offer;
 import com.aukcje.entity.User;
@@ -72,7 +73,7 @@ public class UserAuctionServiceImpl implements UserAuctionService {
 
         Offer offer = offerRepository.findById(offerId).orElseThrow(OfferNotFoundException::new);
 
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        User user  = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         if(Objects.equals(user.getId(), offer.getUser().getId())){
             throw new CanNotBidYourOfferException();
         }

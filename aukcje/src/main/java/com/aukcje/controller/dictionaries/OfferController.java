@@ -6,6 +6,7 @@ import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.exception.customException.OfferEditPermissionDeniedException;
 import com.aukcje.exception.customException.InactiveOfferException;
+import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class OfferController {
     }
 
     @GetMapping("/podglad/{ofertaId}")
-    public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException {
+    public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException, OfferNotFoundException {
 
         //TODO dodać: ograniczenie dla AKTYWNYCH; przy nieaktywnych (sprzedanych, usunietych) - blad
         OfferDTO offerDTO = offerService.findById(offerId);
@@ -136,7 +137,7 @@ public class OfferController {
     @GetMapping("/edytuj/{ofertaId}")
     public String editOffer(Principal principal,
                             @PathVariable("ofertaId") Long offerId,
-                            Model model) throws OfferEditPermissionDeniedException {
+                            Model model) throws OfferEditPermissionDeniedException, OfferNotFoundException {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
         OfferAddModel offerAddModel = new OfferAddModel();

@@ -8,4 +8,6 @@ import java.time.LocalDateTime;
 public class UserAuctionDTO {
     private double value;
     private LocalDateTime insertTime;
+    private UserDTO userDTO;
+    private OfferDTO offerDTO;
 }

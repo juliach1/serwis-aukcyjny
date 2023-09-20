@@ -26,7 +26,7 @@
 
 
 
-<body onload="setQuantityForCart(1)">
+<body>
 <%@include file="../../../fragments/navbar.jspf" %>
 
 <main>
@@ -230,14 +230,10 @@
                                         <div class="current-price mb-4">
                                             <c:choose>
                                                 <c:when test="${highestValueUserAuction.value > 0 }">
-                                                    <div class="d-inline-flex">
-                                                        <h1>${offerDTO.price}</h1> <h1 class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</h1>
-                                                    </div>
-
-                                                    <h1>${highestValueUserAuction.value}<span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
+                                                    <h1 id="current-price-txt">${highestValueUserAuction.value}<span class="text-center">${offerDTO.price*10 % 1 == 0 ?'0' : ''} zł</span> </h1>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <h1>${startValue}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span>  </h1>
+                                                    <h1 id="current-price-txt">${offerDTO.price}<span class="text-center">${offerDTO.price*10 % 1 == 0 ? '0' : ''} zł</span>  </h1>
                                                 </c:otherwise>
                                             </c:choose>
                                             <p class="pt-2">/${offerDTO.quantity}szt.</p>
@@ -246,11 +242,11 @@
                                         <p>Twoja oferta:</p>
                                         <div class="user-offer d-inline-flex">
                                             <c:choose>
-                                                <c:when test="${highestValueUserAuction.value > 0 && highestValueUserAuction.value>startValue}">
-                                                    <input type="number" class="form-control" id="user-offer" name="quantity" min="${highestValueUserAuction.value + 0.01}" placeholder="${highestValueUserAuction.value + 1.0}">
+                                                <c:when test="${highestValueUserAuction.value > 0 && highestValueUserAuction.value>offerDTO.price}">
+                                                    <input id="current-price" type="number" class="current-price form-control" value="${highestValueUserAuction.value+1}" id="user-offer" name="quantity" min="${highestValueUserAuction.value + 0.01}" placeholder="${highestValueUserAuction.value + 1.0}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="number" class="form-control" id="user-offer" name="quantity" min="${startValue + 0.01}" placeholder="${startValue + 1.0}">
+                                                    <input id="current-price" type="number" class="form-control" id="user-offer" value="${offerDTO.price+1}" name="quantity" min="${offerDTO.price + 0.01}" placeholder="${offerDTO.price + 1.0}">
                                                 </c:otherwise>
                                             </c:choose>
 
@@ -258,12 +254,12 @@
                                         </div>
 
                                         <div class="d-inline-flex justify-content-center mt-5 col-9">
-                                            <a id="observe-button-auction" class="observe-button" href="#"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
-                                            <button type="submit" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
+                                            <a id="observe-button-auction" class="observe-button"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
+                                            <button type="submit" onclick="bid(${offerDTO.id})" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
                                                 licytuj
                                             </button>
-
                                         </div>
+                                        <p id="bad-bid-message" class="error" style="display: none"></p>
                                     </div>
 
                                 </div>
@@ -322,6 +318,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/files/js/user/offer/offer-auction.js"></script>
 <script src="${pageContext.request.contextPath}/files/js/user/offer/offer.js"></script>
 
 </body>

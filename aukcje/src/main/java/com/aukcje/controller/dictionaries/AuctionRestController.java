@@ -28,7 +28,7 @@ public class AuctionRestController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/licytuj")
+    @GetMapping("/licytuj")
     public ResponseEntity<String> placeBid( Principal principal,
                                             @RequestParam("ofertaId") Long offerId,
                                             @RequestParam("kwota") Double bidAmount) throws UserNotFoundException, CanNotBidYourOfferException, OfferNotActiveException, UserNotActiveException, OfferNotFoundException {
@@ -36,16 +36,22 @@ public class AuctionRestController {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         BidStatusEnum status = userAuctionService.placeBid(offerId, bidAmount, userDTO.getId());
 
+
+        HttpStatus httpStatus;
         switch (status){
             case BID_PLACED:
-                return ResponseEntity.status(HttpStatus.CREATED).body(status.toString());
+                httpStatus = HttpStatus.CREATED; break;
             case TOO_LOW:
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(status.toString());
+                httpStatus = HttpStatus.CONFLICT; break;
             case AUCTION_ENDED:
-                return ResponseEntity.status(HttpStatus.OK).body(status.toString());
+                 httpStatus = HttpStatus.OK; break;
             default:
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(status.toString());
+                httpStatus = HttpStatus.BAD_REQUEST; break;
         }
 
+        ResponseEntity<String> responseEntity = ResponseEntity.status(httpStatus).body(status.toString());
+
+        System.out.println("STATUS:" + responseEntity.getStatusCode().name());
+        return responseEntity;
     }
 }

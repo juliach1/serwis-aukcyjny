@@ -5,6 +5,7 @@ import com.aukcje.dto.mapper.UserDTOMapper;
 import com.aukcje.entity.Role;
 import com.aukcje.entity.User;
 import com.aukcje.enums.UserStatusEnum;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
@@ -97,8 +98,8 @@ public class UserServiceImpl implements UserService {
     public void setUserActive(Long userId) { userRepository.setUserStatus(1, userId); }
 
     @Override
-    public UserDTO findById(Long id) {
-        return UserDTOMapper.instance.userDTO(userRepository.findById(id).orElseThrow());
+    public UserDTO findById(Long id) throws UserNotFoundException {
+        return UserDTOMapper.instance.userDTO(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
 
     @Override

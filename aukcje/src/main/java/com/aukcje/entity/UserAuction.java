@@ -18,12 +18,12 @@ public class UserAuction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+            cascade = {CascadeType.MERGE})
     @JoinColumn(name = "ID_USER")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_OFFER")
     private Offer offer;
 

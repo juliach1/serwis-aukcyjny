@@ -45,7 +45,6 @@ function addObservation(objectId){
     return xmlHttp.responseText;
 }
 
-/* REMOVAL */
 function deleteOffer(offerId){
      let url = "/oferta/usun/"+offerId;
      var xmlHttp = new XMLHttpRequest();

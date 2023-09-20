@@ -2,6 +2,7 @@ package com.aukcje.service.iface;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
@@ -25,7 +26,7 @@ public interface UserService extends UserDetailsService {
 
     void setUserActive(Long userId);
 
-    UserDTO findById(Long id);
+    UserDTO findById(Long id) throws UserNotFoundException;
 
     UserDTO findByUsername(String username);
 

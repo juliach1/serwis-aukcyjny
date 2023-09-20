@@ -5,7 +5,9 @@ import com.aukcje.dto.OfferPhotoDTO;
 import com.aukcje.dto.UserFavoriteOfferDTO;
 import com.aukcje.dto.mapper.OfferDTOMapper;
 import com.aukcje.entity.*;
+import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.enums.OfferTypeEnum;
+import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.model.mapper.OfferMapper;
@@ -76,8 +78,8 @@ public class OfferServiceImpl implements OfferService {
     private ServletContext servletContext;
 
     @Override
-    public OfferDTO findById(Long id) {
-        OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElse(new Offer()) );
+    public OfferDTO findById(Long id) throws OfferNotFoundException {
+        OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElseThrow(OfferNotFoundException::new) );
         offerDTO.setOfferPhoto( offerPhotoService.findByOfferId(id) );
         return offerDTO;
     }
@@ -288,6 +290,11 @@ public class OfferServiceImpl implements OfferService {
             UserFavoriteOfferDTO offer = userFavoriteOfferService.geByUserIdAndOfferId(userId, offerDTO.getId());
             offerDTO.setIsFavorite(offer != null);
         }
+    }
+
+    @Override
+    public boolean isOfferActive(Offer offer) {
+        return offer.getOfferStatus().getId().equals(OfferStatusEnum.ACTIVE.getId());
     }
 
     private OfferDTO createOfferDTO(Offer offer){

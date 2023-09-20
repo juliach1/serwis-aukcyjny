@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static boolean isDateBeforeNow(LocalDateTime localDateTime){
+        return localDateTime.isBefore(LocalDateTime.now());
     }
 
 

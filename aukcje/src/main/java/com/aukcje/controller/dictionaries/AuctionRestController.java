@@ -1,6 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
+import com.aukcje.enums.BidStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.PurchaseStatusNotFoundException;
 import com.aukcje.exception.customException.*;
@@ -33,8 +34,18 @@ public class AuctionRestController {
                                             @RequestParam("kwota") Double bidAmount) throws UserNotFoundException, CanNotBidYourOfferException, OfferNotActiveException, UserNotActiveException, OfferNotFoundException {
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        userAuctionService.placeBid(offerId, bidAmount, userDTO.getId());
+        BidStatusEnum status = userAuctionService.placeBid(offerId, bidAmount, userDTO.getId());
 
-        return ResponseEntity.status(HttpStatus.OK).body("Złożono ofertę");
+        switch (status){
+            case BID_PLACED:
+                return ResponseEntity.status(HttpStatus.CREATED).body(status.toString());
+            case TOO_LOW:
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(status.toString());
+            case AUCTION_ENDED:
+                return ResponseEntity.status(HttpStatus.OK).body(status.toString());
+            default:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(status.toString());
+        }
+
     }
 }

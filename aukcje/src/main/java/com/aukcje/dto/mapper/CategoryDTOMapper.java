@@ -7,6 +7,7 @@ import com.aukcje.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
@@ -32,6 +33,22 @@ public interface CategoryDTOMapper {
     default String map(Category value){
         return value.getName();
     }
+
+
+//    @Named("parentCategory")
+//    default String mapParentCat(Category value){
+//        return value.getName();
+//    }
+
+//    @Named("subCategories")
+//    default List<String> mapParentCat(List<Category> value){
+//        List<String> subCats = new ArrayList<>();
+//        for(Category category : value){
+//            subCats.add(category.getName());
+//        }
+//        return subCats;
+//    }
+
 
     default List<String> map(List<Category> value){
         List<String> subCats = new ArrayList<>();

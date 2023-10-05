@@ -1,5 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.OfferDTO;
+import com.aukcje.dto.OfferPurchaseInfoDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.PurchaseStatusNotFoundException;
@@ -12,10 +14,8 @@ import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -42,6 +42,18 @@ public class PurchaseController {
         offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);
 
         return "redirect:/uzytkownik/strona-glowna";
+    }
+
+    @GetMapping("/moje-zakupy")
+    public String userOffers(Principal principal, Model model){
+
+        UserDTO user = userService.findByUsername(principal.getName());
+        List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllByUserId(user.getId());
+
+        model.addAttribute("purchaseDTOS", purchasedItems);
+
+        return "/views/user/offer/purchase/user-purchases";
+
     }
 
 }

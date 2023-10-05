@@ -1,5 +1,7 @@
 package com.aukcje.service;
 
+import com.aukcje.dto.OfferPurchaseInfoDTO;
+import com.aukcje.dto.mapper.OfferPurchaseInfoDTOMapper;
 import com.aukcje.entity.*;
 import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.enums.PurchaseStatusEnum;
@@ -53,6 +55,38 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
     public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
         List<OfferPurchaseInfo> offerPurchaseInfo = checkAndCreatePurchaseInfos(offerPurchaseModels, buyerId, addressId);
         save0fferPurchases(offerPurchaseInfo);
+    }
+
+    @Override
+    public List<OfferPurchaseInfoDTO> getAllByUserId(Long userId) {
+        List<OfferPurchaseInfo> offerPurchaseInfos = offerPurchaseInfoRepository.findOfferPurchaseInfoByBuyerIdOrderByPurchaseTimeDesc(userId);
+
+        return createOfferPurchaseInfoDTO(offerPurchaseInfos);
+    }
+
+    private List<OfferPurchaseInfoDTO> createOfferPurchaseInfoDTO(List<OfferPurchaseInfo> offerPurchaseInfos){
+        List<OfferPurchaseInfoDTO> purchaseInfoDTOS = new ArrayList<>();
+
+        for (OfferPurchaseInfo purchaseInfo : offerPurchaseInfos){
+            OfferPurchaseInfoDTO offerPurchaseInfoDTO = createOfferPurchaseInfoDTO(purchaseInfo);
+            offerPurchaseInfoDTO.setPurchaseTime(purchaseInfo.getPurchaseTime());
+            System.out.println("ZAKUPY UŻYTKOWNIKA: ");
+            System.out.println("oferta: " + offerPurchaseInfoDTO.getOffer().getOfferDetails().getTitle());
+            System.out.println("liczba sztuk: " + offerPurchaseInfoDTO.getQuantity());
+            System.out.println("buyer: " + offerPurchaseInfoDTO.getBuyer().getUsername());
+            System.out.println("seller: " + offerPurchaseInfoDTO.getSeller().getUsername());
+            System.out.println("data zakupu: " + offerPurchaseInfoDTO.getPurchaseTime().toString());
+            System.out.println("adres: " + offerPurchaseInfoDTO.getAddress().getStreetName());
+            System.out.println("--------------------------------------------");
+
+            purchaseInfoDTOS.add(offerPurchaseInfoDTO);
+        }
+
+        return purchaseInfoDTOS;
+    }
+
+    private OfferPurchaseInfoDTO createOfferPurchaseInfoDTO(OfferPurchaseInfo offerPurchaseInfo){
+        return OfferPurchaseInfoDTOMapper.instance.offerPurchaseInfoDTO(offerPurchaseInfo);
     }
 
     private void save0fferPurchases(List<OfferPurchaseInfo> offerPurchaseInfos){

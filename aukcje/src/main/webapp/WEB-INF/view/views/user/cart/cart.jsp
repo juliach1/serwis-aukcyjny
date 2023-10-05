@@ -1,5 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -41,13 +43,13 @@
                                 <h5 class="mb-0">Liczba ofert w koszyku: <h5 id="all-pcs">${cartOfferDTOS.size()}</h5> </h5>
                             </div>
                             <div class="card-body">
-                                <c:forEach var = "cartOffer" items = "${cartOfferDTOS}">
-                                    <div id="cart-offer_${cartOffer.id}" data-offer-id_${cartOffer.id}="${cartOffer.offer.id}" class="row cart-offer-card">
+                                <c:forEach var = "purchase" items = "${cartOfferDTOS}">
+                                    <div id="cart-offer_${purchase.id}" data-offer-id_${purchase.id}="${purchase.offer.id}" class="row cart-offer-card">
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                         <!-- Image -->
                                         <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                             <div class="img-container">
-                                                <img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/files/img/offers/${cartOffer.offer.id}/1.png" alt="Card image">
+                                                <img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/files/img/offers/${purchase.offer.id}/1.png" alt="Card image">
                                             </div>
 
                                             <a href="#!">
@@ -59,11 +61,11 @@
 
                                     <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                         <!-- Data -->
-                                        <p><strong>${cartOffer.offer.offerDetails.title}</strong></p>
-                                        <p>dostępnych ${cartOffer.offer.quantity}szt.</p>
+                                        <p><strong>${purchase.offer.offerDetails.title}</strong></p>
+                                        <p>dostępnych ${purchase.offer.quantity}szt.</p>
                                         <div class="d-flex align-items-center">
-                                            <a class="remove-button text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${cartOffer.id}" onclick="removeCartOffer(${cartOffer.id})" role="button"> <i id="remove-icon-${cartOffer.id}" class="card-action-icon remove-icon bi bi-trash3"></i> </a>
-                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${cartOffer.id}" onclick="moveFromCartToFavoriteOffers(${cartOffer.id}, ${cartOffer.offer.id})"> <i id="observe-icon_${cartOffer.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
+                                            <a class="remove-button text-right me-5" title="Usuń przedmiot z koszyka" id="remove-button_${purchase.id}" onclick="removeCartOffer(${purchase.id})" role="button"> <i id="remove-icon-${purchase.id}" class="card-action-icon remove-icon bi bi-trash3"></i> </a>
+                                            <a class="observe-button text-right" title="Przenieś do obserwowanych" id="observe-button_${purchase.id}" onclick="moveFromCartToFavoriteOffers(${purchase.id}, ${purchase.offer.id})"> <i id="observe-icon_${purchase.id}" class="card-action-icon observe-icon bi bi-eye"></i> </a>
                                         </div>
                                        <!-- Data -->
                                     </div>
@@ -71,23 +73,23 @@
                                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                         <!-- Quantity -->
                                         <div class="d-flex justify-content-center">
-                                            <div id="quantity-selection_${cartOffer.id}" class="d-inline-flex justify-content-center col-4 col-md-2">
-                                                <button id="button-quantity-down_${cartOffer.id}"  onclick="decrementQuantity(${cartOffer.id})" type="button" class="btn button-quantity-down col">
+                                            <div id="quantity-selection_${purchase.id}" class="d-inline-flex justify-content-center col-4 col-md-2">
+                                                <button id="button-quantity-down_${purchase.id}" onclick="decrementQuantity(${purchase.id})" type="button" class="btn button-quantity-down col">
                                                     <i class="bi bi-caret-down"></i>
                                                 </button>
 
-                                                <input type="number" class="quantity form-control" id="quantity_${cartOffer.id}" name="quantity" value="${cartOffer.quantity}" min="1" max="${cartOffer.offer.quantity}" readonly>
+                                                <input type="number" class="quantity form-control" id="quantity_${purchase.id}" name="quantity" value="${purchase.quantity}" min="1" max="${purchase.offer.quantity}" readonly>
 
-                                                <button id="button-quantity-up_${cartOffer.id}" onclick="incrementQuantity(${cartOffer.id})" type="button" class="btn button-quantity-up col">
+                                                <button id="button-quantity-up_${purchase.id}" onclick="incrementQuantity(${purchase.id})" type="button" class="btn button-quantity-up col">
                                                     <i class="bi bi-caret-up"></i>
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <p class="text-center pt-2 mb-4">/${cartOffer.offer.quantity}szt.</p>
+                                        <p class="text-center pt-2 mb-4">/${purchase.offer.quantity}szt.</p>
 
                                         <div class="d-flex justify-content-center">
-                                            <h1 id="price_${cartOffer.id}" class="price" data-pc-price_${cartOffer.id}="${cartOffer.offer.price}">${cartOffer.offer.price * cartOffer.quantity}<span>${cartOffer.offer.price*10 % 1 == 0 ? '0' : ''} zł</span></h1>
+                                            <h1 id="price_${purchase.id}" class="price" data-pc-price_${purchase.id}="${purchase.offer.price}">${purchase.offer.price * purchase.quantity}<span>${purchase.offer.price*10 % 1 == 0 ? '0' : ''} zł</span></h1>
                                         </div>
                                     </div>
                                         <hr class="my-4" />

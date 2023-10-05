@@ -1,5 +1,6 @@
 package com.aukcje.service.iface;
 
+import com.aukcje.dto.OfferPurchaseInfoDTO;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.PurchaseStatusNotFoundException;
 import com.aukcje.exception.customException.AddressNotFoundException;
@@ -15,4 +16,6 @@ public interface OfferPurchaseService {
     //TODO DOKOŃCZYĆ
 
     void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException;
+
+    List<OfferPurchaseInfoDTO> getAllByUserId(Long userId);
 }

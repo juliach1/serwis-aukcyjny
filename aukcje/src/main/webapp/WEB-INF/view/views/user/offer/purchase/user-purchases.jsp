@@ -39,7 +39,14 @@
                 <div class="row d-flex justify-content-center my-4">
                     <div class="col">
                         <p class="display-3 text-center">
-                            Twoje zakupy
+                                <c:choose>
+                                <c:when test="${requestScope.bought == true}">
+                                    Twoje zakupy
+                                </c:when>
+                                <c:when test="${requestScope.sold == true}">
+                                        Sprzedane przedmioty
+                                </c:when>
+                            </c:choose>
                         </p>
 
                         <c:forEach var ="purchase" items = "${purchaseDTOS}" varStatus="index">
@@ -101,14 +108,40 @@
                                                             </c:when>
 
                                                             <c:when test="${purchase.purchaseStatus.name == 'Wysłane'}">
-                                                                <button id="change-status-btn-${purchase.id}" type="submit" onclick="changeOfferStatus(${purchase.id},3)" class="btn button-submit h-auto ms-2 w-100">
-                                                                    Odebrano zamówienie
-                                                                </button>
+                                                                <c:choose>
+                                                                    <c:when test="${purchase.buyer.username == pageContext.request.userPrincipal.name}">
+                                                                        <button id="change-status-btn-${purchase.id}"
+                                                                                type="submit"
+                                                                                onclick="changeOfferStatus(${purchase.id},3)"
+                                                                                class="btn button-submit h-auto ms-2 w-100">
+                                                                            Odebrano zamówienie
+                                                                        </button>
+                                                                    </c:when>
+                                                                </c:choose>
                                                             </c:when>
+
                                                         </c:choose>
                                                     </section>
 
-                                                    <p class="mt-2"> <strong>Sprzedawca:</strong> ${purchase.seller.username}</p>
+                                                    <c:choose>
+                                                        <c:when test="${requestScope.bought==true}">
+                                                            <p class="mt-2">
+                                                                <strong>Sprzedawca:</strong>
+                                                                <a href="">
+                                                                        ${purchase.seller.username}
+                                                                </a>
+                                                            </p>
+                                                        </c:when>
+                                                        <c:when test="${requestScope.sold==true}">
+                                                            <strong>Kupujący:</strong>
+                                                            <p class="mt-2">
+                                                                <a href="">
+                                                                        ${purchase.buyer.username}
+                                                                </a>
+                                                            </p>
+                                                        </c:when>
+                                                    </c:choose>
+
                                                 </div>
 
                                                 <!-- Data -->

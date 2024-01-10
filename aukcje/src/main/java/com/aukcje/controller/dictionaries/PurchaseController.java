@@ -1,6 +1,5 @@
 package com.aukcje.controller.dictionaries;
 
-import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPurchaseInfoDTO;
 import com.aukcje.dto.PurchaseStatusDTO;
 import com.aukcje.dto.UserDTO;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
@@ -46,19 +46,38 @@ public class PurchaseController {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);
 
+
         return "redirect:/uzytkownik/strona-glowna";
     }
 
     @GetMapping("/moje-zakupy")
-    public String userOffers(Principal principal, Model model){
+    public String userOffers(HttpServletRequest request, Principal principal, Model model){
 
         UserDTO user = userService.findByUsername(principal.getName());
-        List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllByUserId(user.getId());
+        List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllByBuyerId(user.getId());
 
         List<PurchaseStatusDTO> purchaseStatuses = purchaseStatusService.findAll();
 
         model.addAttribute("purchaseDTOS", purchasedItems);
         model.addAttribute("purchaseStatusDTOS", purchaseStatuses);
+        request.setAttribute("bought", true);
+
+
+        return "/views/user/offer/purchase/user-purchases";
+
+    }
+
+    @GetMapping("/sprzedane")
+    public String userSoldOffers(HttpServletRequest request, Principal principal, Model model){
+
+        UserDTO user = userService.findByUsername(principal.getName());
+        List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllBySellerId(user.getId());
+
+        List<PurchaseStatusDTO> purchaseStatuses = purchaseStatusService.findAll();
+
+        model.addAttribute("purchaseDTOS", purchasedItems);
+        model.addAttribute("purchaseStatusDTOS", purchaseStatuses);
+        request.setAttribute("sold", true);
 
         return "/views/user/offer/purchase/user-purchases";
 

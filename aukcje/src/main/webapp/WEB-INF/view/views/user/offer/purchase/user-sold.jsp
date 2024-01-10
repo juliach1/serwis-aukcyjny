@@ -39,7 +39,7 @@
                 <div class="row d-flex justify-content-center my-4">
                     <div class="col">
                         <p class="display-3 text-center">
-                            Twoje zakupy
+                            Sprzedane przedmioty
                         </p>
 
                         <c:forEach var ="purchase" items = "${purchaseDTOS}" varStatus="index">

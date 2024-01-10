@@ -66,8 +66,15 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
     }
 
     @Override
-    public List<OfferPurchaseInfoDTO> getAllByUserId(Long userId) {
+    public List<OfferPurchaseInfoDTO> getAllByBuyerId(Long userId) {
         List<OfferPurchaseInfo> offerPurchaseInfos = offerPurchaseInfoRepository.findOfferPurchaseInfoByBuyerIdOrderByPurchaseTimeDesc(userId);
+
+        return createOfferPurchaseInfoDTO(offerPurchaseInfos);
+    }
+
+    @Override
+    public List<OfferPurchaseInfoDTO> getAllBySellerId(Long userId) {
+        List<OfferPurchaseInfo> offerPurchaseInfos = offerPurchaseInfoRepository.findOfferPurchaseInfoBySellerIdOrderByPurchaseTimeDesc(userId);
 
         return createOfferPurchaseInfoDTO(offerPurchaseInfos);
     }

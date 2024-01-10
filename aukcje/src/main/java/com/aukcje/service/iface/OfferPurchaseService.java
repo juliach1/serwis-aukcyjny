@@ -22,7 +22,9 @@ public interface OfferPurchaseService {
 
     OfferPurchaseInfoDTO getById(Long id);
 
-    List<OfferPurchaseInfoDTO> getAllByUserId(Long userId);
+    List<OfferPurchaseInfoDTO> getAllByBuyerId(Long userId);
+
+    List<OfferPurchaseInfoDTO> getAllBySellerId(Long userId);
 
     void updatePurchaseStatus(Long offerPurchaseId, Integer purchaseStatus);
 

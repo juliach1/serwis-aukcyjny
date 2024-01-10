@@ -8,4 +8,6 @@ import java.util.List;
 public interface OfferPurchaseInfoRepository extends JpaRepository<OfferPurchaseInfo, Long> {
 
     List<OfferPurchaseInfo> findOfferPurchaseInfoByBuyerIdOrderByPurchaseTimeDesc(Long buyerId);
+
+    List<OfferPurchaseInfo> findOfferPurchaseInfoBySellerIdOrderByPurchaseTimeDesc(Long userId);
 }

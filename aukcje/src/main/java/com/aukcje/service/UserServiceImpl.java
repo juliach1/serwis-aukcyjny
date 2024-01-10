@@ -123,7 +123,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUsername(String username){ return createUserDTO(userRepository.findByUsername(username)); }
 
-
     public List<UserDTO> createUserDTO(List<User> users){
         List<UserDTO> usersDTO = new ArrayList<>();
         for (User tempUser : users){

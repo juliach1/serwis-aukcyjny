@@ -54,7 +54,7 @@
 
                                     <li><a id="my-offers-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/moje-oferty">Moje oferty</a></li>
 
-                                    <li><a id="my-orders-item" class="dropdown-item">Moje zamówienia</a></li>
+                                    <li><a id="my-orders-item" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/moje-zakupy">Moje zamówienia</a></li>
 
                                     <li>
                                         <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">

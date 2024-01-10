@@ -1,6 +1,7 @@
 package com.aukcje.service;
 
 import com.aukcje.dto.OfferPurchaseInfoDTO;
+import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.OfferPurchaseInfoDTOMapper;
 import com.aukcje.entity.*;
 import com.aukcje.enums.OfferStatusEnum;
@@ -19,6 +20,7 @@ import com.aukcje.service.iface.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +60,27 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
     }
 
     @Override
+    public OfferPurchaseInfoDTO getById(Long id) {
+        //todo: dodaj błąd: nie znaleziono transakcji
+        return createOfferPurchaseInfoDTO(offerPurchaseInfoRepository.findById(id).orElse(null));
+    }
+
+    @Override
     public List<OfferPurchaseInfoDTO> getAllByUserId(Long userId) {
         List<OfferPurchaseInfo> offerPurchaseInfos = offerPurchaseInfoRepository.findOfferPurchaseInfoByBuyerIdOrderByPurchaseTimeDesc(userId);
 
         return createOfferPurchaseInfoDTO(offerPurchaseInfos);
+    }
+
+    @Override
+    @Transactional
+    public void updatePurchaseStatus(Long offerPurchaseId, Integer purchaseStatusId) {
+        PurchaseStatus purchaseStatus = purchaseStatusRepository.getOne(purchaseStatusId);
+        OfferPurchaseInfo offerPurchaseInfo = offerPurchaseInfoRepository.getOne(offerPurchaseId);
+
+        offerPurchaseInfo.setPurchaseStatus(purchaseStatus);
+
+        offerPurchaseInfoRepository.save(offerPurchaseInfo);
     }
 
     private List<OfferPurchaseInfoDTO> createOfferPurchaseInfoDTO(List<OfferPurchaseInfo> offerPurchaseInfos){

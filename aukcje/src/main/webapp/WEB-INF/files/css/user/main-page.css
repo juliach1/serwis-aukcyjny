@@ -43,6 +43,13 @@
 .card-body .price{
     font-size: 3rem;
 }
+
+.card-body .item-title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .card-body .item-title:hover{
     color: darkorange;
 

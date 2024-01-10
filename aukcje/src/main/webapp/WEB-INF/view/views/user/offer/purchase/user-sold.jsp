@@ -78,10 +78,7 @@
                                                 <p class="item-description-short">${purchase.offer.offerDetails.description}</p>
                                                 <div class="purchase-data align-self-bottom">
                                                     <hr class="my-4" />
-                                                    <section class="status-section">
-                                                        <div class="d-inline-flex">
-                                                            <strong>Status zamówienia:</strong>
-                                                            <p id="purchase-status-name-${purchase.id}" class="ms-1">${purchase.purchaseStatus.name}</p></div>
+                                                    <p> <strong>Status zamówienia:</strong> <p id="purchase-status-name-${purchase.id}">${purchase.purchaseStatus.name}</p>
 
                                                         <c:choose>
 
@@ -89,10 +86,9 @@
 
                                                                 <c:choose>
                                                                     <c:when test="${purchase.seller.username == pageContext.request.userPrincipal.name}">
-                                                                        <button id="change-status-btn-${purchase.id}"
-                                                                                type="submit"
+                                                                        <button type="submit"
                                                                                 onclick="changeOfferStatus(${purchase.id},2)"
-                                                                                class="btn button-submit  h-auto ms-2 w-100">
+                                                                                class="btn button-submit text-lowercase h-auto ms-2 w-100">
                                                                             Wysłano zamówienie
                                                                         </button>
                                                                     </c:when>
@@ -101,14 +97,12 @@
                                                             </c:when>
 
                                                             <c:when test="${purchase.purchaseStatus.name == 'Wysłane'}">
-                                                                <button id="change-status-btn-${purchase.id}" type="submit" onclick="changeOfferStatus(${purchase.id},3)" class="btn button-submit h-auto ms-2 w-100">
+                                                                <button type="submit" onclick="changeOfferStatus(${purchase.id},3)" class="btn button-submit text-lowercase h-auto ms-2 w-100">
                                                                     Odebrano zamówienie
                                                                 </button>
                                                             </c:when>
                                                         </c:choose>
-                                                    </section>
-
-                                                    <p class="mt-2"> <strong>Sprzedawca:</strong> ${purchase.seller.username}</p>
+                                                    <p> <strong>Sprzedawca:</strong> ${purchase.seller.username}</p>
                                                 </div>
 
                                                 <!-- Data -->

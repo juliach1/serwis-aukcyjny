@@ -2,12 +2,12 @@ package com.aukcje.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Data
 public class OfferPurchaseInfoDTO {
 
+    private Long id;
     private UserDTO seller;
     private UserDTO buyer;
     private OfferDTO offer;

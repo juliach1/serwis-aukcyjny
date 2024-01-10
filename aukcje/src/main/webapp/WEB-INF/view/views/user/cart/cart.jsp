@@ -122,6 +122,7 @@
                     <div class="col-md-4">
 
                         <div class="card mb-4">
+
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Adres dostawy: </h5>
                             </div>
@@ -160,7 +161,7 @@
                             </div>
                         </div>
 
-                        <div class="-card mb4">
+                        <div class="-card mb-4">
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Podsumowanie koszyka</h5>
                             </div>

@@ -2,6 +2,7 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferPurchaseInfoDTO;
+import com.aukcje.dto.PurchaseStatusDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.PurchaseStatusNotFoundException;
@@ -11,6 +12,7 @@ import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.service.iface.OfferPurchaseService;
+import com.aukcje.service.iface.PurchaseStatusService;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class PurchaseController {
 
     @Autowired
     private OfferPurchaseService offerPurchaseService;
+
+    @Autowired
+    private PurchaseStatusService purchaseStatusService;
 
     @Autowired
     private UserService userService;
@@ -50,7 +55,10 @@ public class PurchaseController {
         UserDTO user = userService.findByUsername(principal.getName());
         List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllByUserId(user.getId());
 
+        List<PurchaseStatusDTO> purchaseStatuses = purchaseStatusService.findAll();
+
         model.addAttribute("purchaseDTOS", purchasedItems);
+        model.addAttribute("purchaseStatusDTOS", purchaseStatuses);
 
         return "/views/user/offer/purchase/user-purchases";
 

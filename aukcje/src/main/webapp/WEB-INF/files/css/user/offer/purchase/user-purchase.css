@@ -1,0 +1,24 @@
+.purchase-date{
+    font-size: 3.2rem;
+    padding-bottom: 3rem;
+    padding-top: 2.4rem;
+}
+
+.card-body{
+    overflow: hidden;
+}
+
+.item-description-short{
+    display: -webkit-box;
+    height: 220px;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: justify;
+}
+
+.img-container img{
+    height: 320px;
+    object-fit: cover;
+    object-position: center;
+}

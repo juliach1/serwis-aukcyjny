@@ -36,7 +36,6 @@ public class AuctionRestController {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         BidStatusEnum status = userAuctionService.placeBid(offerId, bidAmount, userDTO.getId());
 
-
         HttpStatus httpStatus;
         switch (status){
             case BID_PLACED:

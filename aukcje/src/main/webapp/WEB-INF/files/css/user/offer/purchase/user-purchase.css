@@ -10,7 +10,7 @@
 
 .item-description-short{
     display: -webkit-box;
-    height: 220px;
+    height: 150px;
     -webkit-line-clamp: 9;
     -webkit-box-orient: vertical;
     overflow: hidden;

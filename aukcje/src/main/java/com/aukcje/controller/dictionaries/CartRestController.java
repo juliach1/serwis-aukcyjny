@@ -59,11 +59,9 @@ public class CartRestController {
         UserDTO user = userService.findByUsername(principal.getName());
         if(cartOfferService.isCartOfferAssignedToUser(user.id, cartOfferId)){
             if(pcs == null){
-                System.out.println("USUWANIE WSZYSTKICH");
-                cartOfferService.delete(cartOfferId);   //usuń wszystkie dla danej oferty
-            }else{        //usuń jedną
+                cartOfferService.delete(cartOfferId);
+            }else{
                 if( user.getUserStatus().getName().equals(UserStatusEnum.ACTIVE.name()) ){
-                    System.out.println("USUWANIE JEDNEGO");
                     cartOfferService.changeQuantity(cartOfferId, pcs);
                 }
             }

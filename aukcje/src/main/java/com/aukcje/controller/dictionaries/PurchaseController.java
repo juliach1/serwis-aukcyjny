@@ -41,11 +41,10 @@ public class PurchaseController {
             @RequestBody List<OfferPurchaseModel> offerPurchaseModel,
             @RequestParam("adresId") Long addressId
     ) throws UserNotFoundException, OfferNotActiveException, AddressNotFoundException, OfferNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
-        System.out.println("W PRZETWARZANIU KONTEOLERA KUPOWANIA");
+        System.out.println("-------> Metoda przetwarzania zakupów");
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
         offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);
-
 
         return "redirect:/uzytkownik/strona-glowna";
     }

@@ -42,7 +42,7 @@
                     <jsp:useBean id="offerDTOS" scope="request" type="java.util.List<com.aukcje.dto.OfferDTO>"/>
 
                     <c:if test="${offerDTOS.size()<1}">
-                        <div class="noresultbox p-5 my-5 border">
+                        <div class="noresultbox p-5 my-5 border rounded-3">
                             <p class=" display-8 text-danger"> Nie masz aktywnych ofert. Zacznij sprzedawać już teraz! </p>
                         </div>
                     </c:if>

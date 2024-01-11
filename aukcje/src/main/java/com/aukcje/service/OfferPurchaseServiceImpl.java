@@ -55,6 +55,8 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
 
     @Override
     public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
+        System.out.println("-------> Metoda głowna w serwisie");
+
         List<OfferPurchaseInfo> offerPurchaseInfo = checkAndCreatePurchaseInfos(offerPurchaseModels, buyerId, addressId);
         save0fferPurchases(offerPurchaseInfo);
     }
@@ -122,10 +124,14 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
             cartOfferService.deleteAllByOfferId(offer.getId());
             offerRepository.save(offerPurchaseInfo.getOffer());
             offerPurchaseInfoRepository.save(offerPurchaseInfo);
+            System.out.println("zapisano oferte: "+offerPurchaseInfo.getOffer().getOfferDetails().getTitle());
         }
     }
 
     private List<OfferPurchaseInfo> checkAndCreatePurchaseInfos(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, OfferNotFoundException, AddressNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
+        System.out.println("-------> Metoda prywatna w serwisie");
+        System.out.println("-------> OFFERPURCHASEMODEL - rozmiar: "+offerPurchaseModels.size());
+
         List<OfferPurchaseInfo> offerPurchaseInfos = new ArrayList<>();
         User buyer = userRepository.findById(buyerId).orElseThrow(() -> new UserNotFoundException("Nie znaleziono konta sprzedawcy"));
         Address address = addressRepository.findById(addressId).orElseThrow( AddressNotFoundException::new );

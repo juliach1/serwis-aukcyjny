@@ -146,14 +146,35 @@
                                                                     <c:when test="${purchase.purchaseStatus.name == 'Zrealizowane'}">
                                                                         <c:choose>
                                                                             <c:when test="${purchase.buyer.username == pageContext.request.userPrincipal.name}">
-                                                                                <select class="form-select w-50 w-lg-75 w-md-100 w-sm-50" aria-label="Default select example">
-                                                                                    <option selected>Oceń sprzedającego...</option>
-                                                                                    <option value="5">5</option>
-                                                                                    <option value="4">4</option>
-                                                                                    <option value="3">3</option>
-                                                                                    <option value="2">2</option>
-                                                                                    <option value="1">1</option>
-                                                                                </select>
+
+                                                                                <c:choose>
+                                                                                    <c:when test="${purchase.userRating == null}">
+                                                                                        <div class="d-flex">
+                                                                                            <select id="seller-rating-select-${purchase.id}" class="col form-select w-50 w-lg-75 w-md-100 w-sm-50">
+                                                                                                <option selected>Oceń sprzedającego...</option>
+                                                                                                <option value="5">5</option>
+                                                                                                <option value="4">4</option>
+                                                                                                <option value="3">3</option>
+                                                                                                <option value="2">2</option>
+                                                                                                <option value="1">1</option>
+                                                                                            </select>
+                                                                                            <button id="seller-rating-btn-${purchase.id}"
+                                                                                                    type="submit"
+                                                                                                    onclick="rateSeller(${purchase.id}, ${purchase.seller.id})"
+                                                                                                    class="btn col-3 button-submit h-auto ms-2 mb-3">
+                                                                                                OK
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <div class="d-inline-flex">
+                                                                                            <strong>Przyznana ocena: </strong> <p class="ms-2"> ${purchase.userRating.rating} </p>
+                                                                                        </div>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+
+
+
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </c:when>

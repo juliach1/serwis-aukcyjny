@@ -48,4 +48,8 @@ public class OfferPurchaseInfo {
     @Column(name="QUANTITY")
     private Integer quantity;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "ID_USER_RATING")
+    private UserRating userRating;
+
 }

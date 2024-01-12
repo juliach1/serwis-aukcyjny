@@ -4,6 +4,7 @@ import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserDTOMapper;
 import com.aukcje.entity.Role;
 import com.aukcje.entity.User;
+import com.aukcje.entity.UserRating;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
@@ -165,6 +166,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserActive(User user) {
         return Objects.equals(user.getUserStatus().getId(), UserStatusEnum.ACTIVE.getId());
+    }
+
+    @Override
+    @Transactional
+    public void setUserRating(Long userId, Double userRating) {
+        User user = userRepository.getOne(userId);
+        user.setAverageRate(userRating);
+        userRepository.save(user);
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

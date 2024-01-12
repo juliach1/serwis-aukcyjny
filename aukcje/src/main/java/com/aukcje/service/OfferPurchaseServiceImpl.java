@@ -8,10 +8,7 @@ import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.enums.PurchaseStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.PurchaseStatusNotFoundException;
-import com.aukcje.exception.customException.AddressNotFoundException;
-import com.aukcje.exception.customException.OfferNotFoundException;
-import com.aukcje.exception.customException.OfferStatusNotFoundException;
-import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.exception.customException.*;
 import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.repository.*;
 import com.aukcje.service.iface.CartOfferService;
@@ -52,6 +49,14 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
 
     @Autowired
     private CartOfferService cartOfferService;
+
+    @Override
+    public void setRating(Long purchaseId, UserRating userRating) throws PurchaseNotFoundException {
+        OfferPurchaseInfo offerPurchaseInfo = offerPurchaseInfoRepository.findById(purchaseId).orElseThrow(PurchaseNotFoundException::new);
+        offerPurchaseInfo.setUserRating(userRating);
+        System.out.println("ZAPISYWANIE USERRATING: "+userRating.getRating());
+        offerPurchaseInfoRepository.save(offerPurchaseInfo);
+    }
 
     @Override
     public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {

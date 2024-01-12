@@ -1,0 +1,105 @@
+package com.aukcje.service;
+
+import com.aukcje.dto.UserRatingDTO;
+import com.aukcje.dto.mapper.UserRatingDTOMapper;
+import com.aukcje.entity.OfferPurchaseInfo;
+import com.aukcje.entity.User;
+import com.aukcje.entity.UserRating;
+import com.aukcje.exception.customException.CouldNotRateUser;
+import com.aukcje.exception.customException.PurchaseNotFoundException;
+import com.aukcje.model.UserRatingModel;
+import com.aukcje.repository.OfferPurchaseInfoRepository;
+import com.aukcje.repository.UserRatingRepository;
+import com.aukcje.repository.UserRepository;
+import com.aukcje.service.iface.UserRatingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class UserRatingServiceImpl implements UserRatingService {
+
+    @Autowired
+    private UserRatingRepository userRatingRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private OfferPurchaseInfoRepository offerPurchaseInfoRepository;
+
+    @Autowired
+    private OfferPurchaseServiceImpl offerPurchaseService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+
+    @Override
+    public Double calculateAvarageRatingForUser(Long userId){
+        List<UserRating> userRatings = userRatingRepository.getAllByUserId(userId);
+        List<UserRatingDTO> userRatingDTOS = createUserRatingDTO(userRatings);
+
+        int ratingsNumber = userRatingDTOS.size();
+        long ratingsSum = 0L;
+        double avarageValue;
+
+        for(UserRatingDTO tempRating : userRatingDTOS){
+            ratingsSum = ratingsSum + tempRating.getRating();
+        }
+
+        avarageValue = 1.0 * ratingsSum / ratingsNumber;
+
+        return avarageValue;
+    }
+
+    @Override
+    public void addRatingForUser(UserRatingModel userRatingModel) throws CouldNotRateUser, PurchaseNotFoundException {
+        UserRating userRating = new UserRating();
+
+
+        if(isValid(userRatingModel)){
+            long userId = userRatingModel.getUserId();
+            long purchaseId = userRatingModel.getPurchaseId();
+            int rating = userRatingModel.getRating();
+
+            OfferPurchaseInfo offerPurchaseInfo = offerPurchaseInfoRepository.getOne(purchaseId);
+
+            User user = userRepository.getOne(userId);
+
+            userRating.setUser(user);
+            userRating.setRating(rating);
+
+            UserRating userRatingNew = userRatingRepository.save(userRating);
+            offerPurchaseService.setRating(purchaseId, userRatingNew);
+
+            Double avarageRate = calculateAvarageRatingForUser(userId);
+            userService.setUserRating(userRatingModel.getUserId(), avarageRate);
+
+        }else {
+            throw new CouldNotRateUser();
+        }
+    }
+
+    private boolean isValid(UserRatingModel userRatingModel){
+        Integer rating = userRatingModel.getRating();
+        Long userId = userRatingModel.getUserId();
+        return userId != null && rating >= 1  && rating <= 5 && userRatingModel.getPurchaseId() != null;
+    }
+
+    private UserRatingDTO createUserRatingDTO(UserRating userRating){
+        return UserRatingDTOMapper.instance.userRatingDTO(userRating);
+    }
+
+    private List<UserRatingDTO> createUserRatingDTO(List<UserRating> userRatings){
+        List<UserRatingDTO> userRatingDTOS = new ArrayList<>();
+
+        for (UserRating userRating : userRatings){
+            UserRatingDTO userRatingDTO = createUserRatingDTO(userRating);
+            userRatingDTOS.add(userRatingDTO);
+        }
+        return userRatingDTOS;
+    }
+}

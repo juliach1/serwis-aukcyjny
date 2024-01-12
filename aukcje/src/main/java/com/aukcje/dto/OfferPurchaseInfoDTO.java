@@ -16,4 +16,6 @@ public class OfferPurchaseInfoDTO {
     private LocalDateTime purchaseTime;
     private Double price;
     private Integer quantity;
+    private UserRatingDTO userRating;
+
 }

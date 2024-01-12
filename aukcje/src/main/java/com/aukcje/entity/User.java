@@ -36,7 +36,7 @@ public class User {
     private String email;
 
     @Column(name="AVERAGE_RATE")
-    private Integer averageRate;
+    private Double averageRate;
 
     @Column(name="AVATAR_PATH")
     private String avatarPath;

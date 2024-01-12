@@ -44,14 +44,15 @@ public class UserRatingServiceImpl implements UserRatingService {
 
         int ratingsNumber = userRatingDTOS.size();
         long ratingsSum = 0L;
-        double avarageValue;
+        Double avarageValue = null;
 
-        for(UserRatingDTO tempRating : userRatingDTOS){
-            ratingsSum = ratingsSum + tempRating.getRating();
+        if(ratingsNumber >= 5) {
+            for (UserRatingDTO tempRating : userRatingDTOS) {
+                ratingsSum = ratingsSum + tempRating.getRating();
+            }
+
+            avarageValue = 1.0 * ratingsSum / ratingsNumber;
         }
-
-        avarageValue = 1.0 * ratingsSum / ratingsNumber;
-
         return avarageValue;
     }
 

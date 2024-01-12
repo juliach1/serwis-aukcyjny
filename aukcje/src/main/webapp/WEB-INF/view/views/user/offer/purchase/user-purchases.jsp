@@ -168,7 +168,7 @@
                                                                                     </c:when>
                                                                                     <c:otherwise>
                                                                                         <div class="d-inline-flex">
-                                                                                            <strong>Przyznana ocena: </strong> <p class="ms-2"> ${purchase.userRating.rating} </p>
+                                                                                            <strong>Przyznana ocena:</strong> <p class="ms-2">${purchase.userRating.rating}</p>
                                                                                         </div>
                                                                                     </c:otherwise>
                                                                                 </c:choose>

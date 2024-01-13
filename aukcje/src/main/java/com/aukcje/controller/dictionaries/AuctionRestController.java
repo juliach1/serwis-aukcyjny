@@ -9,24 +9,24 @@ import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserAuctionService;
 import com.aukcje.service.iface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/oferta")
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class AuctionRestController {
 
-    @Autowired
-    private UserAuctionService userAuctionService;
-
-    @Autowired
-    private UserService userService;
+    private final UserAuctionService userAuctionService;
+    private final UserService userService;
 
     @GetMapping("/licytuj")
     public ResponseEntity<String> placeBid( Principal principal,

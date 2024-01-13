@@ -11,7 +11,6 @@ public interface AddressService {
 
    Address getAddressFromAddressAddModel(AddressModel addressModel,
                                          Long userId);
-
    void updateAddress(AddressModel addressModel, Long userId);
 
    AddressDTO findById(Long addressId);

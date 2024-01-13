@@ -18,6 +18,7 @@ import com.aukcje.repository.UserRepository;
 import com.aukcje.repository.UserStatusRepository;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.utils.Utils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,25 +29,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor(onConstructor_ = {@Inject})
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CustomUserRepository customUserRepository;
-    @Autowired
-    private UserStatusRepository userStatusRepository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepository roleRepository;
-
+    private final UserRepository userRepository;
+    private final CustomUserRepository customUserRepository;
+    private final UserStatusRepository userStatusRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<UserDTO> findAll() {

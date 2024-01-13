@@ -6,36 +6,32 @@ import com.aukcje.exception.customException.CartOfferNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/koszyk")
 public class CartRestController {
 
-    @Autowired
-    CartOfferService cartOfferService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    UserStatusService userStatusService;
+    private final CartOfferService cartOfferService;
+    private final UserService userService;
 
     @GetMapping("/dodaj")
     public void addOfferToCart(HttpServletResponse response,
                                   Principal principal,
                                   @RequestParam(value = "ofertaId") Long offerId,
-                                  @RequestParam(value = "szt", required = false) Integer pcs,
-                                  Model model
-    ){
-
+                                  @RequestParam(value = "szt", required = false) Integer pcs)
+    {
         UserDTO user = userService.findByUsername(principal.getName());
 
         if( user.getUserStatus().getId().equals(UserStatusEnum.ACTIVE.getId()) ){

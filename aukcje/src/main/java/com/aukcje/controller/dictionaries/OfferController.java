@@ -9,6 +9,7 @@ import com.aukcje.exception.customException.InactiveOfferException;
 import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -25,26 +28,16 @@ import java.util.Objects;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/oferta")
 public class OfferController {
 
-    @Autowired
-    OfferService offerService;
-
-    @Autowired
-    CategoryService categoryService;
-
-    @Autowired
-    UserAuctionService userAuctionService;
-
-    @Autowired
-    OfferTypeService offerTypeService;
-
-    @Autowired
-    ItemConditionService itemConditionService;
-
-    @Autowired
-    UserService userService;
+    private final OfferService offerService;
+    private final CategoryService categoryService;
+    private final UserAuctionService userAuctionService;
+    private final OfferTypeService offerTypeService;
+    private final ItemConditionService itemConditionService;
+    private final UserService userService;
 
     @GetMapping("/moje-oferty")
     public String userOffers(Principal principal, Model model){

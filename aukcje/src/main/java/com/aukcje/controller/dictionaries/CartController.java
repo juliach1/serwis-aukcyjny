@@ -6,30 +6,26 @@ import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.inject.Inject;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/koszyk")
 public class CartController {
 
-    @Autowired
-    CartOfferService cartOfferService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    UserStatusService userStatusService;
-
-    @Autowired
-    AddressService addressService;
+    private final CartOfferService cartOfferService;
+    private final UserService userService;
+    private final UserStatusService userStatusService;
+    private final AddressService addressService;
 
     @GetMapping("")
     public String getCart(Principal principal, Model model){

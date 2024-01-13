@@ -3,6 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.service.iface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -11,16 +12,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("")
 public class LoginController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    //zamienia puste stringi na nulle
+    //TODO PRZENIEŚĆ ZAWARTOŚĆ METODY DO INNEJ KLASY
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);

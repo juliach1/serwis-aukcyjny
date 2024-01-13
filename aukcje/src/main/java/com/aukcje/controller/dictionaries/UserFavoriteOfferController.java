@@ -8,33 +8,27 @@ import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.OfferTypeService;
 import com.aukcje.service.iface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.inject.Inject;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/uzytkownik/ulubione")
 public class UserFavoriteOfferController {
 
+    private final CategoryService categoryService;
+    private final OfferService offerService;
+    private final OfferTypeService offerTypeService;
+    private final UserService userService;
     private final Integer PAGE_SIZE = 24;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private OfferService offerService;
-
-    @Autowired
-    private OfferTypeService offerTypeService;
-
-    @Autowired
-    private UserService userService;
-
 
     @GetMapping()
     public String showFavoritesPage(Principal principal, Model model) {

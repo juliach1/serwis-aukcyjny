@@ -7,25 +7,26 @@ import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/admin/uzytkownik")
 //@RequiredArgsConstructor(onConstructor_ = @__({@Inject}))
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserStatusService userStatusService;
+    private final UserService userService;
+    private final UserStatusService userStatusService;
 
     @GetMapping("")
     public String searchUser(Model model,

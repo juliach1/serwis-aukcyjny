@@ -3,6 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.CategoryParentHierarchyDTO;
 import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.service.iface.CategoryService;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,14 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/rest")
 public class CategoryRestController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Setter
     private String baseUrl;

@@ -10,29 +10,27 @@ import com.aukcje.model.AddressModel;
 import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CountryService;
 import com.aukcje.service.iface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 //TODO dodać: podgląd adresów
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/uzytkownik/adres")
 public class AddressController {
 
-    @Autowired
-    AddressService addressService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    CountryService countryService;
-
+    private final AddressService addressService;
+    private final UserService userService;
+    private final CountryService countryService;
 
     @GetMapping("")
     public String userAddresses(Principal principal, Model model){

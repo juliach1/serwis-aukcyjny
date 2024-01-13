@@ -13,27 +13,25 @@ import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.PurchaseStatusService;
 import com.aukcje.service.iface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/zakup")
 public class PurchaseController {
 
-    @Autowired
-    private OfferPurchaseService offerPurchaseService;
-
-    @Autowired
-    private PurchaseStatusService purchaseStatusService;
-
-    @Autowired
-    private UserService userService;
+    private final OfferPurchaseService offerPurchaseService;
+    private final PurchaseStatusService purchaseStatusService;
+    private final UserService userService;
 
     @PostMapping("/przetworz")
     public String newPurchase(

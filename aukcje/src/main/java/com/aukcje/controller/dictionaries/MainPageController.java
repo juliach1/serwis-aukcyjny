@@ -5,29 +5,26 @@ import com.aukcje.dto.OfferSearchDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.service.iface.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/uzytkownik/strona-glowna")
 public class MainPageController {
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private OfferService offerService;
-
-    @Autowired
-    private OfferTypeService offerTypeService;
-
-    @Autowired
-    private UserService userService;
+    private final CategoryService categoryService;
+    private final OfferService offerService;
+    private final OfferTypeService offerTypeService;
+    private final UserService userService;
 
     private final Integer PAGE_SIZE = 12;
 

@@ -30,7 +30,7 @@
     <section class="central container col-sm-12 col-md-10 col-xl-8 bg-light">
         <div class="address-list bg-light p-5 mt-5 d-flex flex-column align-items-center">
 
-            <p class="display-3 text-center mt-4 mb-5">
+            <p class="display-3 text-center my-4">
                 Twoje adresy
             </p>
 
@@ -50,65 +50,66 @@
                                 </c:if>
 
                                 <li class="d-flex align-items-center mx-4">
-                                <div class="col ms-4 text-end">
-                                    <div class="address text-right">
-                                        <p class="mb-0">${address.firstName} ${address.lastName}</p>
-                                        <p class="mb-0">${address.country.name}</p>
-                                        <p class="mb-0">${address.city}, ${address.postalCode}</p>
-                                        <p class="mb-0">${address.streetName}</p>
-                                        <p class="mb-0">tel. ${address.phone}</p>
+                                    <div class="col text-end">
+                                        <div class="address text-right">
+                                            <p class="mb-0">${address.firstName} ${address.lastName}</p>
+                                            <p class="mb-0">${address.country.name}</p>
+                                            <p class="mb-0">${address.city}, ${address.postalCode}</p>
+                                            <p class="mb-0">${address.streetName}</p>
+                                            <p class="mb-0">tel. ${address.phone}</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <a id="edit-button_${address.id}" title="Edytuj adres" data-bs-toggle="modal"
-                                   data-bs-target="#myModal_${address.id}"
-                                   href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${address.id}"
-                                   role="button">
-                                    <i id="edit-icon_${address.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
-                                </a>
+                                    <a id="edit-button_${address.id}" title="Edytuj adres" data-bs-toggle="modal"
+                                       data-bs-target="#myModal_${address.id}"
+                                       href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${address.id}"
+                                       role="button">
+                                        <i id="edit-icon_${address.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
+                                    </a>
 
-                                <a id="remove-button_${address.id}" title="Usuń adres" data-bs-toggle="modal"
-                                   data-bs-target="#myModal_${address.id}"
-                                   href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${address.id}"
-                                   role="button">
-                                    <i id="remove-icon_${address.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
-                                </a>
-                            </li>
-                            </div>
-
-
+                                    <a id="remove-button_${address.id}" title="Usuń adres" data-bs-toggle="modal"
+                                       data-bs-target="#myModal_${address.id}"
+                                       href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${address.id}"
+                                       role="button">
+                                        <i id="remove-icon_${address.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
+                                    </a>
+                                </li>
+                        </div>
 
                             <div class="modal" id="myModal_${address.id}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-
-                                        <!-- Modal Header -->
                                         <div class="modal-header">
                                             <h4 class="modal-title">Usunąć adres?</h4>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <!-- Modal body -->
                                         <div class="modal-body">
                                             Czy na pewno chcesz usunąć wybrany adres? Nie da się cofnąć tego działania.
                                         </div>
-
-                                        <!-- Modal footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn button-submit" onclick="deleteAddress(${address.id})">Tak</button>
                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nie</button>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
+
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
-                <p id="addressNotSelectedError" class="error" style="display: none">Wybierz adres</p>
             </ul>
-        </div>
 
         </div>
+            <div class="w-50 my-5">
+                <a id="add-address-btn" title="Dodaj nowy adres"
+                   href="${pageContext.request.contextPath}/uzytkownik/adres/dodaj"
+                   role="button"
+                   class="btn button-submit text-uppercase d-flex justify-content-center align-items-center">
+                    Nowy adres
+                </a>
+            </div>
+        </div>
+
     </section>
 </main>
 

@@ -38,12 +38,15 @@ public class PurchaseRestController {
         if(isUserBuyer(user, purchaseInfoDTO) && isStatus(PurchaseStatusEnum.SENT, purchaseInfoDTO)) {
             offerPurchaseService.updatePurchaseStatus(purchaseId, statusId);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
         } else if (isUserSeller(user, purchaseInfoDTO) && isStatus(PurchaseStatusEnum.NEW, purchaseInfoDTO)) {
             offerPurchaseService.updatePurchaseStatus(purchaseId, statusId);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             throw new PermissionDeniedException();
+
         }
     }
 

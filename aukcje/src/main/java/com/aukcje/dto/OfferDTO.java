@@ -26,5 +26,4 @@ public class OfferDTO {
     public List<CategoryPathCategoryDTO> categoryPath;
     private Boolean isFavorite;
 
-
 }

@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 @Mapper
 public interface UserRegisterModelMapper {
 
@@ -14,6 +17,6 @@ public interface UserRegisterModelMapper {
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "userStatus", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
     User user(UserRegisterModel userRegisterModelModel);
-
 }

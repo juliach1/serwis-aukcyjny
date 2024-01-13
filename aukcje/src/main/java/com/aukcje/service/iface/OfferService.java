@@ -17,7 +17,7 @@ public interface OfferService {
 
     List<OfferDTO> findNewAuctions(Integer pageSize);
 
-    List<OfferDTO> findNewBuyNow(Integer pageSize);
+    List<OfferDTO> findNewBuyNow(Integer pagedSize);
 
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel);
 

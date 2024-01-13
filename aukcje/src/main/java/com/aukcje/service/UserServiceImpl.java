@@ -11,6 +11,7 @@ import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
 import com.aukcje.model.mapper.UserEditModelMapper;
+import com.aukcje.model.mapper.UserRegisterModelMapper;
 import com.aukcje.repository.CustomUserRepository;
 import com.aukcje.repository.RoleRepository;
 import com.aukcje.repository.UserRepository;
@@ -27,6 +28,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -110,16 +112,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserRegisterModel userRegisterModel) {
-        User user = new User();
-        user.setUsername(userRegisterModel.getUsername());
+        User user = UserRegisterModelMapper.instance.user(userRegisterModel);
         user.setPassword(passwordEncoder.encode(userRegisterModel.getPassword()));
-        user.setEmail(userRegisterModel.getEmail());
-        user.setFirstName(userRegisterModel.getFirstName());
-        user.setLastName(userRegisterModel.getLastName());
-        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USERNAME")));;
+        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USERNAME")));;
+        user.setRegistrationDate(LocalDateTime.now());
         userRepository.save(user);
     }
-
 
     @Override
     public UserDTO findByUsername(String username){ return createUserDTO(userRepository.findByUsername(username)); }
@@ -135,11 +133,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateEditUser(UserEditModel userEditModel){
         User user = UserEditModelMapper.instance.user(userEditModel);
-        System.out.printf("EDYCJA");
 
         if(userEditModel.getUserStatus() != null){
             Integer userStatusId = userEditModel.getUserStatus();
-            System.out.printf("USER STATUS: "+userStatusId);
             user.setUserStatus(userStatusRepository.findById(userStatusId).orElseThrow());
         }
 

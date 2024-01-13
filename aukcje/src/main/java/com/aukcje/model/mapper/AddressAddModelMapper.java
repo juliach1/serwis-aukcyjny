@@ -1,6 +1,9 @@
 package com.aukcje.model.mapper;
 
+import com.aukcje.dto.CategoryDTO;
+import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.entity.Address;
+import com.aukcje.entity.Category;
 import com.aukcje.model.AddressModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

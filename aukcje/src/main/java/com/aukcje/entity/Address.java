@@ -47,4 +47,7 @@ public class Address {
     @Column(name = "CITY")
     private String city;
 
+    @Column(name = "IS_DELETED")
+    private Boolean isDeleted;
+
 }

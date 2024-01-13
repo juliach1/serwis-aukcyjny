@@ -15,5 +15,6 @@ public class AddressDTO {
     public String postalCode;
     public String phone;
     public String city;
+    public Boolean isDeleted;
 
 }

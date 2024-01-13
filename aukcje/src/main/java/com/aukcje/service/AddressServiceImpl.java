@@ -5,6 +5,7 @@ import com.aukcje.dto.mapper.AddressDTOMapper;
 import com.aukcje.entity.Address;
 import com.aukcje.entity.Country;
 import com.aukcje.entity.User;
+import com.aukcje.exception.customException.AddressNotFoundException;
 import com.aukcje.model.AddressModel;
 import com.aukcje.model.mapper.AddressAddModelMapper;
 import com.aukcje.model.mapper.AddressEditModelMapper;
@@ -31,12 +32,9 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
-
     @Override
     public Address getAddressFromAddressAddModel(AddressModel addressModel, Long userId) {
-
         Address address = AddressAddModelMapper.instance.address(addressModel);
-
         address.setUser(userRepository.findById(userId).orElseThrow());
         address.setCountry(findByName(addressModel.getCountry()));
 
@@ -47,7 +45,6 @@ public class AddressServiceImpl implements AddressService {
     public void updateAddress(AddressModel addressModel, Long userId) {
         Address address = AddressEditModelMapper.instance.address(addressModel);
         address.setCountry(countryRepository.findByName(addressModel.getCountry()));
-
         address.setUser(findUserById(userId).orElseThrow());
 
         addressRepository.save(address);
@@ -63,16 +60,32 @@ public class AddressServiceImpl implements AddressService {
         return createAddressDTO(addressRepository.findByUserId(userId));
     }
 
+    @Override
+    public List<AddressDTO> findNotDeletedByUserId(Long userId) {
+        return createAddressDTO(addressRepository.findByUserIdAndIsDeletedIsFalse(userId));
+    }
+
+    @Override
+    public AddressDTO findNotDeletedById(Long addressId) throws AddressNotFoundException {
+        Address address = findNotDeletedEntityById(addressId);
+        return createAddressDTO(address);
+    }
+
+    @Override
+    public void deleteAddress(Long addressId) throws AddressNotFoundException {
+        Address address = findNotDeletedEntityById(addressId);
+        address.setIsDeleted(true);
+        addressRepository.save(address);
+    }
 
     @Override
     public void save(AddressModel addressModel, Long userId){
-
         addressRepository.save( getAddressFromAddressAddModel(addressModel, userId) );
     }
 
     @Override
     public boolean isAddressAssignedToUser(Long userId, Long addressId){
-        List<Address> addresses = addressRepository.findByUserId(userId);
+        List<Address> addresses = findNotDeletedEntityByUserId(userId);
         Optional<Address> address = addressRepository.findById(addressId);
 
         if(address.isEmpty()) return false;
@@ -85,6 +98,11 @@ public class AddressServiceImpl implements AddressService {
         return false;
     }
 
+    @Override
+    public boolean isAddressDeleted(AddressDTO addressDTO) {
+        return addressDTO.getIsDeleted();
+    }
+
     private List<AddressDTO> createAddressDTO(List<Address> addresses){
         List<AddressDTO> addressDTOS = new ArrayList<>();
 
@@ -94,6 +112,13 @@ public class AddressServiceImpl implements AddressService {
         return addressDTOS;
     }
 
+    private Address findNotDeletedEntityById(Long addressId) throws AddressNotFoundException {
+        return addressRepository.findByIdAndIsDeletedIsFalse(addressId).orElseThrow(AddressNotFoundException::new);
+    }
+
+    private List<Address> findNotDeletedEntityByUserId(Long userId) {
+        return addressRepository.findByUserIdAndIsDeletedIsFalse(userId);
+    }
 
     private AddressDTO createAddressDTO(Address address){
         return AddressDTOMapper.instance.addressDTO(address);

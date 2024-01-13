@@ -41,7 +41,6 @@ public class PurchaseController {
             @RequestBody List<OfferPurchaseModel> offerPurchaseModel,
             @RequestParam("adresId") Long addressId
     ) throws UserNotFoundException, OfferNotActiveException, AddressNotFoundException, OfferNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
-        System.out.println("-------> Metoda przetwarzania zakupów");
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
         offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);

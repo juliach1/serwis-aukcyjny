@@ -35,7 +35,6 @@ function createDataToSend(card){
     let quantityValue = parseInt(quantityInput.getAttribute("value"));
     const onePcPrice = parseFloat(cartOfferPrice.getAttribute("data-pc-price_"+cartOfferId));
 
-    console.log("one pc price: "+onePcPrice)
     dataToSend.push({
         offerId: offerId,
         quantity: quantityValue,

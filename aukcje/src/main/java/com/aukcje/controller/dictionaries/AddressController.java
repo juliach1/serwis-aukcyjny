@@ -1,7 +1,10 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.AddressDTO;
 import com.aukcje.dto.CountryDTO;
+import com.aukcje.dto.UserDTO;
 import com.aukcje.exception.customException.AddressEditPermissionDeniedException;
+import com.aukcje.exception.customException.AddressNotFoundException;
 import com.aukcje.exception.customException.IncorrectCountryException;
 import com.aukcje.model.AddressModel;
 import com.aukcje.service.iface.AddressService;
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 //TODO dodać: podgląd adresów
 @Controller
@@ -28,6 +32,18 @@ public class AddressController {
 
     @Autowired
     CountryService countryService;
+
+
+    @GetMapping("")
+    public String userAddresses(Principal principal, Model model){
+
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+        List<AddressDTO> addressDTOS = addressService.findNotDeletedByUserId(userDTO.getId());
+
+        model.addAttribute("addressDTOS", addressDTOS);
+
+        return "/views/user/address/address-all";
+    }
 
     @GetMapping("/dodaj")
     public String addAddress(Model model){
@@ -63,18 +79,21 @@ public class AddressController {
     @GetMapping("/edytuj/{adresId}")
     public String editAddress(Principal principal,
                               @PathVariable("adresId") Long addressId,
-                              Model model) throws AddressEditPermissionDeniedException {
+                              Model model) throws AddressEditPermissionDeniedException, AddressNotFoundException {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
+        AddressDTO addressDTO = addressService.findNotDeletedById(addressId);
 
-        if( addressService.isAddressAssignedToUser(userId, addressId) ){
-
+        if(addressDTO == null) {
+            throw new AddressNotFoundException();
+        }
+        if( addressService.isAddressAssignedToUser(userId, addressId) ) {
             model.addAttribute("countries", countryService.findAll());
-            model.addAttribute("addressDTO", addressService.findById(addressId));
+            model.addAttribute("addressDTO", addressDTO);
             model.addAttribute("addressModel", new AddressModel());
 
             return "/views/user/address/addressedit";
-        }else {
+        } else {
             throw new AddressEditPermissionDeniedException();
         }
     }
@@ -84,8 +103,11 @@ public class AddressController {
                                       Model model,
                                       @Valid @ModelAttribute("addressModel") AddressModel addressModel,
                                       BindingResult bindingResult ) throws IncorrectCountryException {
+
+        List<CountryDTO> countries = countryService.findAll();
+
         if(bindingResult.hasErrors()){
-            model.addAttribute("countries", countryService.findAll());
+            model.addAttribute("countries", countries);
             model.addAttribute("addressModel", addressModel);
 
             return "/views/user/address/addressedit";

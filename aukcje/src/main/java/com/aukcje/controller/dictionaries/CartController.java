@@ -35,7 +35,7 @@ public class CartController {
     public String getCart(Principal principal, Model model){
         Long userId = userService.findByUsername(principal.getName()).getId();
         List<CartOfferDTO> cartOfferDTOS = cartOfferService.getAll(userId);
-        List<AddressDTO> addressDTOS = addressService.findByUserId(userId);
+        List<AddressDTO> addressDTOS = addressService.findNotDeletedByUserId(userId);
 
         double fullPrice = 0.0;
 

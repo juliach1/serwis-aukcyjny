@@ -7,7 +7,7 @@ import com.aukcje.exception.customException.UserNotFoundException;
 import java.util.List;
 
 public interface UserFavoriteOfferService {
-    List<UserFavoriteOfferDTO> getAllByUserId(Long userId, Integer pageSize);
+    List<UserFavoriteOfferDTO> getActiveByUserId(Long userId, Integer pageSize);
 
     UserFavoriteOfferDTO geByUserIdAndOfferId(Long userId, Long offerId);
 

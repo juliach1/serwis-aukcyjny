@@ -5,6 +5,7 @@ import com.aukcje.dto.mapper.UserFavoriteOfferDTOMapper;
 import com.aukcje.entity.Offer;
 import com.aukcje.entity.User;
 import com.aukcje.entity.UserFavoriteOffer;
+import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.repository.OfferRepository;
@@ -34,8 +35,8 @@ public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
     private OfferRepository offerRepository;
 
     @Override
-    public List<UserFavoriteOfferDTO> getAllByUserId(Long userId, Integer pageSize) {
-        List<UserFavoriteOffer> offers = userFavoriteOfferRepository.findByUserId( userId, setPageSize(pageSize) ).toList() ;
+    public List<UserFavoriteOfferDTO> getActiveByUserId(Long userId, Integer pageSize) {
+        List<UserFavoriteOffer> offers = userFavoriteOfferRepository.findByUserIdAndOfferOfferStatusIdOrderByInsertTimeDesc( userId, OfferStatusEnum.ACTIVE.getId(), setPageSize(pageSize) ).toList() ;
         return createUserFavoriteOfferDTO(offers);
     }
 

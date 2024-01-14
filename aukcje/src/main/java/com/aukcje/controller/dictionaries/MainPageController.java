@@ -7,7 +7,6 @@ import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.service.iface.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +34,9 @@ public class MainPageController {
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
 
-        List<OfferDTO> favoriteDTOS = offerService.findFavoriteForUser(userDTO.getId(), PAGE_SIZE);
-        List<OfferDTO> auctionDTOS = offerService.findNewAuctions(PAGE_SIZE);
-        List<OfferDTO> buyNowDTOS = offerService.findNewBuyNow(PAGE_SIZE);
+        List<OfferDTO> favoriteDTOS = offerService.findActiveFavoriteForUser(userDTO.getId(), PAGE_SIZE);
+        List<OfferDTO> auctionDTOS = offerService.findNewActiveAuctions(PAGE_SIZE);
+        List<OfferDTO> buyNowDTOS = offerService.findNewActiveBuyNow(PAGE_SIZE);
 
         offerService.setIsFavorite(auctionDTOS, userDTO.getId());
         offerService.setIsFavorite(buyNowDTOS, userDTO.getId());

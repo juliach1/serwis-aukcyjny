@@ -14,9 +14,9 @@ public interface OfferService {
 
     OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException;
 
-    List<OfferDTO> findNewAuctions(Integer pageSize) throws OfferStatusNotFoundException;
+    List<OfferDTO> findNewActiveAuctions(Integer pageSize) throws OfferStatusNotFoundException;
 
-    List<OfferDTO> findNewBuyNow(Integer pagedSize) throws OfferStatusNotFoundException;
+    List<OfferDTO> findNewActiveBuyNow(Integer pagedSize) throws OfferStatusNotFoundException;
 
     List<OfferDTO> findActiveAuctionsByUserId(Long userId, Integer pageSize) throws OfferStatusNotFoundException;
 
@@ -24,7 +24,7 @@ public interface OfferService {
 
     List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel) throws OfferStatusNotFoundException;
 
-    List<OfferDTO> findFavoriteForUser(Long userId, Integer pageSize);
+    List<OfferDTO> findActiveFavoriteForUser(Long userId, Integer pageSize);
 
     Long save(OfferAddModel offerAddModel, Long userId, MultipartFile multipartFile);
 

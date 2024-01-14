@@ -9,7 +9,6 @@ import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.OfferTypeService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,7 @@ public class UserFavoriteOfferController {
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
 
-        List<OfferDTO> favoriteDTOS = offerService.findFavoriteForUser(userDTO.getId(), PAGE_SIZE);
+        List<OfferDTO> favoriteDTOS = offerService.findActiveFavoriteForUser(userDTO.getId(), PAGE_SIZE);
 
         model.addAttribute("pageSize", PAGE_SIZE);
 

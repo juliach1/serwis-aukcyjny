@@ -96,19 +96,20 @@ public class OfferServiceImpl implements OfferService {
     private boolean hasEnded(Offer offer){
         return offer.getEndDate().isAfter(LocalDateTime.now());
     }
+
     private Offer setStatusEnded(Offer offer) throws OfferStatusNotFoundException {
         OfferStatus offerStatus = offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(OfferStatusNotFoundException::new);
         offer.setOfferStatus(offerStatus);
         return offerRepository.save(offer);
     }
     @Override
-    public List<OfferDTO> findNewAuctions(Integer pageSize) throws OfferStatusNotFoundException {
-        return findNewByOfferTypeId(2, pageSize);
+    public List<OfferDTO> findNewActiveAuctions(Integer pageSize) throws OfferStatusNotFoundException {
+        return findNewActiveByOfferTypeId(OfferTypeEnum.AUCTION.getId(), pageSize);
     }
 
     @Override
-    public List<OfferDTO> findNewBuyNow(Integer pageSize) throws OfferStatusNotFoundException {
-        return findNewByOfferTypeId(1, pageSize);
+    public List<OfferDTO> findNewActiveBuyNow(Integer pageSize) throws OfferStatusNotFoundException {
+        return findNewActiveByOfferTypeId(OfferTypeEnum.BUY_NOW.getId(), pageSize);
     }
 
     @Override
@@ -156,8 +157,8 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<OfferDTO> findFavoriteForUser(Long userId, Integer pageSize){
-        List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getAllByUserId(userId, pageSize);
+    public List<OfferDTO> findActiveFavoriteForUser(Long userId, Integer pageSize){
+        List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getActiveByUserId(userId, pageSize);
         return getFromUserFavoriteOfferDTOS(userFavoriteOfferDTOS);
     }
 
@@ -302,10 +303,10 @@ public class OfferServiceImpl implements OfferService {
         return createdPath;
     }
 
-    private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) throws OfferStatusNotFoundException {
+    private List<OfferDTO> findNewActiveByOfferTypeId(Integer offerTypeId, Integer pageSize) throws OfferStatusNotFoundException {
         if(isInvalid(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
 
-        List<Offer> offers = offerRepository.findByOfferTypeIdOrderByInsertDateDesc( offerTypeId, setPageSize(pageSize) ).toList() ;
+        List<Offer> offers = offerRepository.findByOfferTypeIdAndOfferStatusIdOrderByInsertDateDesc( offerTypeId, OfferStatusEnum.ACTIVE.getId(), setPageSize(pageSize) ).toList() ;
 
         List<OfferDTO> offerDTOS = createOfferDTO( offers );
 

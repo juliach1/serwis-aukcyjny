@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
-    Page<Offer> findByOfferTypeIdOrderByInsertDateDesc(Integer typeId, Pageable pageable);
+    Page<Offer> findByOfferTypeIdAndOfferStatusIdOrderByInsertDateDesc(Integer typeId, Integer statusId, Pageable pageable);
 
     Page<Offer> findByUserIdAndOfferTypeIdAndOfferStatusIdOrderByInsertDateDesc(Long userId, Integer typeId, Integer statusId, Pageable pageable);
 

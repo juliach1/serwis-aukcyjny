@@ -273,21 +273,18 @@
                     <div id="seller-info-panel" class="mt-5">
 
                         <div class="d-flex justify-content-center">
-                            <a class="text-center" href="#####PODGLAD UZYTKOWNIKA">
+                            <a class="text-center" href="${pageContext.request.contextPath}/uzytkownik/podglad/${offerDTO.user.id}">
 
                                 <c:choose>
-                                    <c:when test="${empty offerDTO.user.avatarPath}">
-
-                                        <img src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" class="avatar" alt="Zdjęcie profilowe sprzedawcy">
-
+                                    <c:when test="${offerDTO.user.avatarPath == null || offerDTO.user.avatarPath == ''}">
+                                        <img src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" class="avatar" alt="Brak zdjęcia sprzedawcy">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="${pageContext.request.contextPath}/files/img/users/${offerDTO.user.avatarPath}" class="avatar rounded" alt="Zdjęcie">
-
+                                        <img src="${pageContext.request.contextPath}/files/img/users/${offerDTO.user.id}/${offerDTO.user.id}.png" class="avatar" alt="Zdjęcie profilowe sprzedawcy">
                                     </c:otherwise>
                                 </c:choose>
 
-                                <h1>${offerDTO.user.firstName}</h1>
+                                <h1>${offerDTO.user.username}</h1>
 
                             </a>
                         </div>

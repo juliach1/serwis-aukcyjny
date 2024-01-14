@@ -38,16 +38,17 @@ public class OfferController {
     private final ItemConditionService itemConditionService;
     private final UserService userService;
 
+    private final Integer PAGE_SIZE = 64;
+
     @GetMapping("/moje-oferty")
-    public String myOffers(Principal principal, Model model){
+    public String myOffers(Principal principal, Model model) throws OfferStatusNotFoundException {
 
         UserDTO user = userService.findByUsername(principal.getName());
-//        List<OfferDTO> userOffers = offerService.findByUserId(user.getId());
+        List<OfferDTO> userOffers = offerService.findActiveByUserId(user.getId(), PAGE_SIZE);
 
-//        model.addAttribute("offerDTOS", userOffers);
+        model.addAttribute("offerDTOS", userOffers);
 
         return "/views/user/offer/my-offers";
-
     }
 
     @GetMapping("/oferty-uzytkownika/{uzytkownikId}")
@@ -61,10 +62,9 @@ public class OfferController {
         //TODO: PAGINACJA ALBO ZWYKŁA LISTA!
         List<OfferDTO> userOffers;
         if(isTypeAuctions) {
-            System.out.println("AUKCJA!");
-            userOffers = offerService.findActiveAuctionsByUserId(userId, 64);
+            userOffers = offerService.findActiveAuctionsByUserId(userId, PAGE_SIZE);
         }else
-            userOffers = offerService.findActiveBuyNowByUserId(userId, 64);
+            userOffers = offerService.findActiveBuyNowByUserId(userId, PAGE_SIZE);
 
         model.addAttribute("offerDTOS", userOffers);
         model.addAttribute("userDTO", userDTO);
@@ -74,12 +74,15 @@ public class OfferController {
     }
 
     @GetMapping("/podglad/{ofertaId}")
-    public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException, OfferNotFoundException, OfferStatusNotFoundException {
+    public String getOffer(@PathVariable("ofertaId") Long offerId, Principal principal, Model model) throws InactiveOfferException, OfferNotFoundException, OfferStatusNotFoundException {
 
         //TODO dodać: ograniczenie dla AKTYWNYCH; przy nieaktywnych (sprzedanych, usunietych) - blad
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
         OfferDTO offerDTO = offerService.findById(offerId);
         String offerStatus = offerDTO.getOfferStatus().getName();
         String activeStatus = OfferStatusEnum.ACTIVE.toString();
+
+        Boolean isSellerPricipal = principalDTO.getId() == offerDTO.getUser().getId();
 
         if(!Objects.equals( offerStatus, activeStatus )){
             throw new InactiveOfferException();
@@ -99,6 +102,7 @@ public class OfferController {
         }
 
         model.addAttribute("offerDTO", offerDTO);
+        model.addAttribute("isSellerPrincipal", isSellerPricipal);
 
         return "/views/user/offer/offer";
     }

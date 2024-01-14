@@ -14,8 +14,6 @@ public interface OfferService {
 
     OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException;
 
-    List<OfferDTO> findByUserId(Long userId) throws OfferStatusNotFoundException;
-
     List<OfferDTO> findNewAuctions(Integer pageSize) throws OfferStatusNotFoundException;
 
     List<OfferDTO> findNewBuyNow(Integer pagedSize) throws OfferStatusNotFoundException;
@@ -44,4 +42,5 @@ public interface OfferService {
 
     boolean isOfferActive(Offer offer);
 
+    List<OfferDTO> findActiveByUserId(long id, Integer pageSize) throws OfferStatusNotFoundException;
 }

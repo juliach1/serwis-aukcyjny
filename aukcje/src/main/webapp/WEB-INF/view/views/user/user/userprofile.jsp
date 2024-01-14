@@ -93,19 +93,12 @@
                                 <strong class="mx-3">Data rejestracji:</strong>
                                 <p>${userDTO.registrationDate.dayOfMonth}-${userDTO.registrationDate.monthValue}-${userDTO.registrationDate.year}r.</p>
                             </div>
+
+                            <div class="d-inline-flex mt-4">
+                                <a class="mx-3 text-decoration-underline" href="${pageContext.request.contextPath}/uzytkownik/adres"><strong>Przeglądaj swoje adresy</strong></a>
+                            </div>
                         </div>
                     </div>
-
-                    <c:if test="${isPrincipalProfile}">
-                        <div class="btn btn-submit">
-                            <button id="btn-edit-profile-${userDTO.id}"
-                                    type="submit"
-                                    onclick=""
-                                    class="btn w-100 button-submit h-auto">
-                                Edytuj swój profil
-                            </button>
-                        </div>
-                    </c:if>
 
                 </section>
 

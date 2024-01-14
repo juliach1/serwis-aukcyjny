@@ -86,13 +86,6 @@ public class OfferServiceImpl implements OfferService {
         return createOfferDTO(offer);
     }
 
-    @Override
-    public List<OfferDTO> findByUserId(Long userId) throws OfferStatusNotFoundException {
-        List<Offer> offers = offerRepository.findByUserId(userId);
-
-        return createOfferDTO(offers);
-}
-
     private Offer checkAndSetStatus(Offer offer) throws OfferStatusNotFoundException {
         if(hasEnded(offer)){
             offer = setStatusEnded(offer);
@@ -116,6 +109,13 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<OfferDTO> findNewBuyNow(Integer pageSize) throws OfferStatusNotFoundException {
         return findNewByOfferTypeId(1, pageSize);
+    }
+
+    @Override
+    public List<OfferDTO> findActiveByUserId(long id, Integer pageSize) throws OfferStatusNotFoundException {
+        List<Offer> offers = offerRepository.findByUserIdAndOfferStatusIdOrderByInsertDateDesc(id, OfferStatusEnum.ACTIVE.getId(), setPageSize(pageSize)).toList();
+
+        return createOfferDTO(offers);
     }
 
     @Override

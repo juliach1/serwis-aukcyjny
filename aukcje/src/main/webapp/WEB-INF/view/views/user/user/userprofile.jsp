@@ -55,8 +55,24 @@
                 </section>
                 <section id="user-info" class="row my-5">
                     <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
-                        <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${userDTO.id}/${userDTO.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
+                        <c:choose>
+                            <c:when test="${userDTO.avatarPath==null || userDTO.avatarPath==''}">
+                                <img id="profile-photo-ph" src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego" class="d-block w-100">
+                            </c:when>
+                            <c:otherwise>
+                                <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${userDTO.id}/${userDTO.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
+                            </c:otherwise>
+                        </c:choose>
+                        <c:if test="${isPrincipalProfile}">
+                            <form:form method="post" class="d-flex" enctype="multipart/form-data" action="${pageContext.request.contextPath}/uzytkownik/zmien-zdjecie">
+                            <div class="form-check mt-4 pb-4 ps-0">
+                                <input onchange="showSubmitBtn()" type="file" name="file" id="file" accept="image/png, image/jpeg">
+                            </div>
+                                <input id="file-submit" type="submit" style="display: none" value="ok" class="w-50"/>
+                            </form:form>
+                        </c:if>
                     </div>
+
                     <div class="col">
                         <div class="row">
                             <div class="d-inline-flex">
@@ -290,7 +306,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/files/js/user/user/user-profile.js"></script>
-
+<script src="${pageContext.request.contextPath}/files/js/user/user/user-profile.js"></script>
+<script src="${pageContext.request.contextPath}/files/js/user/offer/offer-actions.js"></script>
 
 </body>
 </html>

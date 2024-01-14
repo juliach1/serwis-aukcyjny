@@ -2,28 +2,20 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserDTO;
-import com.aukcje.dto.UserStatusDTO;
-import com.aukcje.entity.Offer;
-import com.aukcje.exception.customException.IncorrectUserStatusException;
 import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
-import com.aukcje.model.UserEditModel;
-import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.UserRatingService;
 import com.aukcje.service.iface.UserService;
-import com.aukcje.service.iface.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -36,6 +28,18 @@ public class UserController {
 
     private final Integer PAGE_SIZE = 12;
 
+    @PostMapping("/zmien-zdjecie")
+    public String changeProfilePhoto(
+                           Principal principal,
+                           @RequestParam("file") MultipartFile file) throws UserNotFoundException {
+
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+        Long userId = userDTO.getId();
+
+        userService.updateProfilePhoto(userId, file);
+
+        return "redirect:/uzytkownik/podglad/"+userId;
+    }
     @GetMapping("/podglad/{uzytkownikId}")
     public String userPage(@PathVariable("uzytkownikId") Long userId,
                            Principal principal,
@@ -58,7 +62,6 @@ public class UserController {
         model.addAttribute("offersNumber", offersNumber);
         model.addAttribute("ratingsNumber", ratingsNumber);
 
-        System.out.println("Controller podglądu dla usera "+userDTO.getId());
         return "/views/user/user/userprofile";
     }
 }

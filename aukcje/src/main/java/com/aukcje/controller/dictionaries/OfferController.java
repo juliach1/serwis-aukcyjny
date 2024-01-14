@@ -73,16 +73,6 @@ public class OfferController {
         return "/views/user/offer/user-offers";
     }
 
-//    @GetMapping("/oferty-uzytkownika/kup-teraz/{uzytkownikId}")
-//    public String userOffers(@PathVariable("uzytkownikId") Long userId, Model model){
-//
-//        //TODO: PAGINACJA ALBO ZWYKŁA LISTA!
-//        List<OfferDTO> userOffers = offerService.findActiveAuctionsByUserId(userId, 64);
-//        model.addAttribute("offerDTOS", userOffers);
-//
-//        return "/views/user/offer/user-offers-auctions";
-//    }
-
     @GetMapping("/podglad/{ofertaId}")
     public String getOffer(@PathVariable("ofertaId") Long offerId, Model model) throws InactiveOfferException, OfferNotFoundException, OfferStatusNotFoundException {
 
@@ -126,8 +116,8 @@ public class OfferController {
     @PostMapping("/dodaj/przetworz")
     public String addOfferProcess(Model model, Principal principal,
                                   @Valid @ModelAttribute("offerAddModel") OfferAddModel offerAddModel,
-                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file,
-                                  Errors error) {
+                                  BindingResult bindingResult, @RequestParam("file") MultipartFile file
+    ) {
 
         if (bindingResult.hasErrors() || !categoryService.isChosenCategoryForOfferAddCorrect(offerAddModel)) {
             model.addAttribute("offerAddModel", offerAddModel);

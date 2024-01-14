@@ -11,7 +11,9 @@ import com.aukcje.model.UserRatingModel;
 import com.aukcje.repository.OfferPurchaseInfoRepository;
 import com.aukcje.repository.UserRatingRepository;
 import com.aukcje.repository.UserRepository;
+import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserRatingService;
+import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,10 @@ public class UserRatingServiceImpl implements UserRatingService {
     private OfferPurchaseInfoRepository offerPurchaseInfoRepository;
 
     @Autowired
-    private OfferPurchaseServiceImpl offerPurchaseService;
+    private OfferPurchaseService offerPurchaseService;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
 
     @Override

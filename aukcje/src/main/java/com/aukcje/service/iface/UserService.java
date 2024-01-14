@@ -10,6 +10,7 @@ import com.aukcje.model.UserSearchModel;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -44,4 +45,6 @@ public interface UserService extends UserDetailsService {
      boolean isUserActive(User user);
 
     void setUserRating(Long userId, Double userRating);
+
+    void updateProfilePhoto(long id, MultipartFile file) throws UserNotFoundException;
 }

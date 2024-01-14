@@ -3,6 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.OfferSearchDTO;
 import com.aukcje.dto.UserDTO;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.service.iface.*;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class MainPageController {
     private final Integer PAGE_SIZE = 12;
 
     @GetMapping()
-    public String showMainPage(Principal principal, Model model) {
+    public String showMainPage(Principal principal, Model model) throws OfferStatusNotFoundException {
 
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
@@ -62,7 +63,7 @@ public class MainPageController {
                               @RequestParam(value = "typSortowania", required = false) String sortType,
                               @RequestParam(value = "cenaMin", required = false) Double minPrice,
                               @RequestParam(value = "cenaMax", required = false) Double maxPrice,
-                              @RequestParam(value = "szukacWOpisie", required = false) String searchInDesc){
+                              @RequestParam(value = "szukacWOpisie", required = false) String searchInDesc) throws OfferStatusNotFoundException {
 
         offerSearchModel.setMinSmallerThanMax(offerSearchModel.isMinSmallerThanMax());
 

@@ -1,14 +1,19 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.OfferDTO;
+import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.UserStatusDTO;
+import com.aukcje.entity.Offer;
 import com.aukcje.exception.customException.IncorrectUserStatusException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserSearchModel;
+import com.aukcje.service.iface.OfferService;
+import com.aukcje.service.iface.UserRatingService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,85 +21,44 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@RequestMapping("/admin/uzytkownik")
-//@RequiredArgsConstructor(onConstructor_ = @__({@Inject}))
+@RequestMapping("/uzytkownik")
 public class UserController {
 
     private final UserService userService;
-    private final UserStatusService userStatusService;
+    private final OfferService offerService;
+    private final UserRatingService userRatingService;
 
-    @GetMapping("")
-    public String searchUser(Model model,
-                             @Valid @ModelAttribute("userSearchModel") UserSearchModel userSearchModel,
-                             @RequestParam(value = "fraza", required = false) String phrase,
-                             @RequestParam(value = "rozmiarStrony", required = false) Integer pageSize,
-                             @RequestParam(value = "isActive", required = false) String isActive,
-                             @RequestParam(value = "isBlocked", required = false) String isBlocked,
-                             @RequestParam(value = "isDeleted", required = false) String isDeleted){
+    private final Integer PAGE_SIZE = 12;
 
-        model.addAttribute("users", userService.searchBySearchModel(userSearchModel));
-        return "/views/admin/user/usersearch";
-    }
+    @GetMapping("/podglad/{uzytkownikId}")
+    public String userPage(@PathVariable("uzytkownikId") Long userId,
+                           Principal principal,
+                           Model model) throws UserNotFoundException, OfferStatusNotFoundException {
 
-    @GetMapping("/zablokuj/{uzytkownikId}")
-    public String blockUser(@PathVariable(value = "uzytkownikId") Long userId){
-        userService.setUserBlocked(userId);
-        return "redirect:/admin/uzytkownik";
-    }
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
+        UserDTO userDTO = userService.findById(userId);
+        Boolean isUserPrincipal = userDTO.getId() == principalDTO.getId();
 
-    @GetMapping("/odblokuj/{uzytkownikId}")
-    public String unblockUser(@PathVariable(value = "uzytkownikId") Long userId){
-        userService.setUserActive(userId);
-        return "redirect:/admin/uzytkownik";
-    }
+        List<OfferDTO> actionDTOS = offerService.findActiveAuctionsByUserId(userId, PAGE_SIZE);
+        List<OfferDTO> buyNowDTOS = offerService.findActiveBuyNowByUserId(userId, PAGE_SIZE);
 
-    @GetMapping("/edytuj/{uzytkownikId}")
-    public String editUser(@PathVariable(value = "uzytkownikId") Long userId,
-                                            Model model) throws UserNotFoundException {
-        model.addAttribute("userDTO", userService.findById(userId));
-        model.addAttribute("userEditModel", new UserEditModel());
-        model.addAttribute("statuses", userStatusService.findAll());
+        Integer offersNumber = offerService.getActiveOffersNumberByUserId(userId);
+        Long ratingsNumber = userRatingService.getRatingsNumberByUserId(userId);
 
-        return "/views/admin/user/useredit";
-    }
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("auctionDTOS", actionDTOS);
+        model.addAttribute("buyNowDTOS", buyNowDTOS);
+        model.addAttribute("isPrincipalProfile", isUserPrincipal);
+        model.addAttribute("offersNumber", offersNumber);
+        model.addAttribute("ratingsNumber", ratingsNumber);
 
-    @PostMapping("/edytuj/przetworz")
-    public String editUserProcess(Model model,
-                                  @Valid @ModelAttribute("userEditModel") UserEditModel userEditModel,
-                                  BindingResult bindingResult) throws IncorrectUserStatusException {
-        if(bindingResult.hasErrors()){
-            model.addAttribute("userEditModel", userEditModel);
-            model.addAttribute("statuses", userStatusService.findAll());
-            return "/views/admin/user/useredit";
-        }
-        if(isUserStatusCorrect(userEditModel.getUserStatus())){
-            userService.updateEditUser(userEditModel);
-        }else {
-            throw new IncorrectUserStatusException();
-        }
-
-
-        return "redirect:/admin/uzytkownik";
-    }
-
-    @GetMapping("/usun/{uzytkownikId}")
-    public String removeUser(@PathVariable("uzytkownikId") Long userId){
-        userService.setUserDeleted(userId);
-        return "redirect:/admin/uzytkownik";
-    }
-
-    private boolean isUserStatusCorrect(Integer userStatus){
-        List<UserStatusDTO> userStatusDTOS = userStatusService.findAll();
-        for(UserStatusDTO userStatusDTO : userStatusDTOS){
-            if(Objects.equals( userStatusDTO.getId(), userStatus )){
-                return true;
-            }
-        }
-        return false;
+        System.out.println("Controller podglądu dla usera "+userDTO.getId());
+        return "/views/user/user/userprofile";
     }
 }

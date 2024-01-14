@@ -1,9 +1,12 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.CartOfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
+import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -25,6 +29,8 @@ public class CartRestController {
 
     private final CartOfferService cartOfferService;
     private final UserService userService;
+
+    private final OfferService offerService;
 
     @GetMapping("/dodaj")
     public void addOfferToCart(HttpServletResponse response,
@@ -44,7 +50,6 @@ public class CartRestController {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
-
 
     @GetMapping("/usun")
     public void deleteCartOffer(Principal principal,

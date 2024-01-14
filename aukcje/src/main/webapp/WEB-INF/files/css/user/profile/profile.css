@@ -1,0 +1,5 @@
+#profile-photo{
+    vertical-align: middle;
+    max-height: 34rem;
+    object-fit: cover;
+}

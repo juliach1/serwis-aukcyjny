@@ -8,6 +8,7 @@ import com.aukcje.entity.*;
 import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.enums.OfferTypeEnum;
 import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.OfferSearchModel;
 import com.aukcje.model.mapper.OfferMapper;
@@ -29,6 +30,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -78,30 +80,58 @@ public class OfferServiceImpl implements OfferService {
     private ServletContext servletContext;
 
     @Override
-    public OfferDTO findById(Long id) throws OfferNotFoundException {
-        OfferDTO offerDTO = createOfferDTO( offerRepository.findById(id).orElseThrow(OfferNotFoundException::new) );
-        offerDTO.setOfferPhoto( offerPhotoService.findByOfferId(id) );
-        return offerDTO;
+    public OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException {
+        Offer offer = offerRepository.findById(id).orElseThrow(OfferNotFoundException::new);
+
+        return createOfferDTO(offer);
     }
 
     @Override
-    public List<OfferDTO> findByUserId(Long userId) {
+    public List<OfferDTO> findByUserId(Long userId) throws OfferStatusNotFoundException {
         List<Offer> offers = offerRepository.findByUserId(userId);
+
         return createOfferDTO(offers);
+}
+
+    private Offer checkAndSetStatus(Offer offer) throws OfferStatusNotFoundException {
+        if(hasEnded(offer)){
+            offer = setStatusEnded(offer);
+        }
+        return offer;
     }
 
+    private boolean hasEnded(Offer offer){
+        return offer.getEndDate().isAfter(LocalDateTime.now());
+    }
+    private Offer setStatusEnded(Offer offer) throws OfferStatusNotFoundException {
+        OfferStatus offerStatus = offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(OfferStatusNotFoundException::new);
+        offer.setOfferStatus(offerStatus);
+        return offerRepository.save(offer);
+    }
     @Override
-    public List<OfferDTO> findNewAuctions(Integer pageSize) {
+    public List<OfferDTO> findNewAuctions(Integer pageSize) throws OfferStatusNotFoundException {
         return findNewByOfferTypeId(2, pageSize);
     }
 
     @Override
-    public List<OfferDTO> findNewBuyNow(Integer pageSize) {
+    public List<OfferDTO> findNewBuyNow(Integer pageSize) throws OfferStatusNotFoundException {
         return findNewByOfferTypeId(1, pageSize);
     }
 
     @Override
-    public List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel) {
+    public List<OfferDTO> findActiveAuctionsByUserId(Long userId, Integer pageSize) throws OfferStatusNotFoundException {
+        List<Offer> offers = offerRepository.findByUserIdAndOfferTypeIdAndOfferStatusIdOrderByInsertDateDesc(userId, OfferTypeEnum.AUCTION.getId(), OfferStatusEnum.ACTIVE.getId(), setPageSize(pageSize)).toList();
+        return createOfferDTO(offers);
+    }
+
+    @Override
+    public List<OfferDTO> findActiveBuyNowByUserId(Long userId, Integer pageSize) throws OfferStatusNotFoundException {
+        List<Offer> offers = offerRepository.findByUserIdAndOfferTypeIdAndOfferStatusIdOrderByInsertDateDesc(userId, OfferTypeEnum.BUY_NOW.getId(), OfferStatusEnum.ACTIVE.getId(), setPageSize(pageSize)).toList();
+        return createOfferDTO(offers);
+    }
+
+    @Override
+    public List<OfferDTO> findByOfferSearchModel(OfferSearchModel offerSearchModel) throws OfferStatusNotFoundException {
         return createOfferDTO(customOfferRepository.findByOfferSearchModel(offerSearchModel).toList());
     }
 
@@ -170,6 +200,11 @@ public class OfferServiceImpl implements OfferService {
         cartOfferService.deleteAllByOfferId(offerId);
         userFavoriteOfferService.deleteAllByOfferId(offerId);
         offerRepository.deleteById(offerId);
+    }
+
+    @Override
+    public Integer getActiveOffersNumberByUserId(Long userId) {
+        return offerRepository.countOfferByUserIdAndOfferStatusId(userId, OfferStatusEnum.ACTIVE.getId());
     }
 
     private List<OfferDTO> getFromUserFavoriteOfferDTOS(List<UserFavoriteOfferDTO> userFavoriteOfferDTOS){
@@ -267,12 +302,12 @@ public class OfferServiceImpl implements OfferService {
         return createdPath;
     }
 
-    private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) {
+    private List<OfferDTO> findNewByOfferTypeId(Integer offerTypeId, Integer pageSize) throws OfferStatusNotFoundException {
         if(isInvalid(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
 
         List<Offer> offers = offerRepository.findByOfferTypeIdOrderByInsertDateDesc( offerTypeId, setPageSize(pageSize) ).toList() ;
-        List<OfferDTO> offerDTOS = createOfferDTO( offers );
 
+        List<OfferDTO> offerDTOS = createOfferDTO( offers );
 
         return offerDTOS;
     }
@@ -301,10 +336,11 @@ public class OfferServiceImpl implements OfferService {
         return OfferDTOMapper.instance.offerDTO(offer);
     }
 
-    private List<OfferDTO> createOfferDTO(List<Offer> offers){
+    private List<OfferDTO> createOfferDTO(List<Offer> offers) throws OfferStatusNotFoundException {
         List<OfferDTO> offerDTOS = new ArrayList<>();
 
         for(Offer offer : offers){
+            checkAndSetStatus(offer);
             offerDTOS.add( createOfferDTO(offer) );
         }
         return offerDTOS;

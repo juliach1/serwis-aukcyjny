@@ -41,26 +41,17 @@
 
                 <section id="offer-header" class="d-flex align-items-end" style="position:relative;" >
 
-<%--                    <div class="container" style="display:none; position:absolute; position: absolute; z-index: 10;" id="added-to-cart-alert">--%>
-<%--                        <div class="alert alert-success alert-dismissible">--%>
-<%--                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>--%>
-<%--                            Przedmiot został dodany do koszyka.--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-
-                        <div id="added-to-cart-alert" class="alert alert-success alert-dismissible" data-timeout="5000" style="display:none; position:absolute; z-index: 10;">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
-                            Przedmiot został dodany do koszyka.
-                        </div>
-
+                    <div id="added-to-cart-alert" class="alert alert-success alert-dismissible" data-timeout="5000" style="display:none; position:absolute; z-index: 10;">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
+                        Przedmiot został dodany do koszyka.
+                    </div>
 
                     <div class="flex-column flex-fill col-md-6 col-lg-5 col-xl-4">
                         <p class="display-6">
                             ${offerDTO.offerDetails.title}
                         </p>
 
-                        <h4 class="">
+                        <h4>
                             <c:forEach begin="0" end="${offerDTO.categoryPath.size()-1}" varStatus="index">
                                 <c:choose>
                                     <c:when test="${index.index != 0}">
@@ -73,7 +64,6 @@
                             </c:forEach>
                         </h4>
                     </div>
-
 
                      <c:if test="${offerDTO.offerType.name=='aukcja'}">
                          <div class="ps-3 col-md-6 col-lg-5 col-xl-4 pb-0 mb-0 text-end">
@@ -109,14 +99,14 @@
                                 <div class="carousel-indicators">
                                     <c:forEach begin="0" end="${offerDTO.offerPhoto.size()-1}" varStatus="index">
 
-                                    <c:choose>
-                                        <c:when test="${index.index == 0}">
-                                            <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class="active"></button>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class=""></button>
-                                        </c:otherwise>
-                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${index.index == 0}">
+                                                <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class="active"></button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button" data-bs-target="#photos-carousel" data-bs-slide-to="${index.index}" class=""></button>
+                                            </c:otherwise>
+                                        </c:choose>
 
                                     </c:forEach>
 

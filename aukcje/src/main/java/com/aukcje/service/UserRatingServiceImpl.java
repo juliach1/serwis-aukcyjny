@@ -84,6 +84,11 @@ public class UserRatingServiceImpl implements UserRatingService {
         }
     }
 
+    @Override
+    public Long getRatingsNumberByUserId(Long userId) {
+        return userRatingRepository.countByUserId(userId);
+    }
+
     private boolean isValid(UserRatingModel userRatingModel){
         Integer rating = userRatingModel.getRating();
         Long userId = userRatingModel.getUserId();

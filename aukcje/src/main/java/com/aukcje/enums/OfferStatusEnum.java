@@ -11,24 +11,23 @@ public enum OfferStatusEnum {
         }
     },
 
+    SUSPENDED {
+        @Override
+        public String toString(){
+            return "wstrzymana";
+        }
+        public Integer getId(){ return 2; }
+    },
+
     ENDED {
         @Override
         public String toString(){
             return "zakończona";
         }
         public Integer getId(){
-            return 2;
+            return 3;
         }
     },
-
-    SUSPENDED {
-        @Override
-        public String toString(){
-            return "wstrzymana";
-        }
-        public Integer getId(){ return 3; }
-    },
-
     REMOVED {
         @Override
         public String toString(){

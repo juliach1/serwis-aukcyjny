@@ -11,4 +11,6 @@ public interface UserRatingRepository extends JpaRepository<UserRating, Long> {
 
     List<UserRating> getAllByUserId(Long userId);
 
+    Long countByUserId(Long userId);
+
 }

@@ -107,7 +107,7 @@
                             <td class="text-lowercase">${tempUser.userStatus.name}</td>
 
                             <td>
-                                <a href="#">Podgląd</a>
+                                <a href="${pageContext.request.contextPath}/uzytkownik/podglad/${tempUser.id}">Podgląd</a>
                                 |
                                 <a href="${pageContext.request.contextPath}/admin/uzytkownik/edytuj/${tempUser.id}">Edytuj</a>
                                 |

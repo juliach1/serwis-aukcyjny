@@ -64,4 +64,27 @@ public class UserController {
 
         return "/views/user/user/userprofile";
     }
+
+    @GetMapping("/moj-profil")
+    public String userPage( Principal principal,
+                           Model model) throws UserNotFoundException, OfferStatusNotFoundException {
+
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
+        Long userId = principalDTO.getId();
+
+        List<OfferDTO> actionDTOS = offerService.findActiveAuctionsByUserId(userId, PAGE_SIZE);
+        List<OfferDTO> buyNowDTOS = offerService.findActiveBuyNowByUserId(userId, PAGE_SIZE);
+
+        Integer offersNumber = offerService.getActiveOffersNumberByUserId(userId);
+        Long ratingsNumber = userRatingService.getRatingsNumberByUserId(userId);
+
+        model.addAttribute("userDTO", principalDTO);
+        model.addAttribute("auctionDTOS", actionDTOS);
+        model.addAttribute("buyNowDTOS", buyNowDTOS);
+        model.addAttribute("isPrincipalProfile", true);
+        model.addAttribute("offersNumber", offersNumber);
+        model.addAttribute("ratingsNumber", ratingsNumber);
+
+        return "/views/user/user/userprofile";
+    }
 }

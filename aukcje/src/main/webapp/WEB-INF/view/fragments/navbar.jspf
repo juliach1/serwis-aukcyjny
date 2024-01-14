@@ -48,7 +48,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
                                 <ul class="dropdown-menu">
-                                    <li><a id="my-account-nav-item" class="dropdown-item" href="#">Mój profil</a></li>
+                                    <li><a id="my-account-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/uzytkownik/moj-profil">Mój profil</a></li>
 
                                     <li><a id="new-offer-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/dodaj">Nowa oferta</a></li>
 

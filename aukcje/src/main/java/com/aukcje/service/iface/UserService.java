@@ -44,6 +44,8 @@ public interface UserService extends UserDetailsService {
 
      boolean isUserActive(User user);
 
+     boolean isUserActive(UserDTO userDTO);
+
     void setUserRating(Long userId, Double userRating);
 
     void updateProfilePhoto(long id, MultipartFile file) throws UserNotFoundException;

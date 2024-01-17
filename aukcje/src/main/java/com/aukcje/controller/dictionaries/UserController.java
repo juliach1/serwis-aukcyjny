@@ -25,17 +25,14 @@ public class UserController {
     private final UserService userService;
     private final OfferService offerService;
     private final UserRatingService userRatingService;
-
     private final Integer PAGE_SIZE = 12;
 
     @PostMapping("/zmien-zdjecie")
     public String changeProfilePhoto(
                            Principal principal,
                            @RequestParam("file") MultipartFile file) throws UserNotFoundException {
-
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        Long userId = userDTO.getId();
-
+        long userId = userDTO.getId();
         userService.updateProfilePhoto(userId, file);
 
         return "redirect:/uzytkownik/podglad/"+userId;
@@ -44,16 +41,29 @@ public class UserController {
     public String userPage(@PathVariable("uzytkownikId") Long userId,
                            Principal principal,
                            Model model) throws UserNotFoundException, OfferStatusNotFoundException {
-
-        UserDTO principalDTO = userService.findByUsername(principal.getName());
         UserDTO userDTO = userService.findById(userId);
-        Boolean isUserPrincipal = userDTO.getId() == principalDTO.getId();
+        createModel(model, principal, userDTO);
 
+        return "/views/user/user/userprofile";
+    }
+    @GetMapping("/moj-profil")
+    public String userPage( Principal principal,
+                           Model model) throws OfferStatusNotFoundException {
+        UserDTO userDTO = userService.findByUsername(principal.getName());
+        createModel(model, principal, userDTO);
+
+        return "/views/user/user/userprofile";
+    }
+
+    private void createModel(Model model, Principal principal, UserDTO userDTO) throws OfferStatusNotFoundException {
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
+        Long userId = userDTO.getId();
         List<OfferDTO> actionDTOS = offerService.findActiveAuctionsByUserId(userId, PAGE_SIZE);
         List<OfferDTO> buyNowDTOS = offerService.findActiveBuyNowByUserId(userId, PAGE_SIZE);
-
         Integer offersNumber = offerService.getActiveOffersNumberByUserId(userId);
         Long ratingsNumber = userRatingService.getRatingsNumberByUserId(userId);
+
+        Boolean isUserPrincipal = userDTO.getId() == principalDTO.getId();
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("auctionDTOS", actionDTOS);
@@ -62,29 +72,5 @@ public class UserController {
         model.addAttribute("offersNumber", offersNumber);
         model.addAttribute("ratingsNumber", ratingsNumber);
 
-        return "/views/user/user/userprofile";
-    }
-
-    @GetMapping("/moj-profil")
-    public String userPage( Principal principal,
-                           Model model) throws UserNotFoundException, OfferStatusNotFoundException {
-
-        UserDTO principalDTO = userService.findByUsername(principal.getName());
-        Long userId = principalDTO.getId();
-
-        List<OfferDTO> actionDTOS = offerService.findActiveAuctionsByUserId(userId, PAGE_SIZE);
-        List<OfferDTO> buyNowDTOS = offerService.findActiveBuyNowByUserId(userId, PAGE_SIZE);
-
-        Integer offersNumber = offerService.getActiveOffersNumberByUserId(userId);
-        Long ratingsNumber = userRatingService.getRatingsNumberByUserId(userId);
-
-        model.addAttribute("userDTO", principalDTO);
-        model.addAttribute("auctionDTOS", actionDTOS);
-        model.addAttribute("buyNowDTOS", buyNowDTOS);
-        model.addAttribute("isPrincipalProfile", true);
-        model.addAttribute("offersNumber", offersNumber);
-        model.addAttribute("ratingsNumber", ratingsNumber);
-
-        return "/views/user/user/userprofile";
     }
 }

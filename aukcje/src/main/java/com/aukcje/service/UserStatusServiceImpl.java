@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 //@RequiredArgsConstructor(onConstructor_ = {@Inject})
@@ -26,6 +27,16 @@ public class UserStatusServiceImpl implements UserStatusService {
     @Override
     public UserStatusDTO findById(Integer id){
         return createUserStatusDTO(userStatusRepository.findById(id).orElseThrow());
+    }
+
+    @Override
+    public boolean isUserStatusCorrect(Integer userStatus) {
+        List<UserStatusDTO> userStatusDTOS = findAll();
+        for(UserStatusDTO userStatusDTO : userStatusDTOS){
+            if(Objects.equals( userStatusDTO.getId(), userStatus ))
+                return true;
+        }
+        return false;
     }
 
     public List<UserStatusDTO> createUserStatusDTO(List<UserStatus> userStatuses) {

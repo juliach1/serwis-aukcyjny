@@ -24,7 +24,6 @@ public class UserRatingRestController {
     @PostMapping()
     public void rateUser(HttpServletResponse response,
                          @RequestBody UserRatingModel userRatingModel ) throws CouldNotRateUser, PurchaseNotFoundException {
-
         userRatingService.addRatingForUser(userRatingModel);
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
     }

@@ -5,6 +5,7 @@ import com.aukcje.dto.CategoryParentHierarchyDTO;
 import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.entity.Category;
+import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 
@@ -28,7 +29,7 @@ public interface CategoryService {
 
     void update(CategoryModel categoryModel);
 
-    void delete(Integer id);
+    void delete(Integer id) throws NoSuchCategoryException;
 
     boolean categoryAlreadyExists(String name);
 

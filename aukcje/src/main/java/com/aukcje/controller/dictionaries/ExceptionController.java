@@ -10,14 +10,12 @@ public class ExceptionController {
 
     @ExceptionHandler(CustomizedException.class)
     public String handleException(Exception ex, Model model) {
-
         String errorMessage = "Wystąpił nieznany błąd błąd";
 
-        if (ex instanceof CustomizedException) {
+        if (ex instanceof CustomizedException)
             model.addAttribute("errorMessage", ex.getMessage());
-        } else {
+        else
             model.addAttribute("errorMessage", errorMessage);
-        }
 
         //TODO: zrobić ładniejszą stronę obsługi wyjątków
         return "/views/error/exception";

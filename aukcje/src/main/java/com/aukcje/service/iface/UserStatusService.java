@@ -3,6 +3,7 @@ package com.aukcje.service.iface;
 import com.aukcje.dto.UserStatusDTO;
 
 import java.util.List;
+import java.util.Objects;
 
 public interface UserStatusService {
 
@@ -10,6 +11,6 @@ public interface UserStatusService {
 
     UserStatusDTO findById(Integer id);
 
-
+    boolean isUserStatusCorrect(Integer userStatus);
 
 }

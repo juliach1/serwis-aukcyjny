@@ -1,5 +1,6 @@
 package com.aukcje.service.iface;
 
+import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
 import com.aukcje.enums.BidStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
@@ -17,4 +18,6 @@ public interface UserAuctionService {
     UserAuctionDTO findOneWithHighestValue(Long offerId);
 
     BidStatusEnum placeBid(Long offerId, Double value, Long userId) throws OfferNotFoundException, OfferNotActiveException, UserNotFoundException, UserNotActiveException, CanNotBidYourOfferException;
+
+    boolean hasUserAnyAuctions(OfferDTO offerDTO);
 }

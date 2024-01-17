@@ -5,17 +5,14 @@ import com.aukcje.exception.customException.IncorrectParentException;
 import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
-import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -33,8 +30,7 @@ public class CategoryController {
 
     @GetMapping("/pobierz-wszystkie")
     @Transactional
-    public String getCategories(HttpServletRequest httpServletRequest){
-        List<CategoryDTO> categoryList = categoryService.findAll();
+    public String getCategories(HttpServletRequest httpServletRequest) {
         String url = StringUtils.remove(httpServletRequest.getRequestURL().toString(), "/pobierz-wszystkie");
         categoryRestController.setBaseUrl(url);
 
@@ -42,7 +38,7 @@ public class CategoryController {
     }
 
     @GetMapping("/dodaj")
-    public String addCategory(Model model){
+    public String addCategory(Model model) {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAll());
 
@@ -54,23 +50,26 @@ public class CategoryController {
                                      @Valid @ModelAttribute("categoryModel") CategoryModel categoryModel,
                                      BindingResult bindingResult,
                                      Errors error) throws IncorrectParentException {
-        if(bindingResult.hasErrors() || categoryService.categoryAlreadyExists(categoryModel.getName())){
-            if(categoryService.categoryAlreadyExists(categoryModel.getName())){
+        if(bindingResult.hasErrors() || categoryService.categoryAlreadyExists(categoryModel.getName())) {
+
+            if(categoryService.categoryAlreadyExists(categoryModel.getName()))
                 error.reject("categoryExists","Kategoria o podanej nazwie już istnieje");
-            }
+
             model.addAttribute("categoryModel", categoryModel);
             model.addAttribute("categories", categoryService.findAll());
+
             return "redirect:/admin/kategoria/pobierz-wszystkie";
         }
 
         CategoryDTO parentCategoryDTO;
-        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")){
+        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")) {
             categoryService.update(categoryModel);
         }else {
             parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
             if(parentCategoryDTO != null)
                 categoryService.update(categoryModel);
-            else throw new IncorrectParentException();
+            else
+                throw new IncorrectParentException();
         }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
@@ -114,20 +113,8 @@ public class CategoryController {
     }
 
     @GetMapping("/usun/{kategoriaId}")
-    public String deleteCategory(Principal principal,
-                                @PathVariable("kategoriaId") Integer categoryId) throws NoSuchCategoryException {
-
-        CategoryDTO categoryDTO = categoryService.findById(categoryId);
-        if(categoryDTO!=null){
-            //TODO dodać: CZY NA PEWNO USUNĄĆ?
-            categoryService.delete(categoryId);
-        }else {
-
-            //TODO: [pytanie] czy powinnam robic to tutaj, czy w serwisie?
-            //tzn sprawdzać czy jest taka kategoria
-
-            throw new NoSuchCategoryException();
-        }
+    public String deleteCategory(@PathVariable("kategoriaId") Integer categoryId) throws NoSuchCategoryException {
+        categoryService.delete(categoryId);
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }

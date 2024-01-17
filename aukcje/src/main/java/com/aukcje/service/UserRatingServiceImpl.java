@@ -2,13 +2,11 @@ package com.aukcje.service;
 
 import com.aukcje.dto.UserRatingDTO;
 import com.aukcje.dto.mapper.UserRatingDTOMapper;
-import com.aukcje.entity.OfferPurchaseInfo;
 import com.aukcje.entity.User;
 import com.aukcje.entity.UserRating;
 import com.aukcje.exception.customException.CouldNotRateUser;
 import com.aukcje.exception.customException.PurchaseNotFoundException;
 import com.aukcje.model.UserRatingModel;
-import com.aukcje.repository.OfferPurchaseInfoRepository;
 import com.aukcje.repository.UserRatingRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.OfferPurchaseService;
@@ -30,14 +28,10 @@ public class UserRatingServiceImpl implements UserRatingService {
     private UserRepository userRepository;
 
     @Autowired
-    private OfferPurchaseInfoRepository offerPurchaseInfoRepository;
-
-    @Autowired
     private OfferPurchaseService offerPurchaseService;
 
     @Autowired
     private UserService userService;
-
 
     @Override
     public Double calculateAvarageRatingForUser(Long userId){
@@ -52,7 +46,6 @@ public class UserRatingServiceImpl implements UserRatingService {
             for (UserRatingDTO tempRating : userRatingDTOS) {
                 ratingsSum = ratingsSum + tempRating.getRating();
             }
-
             avarageValue = 1.0 * ratingsSum / ratingsNumber;
         }
         return avarageValue;
@@ -60,18 +53,14 @@ public class UserRatingServiceImpl implements UserRatingService {
 
     @Override
     public void addRatingForUser(UserRatingModel userRatingModel) throws CouldNotRateUser, PurchaseNotFoundException {
-        UserRating userRating = new UserRating();
-
 
         if(isValid(userRatingModel)){
             long userId = userRatingModel.getUserId();
             long purchaseId = userRatingModel.getPurchaseId();
             int rating = userRatingModel.getRating();
-
-            OfferPurchaseInfo offerPurchaseInfo = offerPurchaseInfoRepository.getOne(purchaseId);
-
             User user = userRepository.getOne(userId);
 
+            UserRating userRating = new UserRating();
             userRating.setUser(user);
             userRating.setRating(rating);
 
@@ -80,10 +69,8 @@ public class UserRatingServiceImpl implements UserRatingService {
 
             Double avarageRate = calculateAvarageRatingForUser(userId);
             userService.setUserRating(userRatingModel.getUserId(), avarageRate);
-
-        }else {
+        }else
             throw new CouldNotRateUser();
-        }
     }
 
     @Override

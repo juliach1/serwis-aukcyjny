@@ -6,6 +6,7 @@ import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.entity.Category;
+import com.aukcje.exception.customException.NoSuchCategoryException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.mapper.CategoryAddModelMapper;
@@ -117,8 +118,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Integer id){
-        categoryRepository.delete(categoryRepository.findById(id).orElseThrow());
+    public void delete(Integer id) throws NoSuchCategoryException {
+        CategoryDTO categoryDTO = findById(id);
+        if (categoryDTO!=null)
+            categoryRepository.delete(categoryRepository.findById(id).orElseThrow());
+        else
+            throw new NoSuchCategoryException();
     }
 
     @AssertFalse(message = "Nazwa kategorii jest zajęta!")

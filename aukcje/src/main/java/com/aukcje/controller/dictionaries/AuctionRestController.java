@@ -3,22 +3,21 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.BidStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
-import com.aukcje.exception.PurchaseStatusNotFoundException;
-import com.aukcje.exception.customException.*;
-import com.aukcje.model.OfferPurchaseModel;
-import com.aukcje.service.iface.OfferPurchaseService;
+import com.aukcje.exception.customException.CanNotBidYourOfferException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.UserNotActiveException;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.service.iface.UserAuctionService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/oferta")
@@ -48,9 +47,6 @@ public class AuctionRestController {
                 httpStatus = HttpStatus.BAD_REQUEST; break;
         }
 
-        ResponseEntity<String> responseEntity = ResponseEntity.status(httpStatus).body(status.toString());
-
-        System.out.println("STATUS:" + responseEntity.getStatusCode().name());
-        return responseEntity;
+        return ResponseEntity.status(httpStatus).body(status.toString());
     }
 }

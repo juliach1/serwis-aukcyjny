@@ -42,5 +42,7 @@ public interface OfferService {
 
     boolean isOfferActive(Offer offer);
 
+    boolean isOfferActive(OfferDTO offerDTO);
+
     List<OfferDTO> findActiveByUserId(long id, Integer pageSize) throws OfferStatusNotFoundException;
 }

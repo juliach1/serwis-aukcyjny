@@ -31,7 +31,7 @@ public class AddressRestController {
         UserDTO user = userService.findByUsername(principal.getName());
         addressService.findNotDeletedById(addressId);
 
-        if(addressService.isAddressAssignedToUser(user.getId(), addressId)){
+        if(addressService.isAddressAssignedToUser(user.getId(), addressId)) {
             addressService.deleteAddress(addressId);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
         }else

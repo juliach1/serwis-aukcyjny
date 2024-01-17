@@ -32,14 +32,12 @@ public class UserFavoriteOfferRestController {
     ) throws UserNotFoundException, OfferNotFoundException {
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        if (userDTO.isActive()){
-            System.out.println("DODAWANIE DO ULUBIONYCH Z KOSZYKA");
+        if (userDTO.isActive())
             userFavoriteOfferService.add(offerId, userDTO.getId());
-        }
     }
 
     @GetMapping("/usun")
-    public void removeOfferFromFavorites(@RequestParam(value = "ofertaId") Long offerId){
+    public void removeOfferFromFavorites(@RequestParam(value = "ofertaId") Long offerId) {
         userFavoriteOfferService.deleteAllByOfferId(offerId);
     }
 
@@ -48,11 +46,10 @@ public class UserFavoriteOfferRestController {
             Principal principal,
             @RequestParam(value = "ofertaId") Long offerId
     ) throws UserNotFoundException, OfferNotFoundException {
-
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        if (userDTO.isActive()) {
+
+        if (userDTO.isActive())
             userFavoriteOfferService.toggle(offerId, userDTO.getId());
-        }
     }
 
 }

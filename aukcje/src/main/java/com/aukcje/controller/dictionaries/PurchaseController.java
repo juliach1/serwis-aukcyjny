@@ -28,7 +28,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/zakup")
 public class PurchaseController {
-
     private final OfferPurchaseService offerPurchaseService;
     private final PurchaseStatusService purchaseStatusService;
     private final UserService userService;
@@ -39,7 +38,6 @@ public class PurchaseController {
             @RequestBody List<OfferPurchaseModel> offerPurchaseModel,
             @RequestParam("adresId") Long addressId
     ) throws UserNotFoundException, OfferNotActiveException, AddressNotFoundException, OfferNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
-
         UserDTO userDTO = userService.findByUsername(principal.getName());
         offerPurchaseService.purchaseItems(offerPurchaseModel, userDTO.getId(), addressId);
 
@@ -48,27 +46,21 @@ public class PurchaseController {
 
     @GetMapping("/moje-zakupy")
     public String userOffers(HttpServletRequest request, Principal principal, Model model){
-
         UserDTO user = userService.findByUsername(principal.getName());
         List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllByBuyerId(user.getId());
-
         List<PurchaseStatusDTO> purchaseStatuses = purchaseStatusService.findAll();
 
         model.addAttribute("purchaseDTOS", purchasedItems);
         model.addAttribute("purchaseStatusDTOS", purchaseStatuses);
         request.setAttribute("bought", true);
 
-
         return "/views/user/offer/purchase/user-purchases";
-
     }
 
     @GetMapping("/sprzedane")
     public String userSoldOffers(HttpServletRequest request, Principal principal, Model model){
-
         UserDTO user = userService.findByUsername(principal.getName());
         List<OfferPurchaseInfoDTO> purchasedItems = offerPurchaseService.getAllBySellerId(user.getId());
-
         List<PurchaseStatusDTO> purchaseStatuses = purchaseStatusService.findAll();
 
         model.addAttribute("purchaseDTOS", purchasedItems);
@@ -76,7 +68,6 @@ public class PurchaseController {
         request.setAttribute("sold", true);
 
         return "/views/user/offer/purchase/user-purchases";
-
     }
 
 }

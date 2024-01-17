@@ -11,18 +11,15 @@ import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CountryService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-//TODO dodać: podgląd adresów
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/uzytkownik/adres")
@@ -33,8 +30,7 @@ public class AddressController {
     private final CountryService countryService;
 
     @GetMapping("")
-    public String userAddresses(Principal principal, Model model){
-
+    public String userAddresses(Principal principal, Model model) {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         List<AddressDTO> addressDTOS = addressService.findNotDeletedByUserId(userDTO.getId());
 
@@ -44,7 +40,7 @@ public class AddressController {
     }
 
     @GetMapping("/dodaj")
-    public String addAddress(Model model){
+    public String addAddress(Model model) {
         model.addAttribute("countries", countryService.findAll());
         model.addAttribute("addressModel", new AddressModel());
 
@@ -57,20 +53,19 @@ public class AddressController {
                                     @Valid @ModelAttribute("addressModel") AddressModel addressModel,
                                     BindingResult bindingResult) throws IncorrectCountryException {
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors()) {
             model.addAttribute("addressAddModel", new AddressModel());
             model.addAttribute("countries", countryService.findAll());
-
             return "/views/user/address/addressadd";
         }
 
         CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());
 
-        if(chosenCountry != null){
+        if(chosenCountry != null)
             addressService.save(addressModel, userService.findByUsername(principal.getName()).getId() );
-        }else{
+        else
             throw new IncorrectCountryException();
-        }
+
         return "redirect:/uzytkownik/adres/dodaj";
     }
 
@@ -82,18 +77,17 @@ public class AddressController {
         Long userId = userService.findByUsername(principal.getName()).getId();
         AddressDTO addressDTO = addressService.findNotDeletedById(addressId);
 
-        if(addressDTO == null) {
-            throw new AddressNotFoundException();
-        }
-        if( addressService.isAddressAssignedToUser(userId, addressId) ) {
+        if(addressDTO == null) throw new AddressNotFoundException();
+
+        if(addressService.isAddressAssignedToUser(userId, addressId)) {
             model.addAttribute("countries", countryService.findAll());
             model.addAttribute("addressDTO", addressDTO);
             model.addAttribute("addressModel", new AddressModel());
 
             return "/views/user/address/addressedit";
-        } else {
+        } else
             throw new AddressEditPermissionDeniedException();
-        }
+
     }
 
     @PostMapping("/edytuj/przetworz")
@@ -104,7 +98,7 @@ public class AddressController {
 
         List<CountryDTO> countries = countryService.findAll();
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors()) {
             model.addAttribute("countries", countries);
             model.addAttribute("addressModel", addressModel);
 
@@ -116,9 +110,8 @@ public class AddressController {
         if(chosenCountry != null){
             Long userId = userService.findByUsername(principal.getName()).getId();
             addressService.updateAddress(addressModel, userId);
-        }else{
+        }else
             throw new IncorrectCountryException();
-        }
 
         return "redirect:/uzytkownik/adres/dodaj";
     }

@@ -103,6 +103,11 @@ public class UserAuctionServiceImpl implements UserAuctionService {
         return BidStatusEnum.BID_PLACED;
     }
 
+    @Override
+    public boolean hasUserAnyAuctions(OfferDTO offerDTO) {
+        return findAllByOfferId(offerDTO.getId()).size()>0;
+    }
+
     private boolean isHigherThanLastBid(Double value, Long offerId){
         UserAuctionDTO oneWithHighestValue = findOneWithHighestValue(offerId);
         return oneWithHighestValue.getValue() >= value;

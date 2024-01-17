@@ -21,8 +21,6 @@ import static com.aukcje.service.iface.OfferPurchaseService.*;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/zakup")
 public class PurchaseRestController {
-
-
     private final UserService userService;
     private final OfferPurchaseService offerPurchaseService;
 
@@ -46,8 +44,6 @@ public class PurchaseRestController {
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             throw new PermissionDeniedException();
-
         }
     }
-
 }

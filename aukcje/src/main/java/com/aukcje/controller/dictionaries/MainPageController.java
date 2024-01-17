@@ -42,10 +42,8 @@ public class MainPageController {
         offerService.setIsFavorite(buyNowDTOS, userDTO.getId());
 
         model.addAttribute("pageSize", PAGE_SIZE);
-
         model.addAttribute("offerSearchModel", new OfferSearchModel());
         model.addAttribute("offerSearchDTO", offerSearchDTO);
-
         model.addAttribute("favoriteDTOS", favoriteDTOS);
         model.addAttribute("auctionDTOS", auctionDTOS);
         model.addAttribute("buyNowDTOS", buyNowDTOS);

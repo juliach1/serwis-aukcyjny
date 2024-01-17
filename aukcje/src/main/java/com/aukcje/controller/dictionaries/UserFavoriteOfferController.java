@@ -34,14 +34,11 @@ public class UserFavoriteOfferController {
 
         OfferSearchDTO offerSearchDTO = new OfferSearchDTO(offerTypeService,categoryService);
         UserDTO userDTO = userService.findByUsername( principal.getName());
-
         List<OfferDTO> favoriteDTOS = offerService.findActiveFavoriteForUser(userDTO.getId(), PAGE_SIZE);
 
         model.addAttribute("pageSize", PAGE_SIZE);
-
         model.addAttribute("offerSearchModel", new OfferSearchModel());
         model.addAttribute("offerSearchDTO", offerSearchDTO);
-
         model.addAttribute("favoriteDTOS", favoriteDTOS);
 
         return "/views/user/offer/favorite-offers";

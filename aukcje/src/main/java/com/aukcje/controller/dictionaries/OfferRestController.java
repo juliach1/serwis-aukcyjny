@@ -30,11 +30,10 @@ public class OfferRestController {
     ) throws OfferDeletePermissionDeniedException {
         UserDTO user = userService.findByUsername(principal.getName());
 
-        if(offerService.isOfferAssignedToUser(user.getId(), offerId)){
+        if(offerService.isOfferAssignedToUser(user.getId(), offerId))
             offerService.delete(offerId);
-        }else {
+        else
             throw new OfferDeletePermissionDeniedException();
-        }
     }
 
 }

@@ -174,6 +174,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isUserActive(UserDTO userDTO) {
+        return userDTO.getUserStatus().getId().equals(UserStatusEnum.ACTIVE.getId());
+    }
+
+    @Override
     @Transactional
     public void setUserRating(Long userId, Double userRating) {
         User user = userRepository.getOne(userId);

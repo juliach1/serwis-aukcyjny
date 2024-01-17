@@ -333,6 +333,14 @@ public class OfferServiceImpl implements OfferService {
         return offer.getOfferStatus().getId().equals(OfferStatusEnum.ACTIVE.getId());
     }
 
+    @Override
+    public boolean isOfferActive(OfferDTO offerDTO) {
+        String offerStatus = offerDTO.getOfferStatus().getName();
+        String activeStatus = OfferStatusEnum.ACTIVE.toString();
+
+        return Objects.equals( offerStatus, activeStatus );
+    }
+
     private OfferDTO createOfferDTO(Offer offer){
         return OfferDTOMapper.instance.offerDTO(offer);
     }

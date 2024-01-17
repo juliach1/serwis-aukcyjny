@@ -33,20 +33,20 @@ public class UserAdminController {
                              @RequestParam(value = "rozmiarStrony", required = false) Integer pageSize,
                              @RequestParam(value = "isActive", required = false) String isActive,
                              @RequestParam(value = "isBlocked", required = false) String isBlocked,
-                             @RequestParam(value = "isDeleted", required = false) String isDeleted){
+                             @RequestParam(value = "isDeleted", required = false) String isDeleted) {
 
         model.addAttribute("users", userService.searchBySearchModel(userSearchModel));
         return "/views/admin/user/usersearch";
     }
 
     @GetMapping("/zablokuj/{uzytkownikId}")
-    public String blockUser(@PathVariable(value = "uzytkownikId") Long userId){
+    public String blockUser(@PathVariable(value = "uzytkownikId") Long userId) {
         userService.setUserBlocked(userId);
         return "redirect:/admin/uzytkownik";
     }
 
     @GetMapping("/odblokuj/{uzytkownikId}")
-    public String unblockUser(@PathVariable(value = "uzytkownikId") Long userId){
+    public String unblockUser(@PathVariable(value = "uzytkownikId") Long userId) {
         userService.setUserActive(userId);
         return "redirect:/admin/uzytkownik";
     }
@@ -65,34 +65,24 @@ public class UserAdminController {
     public String editUserProcess(Model model,
                                   @Valid @ModelAttribute("userEditModel") UserEditModel userEditModel,
                                   BindingResult bindingResult) throws IncorrectUserStatusException {
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors()) {
             model.addAttribute("userEditModel", userEditModel);
             model.addAttribute("statuses", userStatusService.findAll());
             return "/views/admin/user/useredit";
         }
-        if(isUserStatusCorrect(userEditModel.getUserStatus())){
-            userService.updateEditUser(userEditModel);
-        }else {
-            throw new IncorrectUserStatusException();
-        }
 
+        if(userStatusService.isUserStatusCorrect(userEditModel.getUserStatus()))
+            userService.updateEditUser(userEditModel);
+        else
+            throw new IncorrectUserStatusException();
 
         return "redirect:/admin/uzytkownik";
     }
 
     @GetMapping("/usun/{uzytkownikId}")
-    public String removeUser(@PathVariable("uzytkownikId") Long userId){
+    public String removeUser(@PathVariable("uzytkownikId") Long userId) {
         userService.setUserDeleted(userId);
         return "redirect:/admin/uzytkownik";
     }
 
-    private boolean isUserStatusCorrect(Integer userStatus){
-        List<UserStatusDTO> userStatusDTOS = userStatusService.findAll();
-        for(UserStatusDTO userStatusDTO : userStatusDTOS){
-            if(Objects.equals( userStatusDTO.getId(), userStatus )){
-                return true;
-            }
-        }
-        return false;
-    }
 }

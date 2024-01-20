@@ -5,7 +5,6 @@ import com.aukcje.exception.customException.PurchaseNotFoundException;
 import com.aukcje.model.UserRatingModel;
 import com.aukcje.service.iface.UserRatingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

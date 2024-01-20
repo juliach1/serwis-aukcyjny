@@ -6,9 +6,18 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Utils {
+
+    public static <T> Set<T> setMerge(Set<T> set_1, Set<T> set_2){
+        Set<T> my_set = new HashSet<>(set_1);
+        my_set.addAll(set_2);
+        return my_set;
+    }
 
     public static boolean isLong(String str){
         if(str == null) return false;

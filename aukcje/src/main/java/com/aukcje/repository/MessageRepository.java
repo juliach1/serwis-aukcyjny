@@ -17,4 +17,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     Set<MessageSender> findByReceiverIdOrderBySendTimeDesc(Long receiverId);
 
     MessageTime findTopByReceiverIdAndSenderIdOrderBySendTimeDesc(Long receiverId, Long senderId);
+
+    Message findTopMessageByReceiverIdAndSenderIdOrderBySendTimeDesc(Long receiverId, Long senderId);
 }

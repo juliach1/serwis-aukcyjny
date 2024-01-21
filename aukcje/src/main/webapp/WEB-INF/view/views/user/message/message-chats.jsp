@@ -33,78 +33,51 @@
                 Twoje czaty
             </p>
 
-        <div class="card-body">
+            <div class="card-body">
 
-            <ul class="list-group list-group-flush">
-                <c:choose>
-                    <c:when test="${empty newestMessageDTOS}">
-                        <p class="text-danger">Brak dostępnych adresów. Dodaj nowy adres, by móc dokonywać zakupów.</p>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var ="messageChat" items = "${newestMessageDTOS}" varStatus="index">
+                <ul class="d-flex justify-content-center ps-0">
 
-                            <div id="message-chat_${messageChat.otherUser}">
-                                <c:if test="${index.index!=0}">
-                                    <hr class="my-4" />
-                                </c:if>
-
-                                <li class="d-flex align-items-center mx-4">
-                                    <div class="col text-end">
-                                        <div class="address text-right">
-                                            <p class="mb-0">${messageChat.sendTime.toLocalTime()}</p>
-                                            <p class="mb-0">${messageChat.sendTime.toLocalDate()}</p>
-                                            <p class="mb-0">${messageChat.otherUser.username}</p>
-
+                    <div class="col-10">
+                        <c:choose>
+                            <c:when test="${empty newestMessageDTOS}">
+                                <p class="text-danger">Nie rozmawiałeś jeszcze z innymi użytkownikami.</p>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var ="address" items = "${newestMessageDTOS}" varStatus="index">
+                                    <c:if test="${index.index!=0}">
+                                        <hr class="my-4 col" />
+                                    </c:if>
+                                    <a class="d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/wiadomosci/czat?uzytkownikId="+${address.otherUser.id}>
+                                        <div class="col-3">
+                                            <c:choose>
+                                                <c:when test="${address.otherUser.avatarPath==null || address.otherUser.avatarPath==''}">
+                                                    <img id="profile-photo-ph" src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego" class="d-block w-100">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${address.otherUser.id}/${address.otherUser.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
-                                    </div>
+                                        <div id="message-chat_${address.otherUser}">
 
-<%--                                    <a id="edit-button_${messageChat.id}" title="Edytuj adres" data-bs-toggle="modal"--%>
-<%--                                       data-bs-target="#myModal_${messageChat.id}"--%>
-<%--                                       href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${messageChat.id}"--%>
-<%--                                       role="button">--%>
-<%--                                        <i id="edit-icon_${messageChat.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>--%>
-<%--                                    </a>--%>
+                                            <div class="align-self-center">
+                                                <div class="col">
+                                                    <div class="ms-4 text-end">
+                                                        <p class="mb-0">${address.sendTime.toLocalTime()}</p>
+                                                        <p class="mb-0">${address.sendTime.toLocalDate()}</p>
+                                                        <p class="mb-0">${address.otherUser.username}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
 
-<%--                                    <a id="remove-button_${messageChat.id}" title="Usuń adres" data-bs-toggle="modal"--%>
-<%--                                       data-bs-target="#myModal_${messageChat.id}"--%>
-<%--                                       href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${messageChat.id}"--%>
-<%--                                       role="button">--%>
-<%--                                        <i id="remove-icon_${messageChat.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>--%>
-<%--                                    </a>--%>
-                                </li>
-                        </div>
+                </ul>
 
-<%--                            <div class="modal" id="myModal_${messageChat.id}">--%>
-<%--                                <div class="modal-dialog">--%>
-<%--                                    <div class="modal-content">--%>
-<%--                                        <div class="modal-header">--%>
-<%--                                            <h4 class="modal-title">Usunąć adres?</h4>--%>
-<%--                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="modal-body">--%>
-<%--                                            Czy na pewno chcesz usunąć wybrany adres? Nie da się cofnąć tego działania.--%>
-<%--                                        </div>--%>
-<%--                                        <div class="modal-footer">--%>
-<%--                                            <button type="button" class="btn button-submit" onclick="deleteAddress(${messageChat.id})">Tak</button>--%>
-<%--                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nie</button>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-
-        </div>
-            <div class="w-50 my-5">
-                <a id="add-address-btn" title="Dodaj nowy adres"
-                   href="${pageContext.request.contextPath}/uzytkownik/adres/dodaj"
-                   role="button"
-                   class="btn button-submit text-uppercase d-flex justify-content-center align-items-center">
-                    Nowy adres
-                </a>
             </div>
         </div>
 

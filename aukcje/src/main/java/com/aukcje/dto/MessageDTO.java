@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class MessageDTO {
 
     private UserDTO receiver;
-    private UserDTO user;
-    private String messageContent;
+    private UserDTO sender;
+    private String content;
     private LocalDateTime sendTime;
 }

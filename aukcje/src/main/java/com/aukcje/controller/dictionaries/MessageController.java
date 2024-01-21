@@ -1,5 +1,6 @@
 package com.aukcje.controller.dictionaries;
 
+import com.aukcje.dto.MessageDTO;
 import com.aukcje.dto.NewestMessageDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.*;
@@ -25,10 +27,10 @@ public class MessageController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/podglad")
     public String getSendersAndReceiversForPrincipal(Model model,
                                             Principal principal) throws UserNotFoundException {
-
         UserDTO principalDTO = userService.findByUsername(principal.getName());
         Long userId = principalDTO.getId();
 
@@ -37,5 +39,21 @@ public class MessageController {
         model.addAttribute("newestMessageDTOS", newestMessageDTOS);
 
         return "/views/user/message/message-chats";
+    }
+
+    @GetMapping("/czat")
+    public String getChat(@RequestParam(value = "uzytkownikId") Long userId,
+                          Model model,
+                          Principal principal) throws UserNotFoundException {
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
+        UserDTO userDTO = userService.findById(userId);
+
+        List<MessageDTO> messageDTOS = messageService.getMessagesForUserIdAndOtherUserId(principalDTO.getId(), userId);
+
+        model.addAttribute("messageDTOS", messageDTOS);
+        model.addAttribute("principalDTO", principalDTO);
+        model.addAttribute("user", userDTO);
+
+        return "/views/user/message/message";
     }
 }

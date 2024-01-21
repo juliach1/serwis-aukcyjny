@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Wszystkie adresy</title>
+    <title>Wszystkie kategorie</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,72 +34,72 @@
                 Twoje adresy
             </p>
 
-        <div class="card-body">
+            <div class="card-body">
 
-            <ul class="list-group list-group-flush">
-                <c:choose>
-                    <c:when test="${empty addressDTOS}">
-                        <p class="text-danger">Brak dostępnych adresów. Dodaj nowy adres, by móc dokonywać zakupów.</p>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var = "messageChat" items = "${addressDTOS}" varStatus="index">
+                <ul class="list-group list-group-flush">
+                    <c:choose>
+                        <c:when test="${ addressDTOS.size()==0}">
+                            <p class="text-danger">Brak dostępnych adresów. Dodaj nowy adres, by móc dokonywać zakupów.</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var = "address" items = "${addressDTOS}" varStatus="index">
 
-                            <div id="address_${messageChat.id}">
-                                <c:if test="${index.index!=0}">
-                                    <hr class="my-4" />
-                                </c:if>
+                                <div id="address_${address.id}">
+                                    <c:if test="${index.index!=0}">
+                                        <hr class="my-4" />
+                                    </c:if>
 
-                                <li class="d-flex align-items-center mx-4">
-                                    <div class="col text-end">
-                                        <div class="address text-right">
-                                            <p class="mb-0">${messageChat.firstName} ${messageChat.lastName}</p>
-                                            <p class="mb-0">${messageChat.country.name}</p>
-                                            <p class="mb-0">${messageChat.city}, ${messageChat.postalCode}</p>
-                                            <p class="mb-0">${messageChat.streetName}</p>
-                                            <p class="mb-0">tel. ${messageChat.phone}</p>
+                                    <li class="d-flex align-items-center mx-4">
+                                        <div class="col text-end">
+                                            <div class="address text-right">
+                                                <p class="mb-0">${address.firstName} ${address.lastName}</p>
+                                                <p class="mb-0">${address.country.name}</p>
+                                                <p class="mb-0">${address.city}, ${address.postalCode}</p>
+                                                <p class="mb-0">${address.streetName}</p>
+                                                <p class="mb-0">tel. ${address.phone}</p>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <a id="edit-button_${messageChat.id}" title="Edytuj adres" data-bs-toggle="modal"
-                                       data-bs-target="#myModal_${messageChat.id}"
-                                       href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${messageChat.id}"
-                                       role="button">
-                                        <i id="edit-icon_${messageChat.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
-                                    </a>
+                                        <a id="edit-button_${address.id}" title="Edytuj adres" data-bs-toggle="modal"
+                                           data-bs-target="#myModal_${address.id}"
+                                           href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${address.id}"
+                                           role="button">
+                                            <i id="edit-icon_${address.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
+                                        </a>
 
-                                    <a id="remove-button_${messageChat.id}" title="Usuń adres" data-bs-toggle="modal"
-                                       data-bs-target="#myModal_${messageChat.id}"
-                                       href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${messageChat.id}"
-                                       role="button">
-                                        <i id="remove-icon_${messageChat.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
-                                    </a>
-                                </li>
-                        </div>
+                                        <a id="remove-button_${address.id}" title="Usuń adres" data-bs-toggle="modal"
+                                           data-bs-target="#myModal_${address.id}"
+                                           href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${address.id}"
+                                           role="button">
+                                            <i id="remove-icon_${address.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
+                                        </a>
+                                    </li>
+                                </div>
 
-                            <div class="modal" id="myModal_${messageChat.id}">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Usunąć adres?</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Czy na pewno chcesz usunąć wybrany adres? Nie da się cofnąć tego działania.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn button-submit" onclick="deleteAddress(${messageChat.id})">Tak</button>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nie</button>
+                                <div class="modal" id="myModal_${address.id}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Usunąć adres?</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Czy na pewno chcesz usunąć wybrany adres? Nie da się cofnąć tego działania.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn button-submit" onclick="deleteAddress(${address.id})">Tak</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nie</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
 
-        </div>
+            </div>
             <div class="w-50 my-5">
                 <a id="add-address-btn" title="Dodaj nowy adres"
                    href="${pageContext.request.contextPath}/uzytkownik/adres/dodaj"

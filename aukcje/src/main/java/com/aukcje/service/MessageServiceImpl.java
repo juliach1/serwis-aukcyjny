@@ -1,7 +1,10 @@
 package com.aukcje.service;
 
+import com.aukcje.dto.MessageDTO;
 import com.aukcje.dto.NewestMessageDTO;
 import com.aukcje.dto.UserDTO;
+import com.aukcje.dto.mapper.MessageDTOMapper;
+import com.aukcje.entity.Message;
 import com.aukcje.entity.MessageReceiver;
 import com.aukcje.entity.MessageSender;
 import com.aukcje.exception.customException.UserNotFoundException;
@@ -11,7 +14,6 @@ import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.Kernel;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -22,9 +24,9 @@ public class MessageServiceImpl implements MessageService {
     private MessageRepository messageRepository;
     @Autowired
     private UserService userService;
+
     @Override
     public List<NewestMessageDTO> getNewestMessageChats(Long userId) throws UserNotFoundException {
-
         Set<MessageSender> senders = getSendersForReceiverUserId(userId);
         Set<MessageReceiver> receivers = getReceiversForSenderUserId(userId);
 
@@ -32,6 +34,24 @@ public class MessageServiceImpl implements MessageService {
         populateNewestMessageChatsMap(userId, receivers, senders, newestMessageChats);
 
         return getNewestMessageListFromMap(newestMessageChats);
+    }
+
+    @Override
+    public List<MessageDTO> getMessagesForUserIdAndOtherUserId(Long userId, Long otherUserId) {
+       List<Message> messages = messageRepository.findByReceiverIdAndSenderIdOrSenderIdAndReceiverIdOrderBySendTime(userId, otherUserId, userId, otherUserId);
+       return createMessageDTO(messages);
+    }
+
+    private List<MessageDTO> createMessageDTO(List<Message> messages){
+        List<MessageDTO> messageDTOS = new ArrayList<>();
+        for(Message msg : messages){
+            MessageDTO messageDTO = createMessageDTO(msg);
+            messageDTOS.add(messageDTO);
+        }
+        return messageDTOS;
+    }
+    private MessageDTO createMessageDTO(Message message){
+        return MessageDTOMapper.instance.messageDTO(message);
     }
 
     private List<NewestMessageDTO> getNewestMessageListFromMap(Map<Long, LocalDateTime> newestMessageMap) throws UserNotFoundException {
@@ -61,7 +81,7 @@ public class MessageServiceImpl implements MessageService {
     }
     private void addNewestMessageChatsForSenders(Long userId, Set<MessageSender> senders, Map<Long, LocalDateTime> newestMessageChats){
         for (MessageSender sender : senders){
-            LocalDateTime dateForSender = messageRepository.findTopMessageByReceiverIdAndSenderIdOrderBySendTimeDesc(userId, sender.getSender().getId()).getSendTime();
+            LocalDateTime dateForSender = messageRepository.findTopByReceiverIdAndSenderIdOrderBySendTimeDesc(userId, sender.getSender().getId()).getSendTime();
             if(newestMessageChats.containsKey(sender.getSender().getId())){
                 if(newestMessageChats.get(sender.getSender().getId()).isBefore(dateForSender)){
                     newestMessageChats.replace(sender.getSender().getId(), dateForSender);

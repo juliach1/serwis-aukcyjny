@@ -6,7 +6,6 @@ radioButtons.forEach(function (radioButton) {
         addressNotSelectedError.style.display = "none";
         if (this.checked) {
             chodenAddressId = parseInt(this.value);
-            console.log("Wybrany adres ID: " + chodenAddressId);
         }
     });
 });
@@ -22,6 +21,8 @@ function buyItems(){
     if(chodenAddressId!=null){
         hide(addressNotSelectedError);
         sendPurchaseRequest();
+
+        window.location.pathname = "/uzytkownik/strona-glowna";
     }else {
         show(addressNotSelectedError);
     }

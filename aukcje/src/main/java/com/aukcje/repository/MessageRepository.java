@@ -7,6 +7,7 @@ import com.aukcje.entity.MessageTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,5 +19,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     MessageTime findTopByReceiverIdAndSenderIdOrderBySendTimeDesc(Long receiverId, Long senderId);
 
-    Message findTopMessageByReceiverIdAndSenderIdOrderBySendTimeDesc(Long receiverId, Long senderId);
+    List<Message> findByReceiverIdAndSenderIdOrSenderIdAndReceiverIdOrderBySendTime(Long receiverId, Long senderId, Long senderId2, Long receiverId2);
 }

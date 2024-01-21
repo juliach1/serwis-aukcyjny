@@ -109,6 +109,18 @@ form label {
   color: white;
 }
 
+.bg-orange {
+  background-color: #f8643c;
+}
+
+.bg-purple {
+  background-color: #7A5785;
+}
+
+.bg-light-purple {
+  background-color: #b587c4;
+}
+
 .button-submit {
   background-color: #f8643c;
   border-color: #f8643c;

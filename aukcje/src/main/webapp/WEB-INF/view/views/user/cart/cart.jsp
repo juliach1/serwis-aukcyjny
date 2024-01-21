@@ -135,21 +135,21 @@
                                                 <p class="text-danger">Brak dostępnych adresów.</p>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:forEach var = "messageChat" items = "${addressDTOS}" varStatus="index">
+                                                <c:forEach var = "address" items = "${addressDTOS}" varStatus="index">
                                                     <c:if test="${index.index!=0}">
                                                         <hr class="my-4" />
                                                     </c:if>
                                                     <li class="d-flex align-items-center mx-4">
                                                         <div class="pr-3">
-                                                            <input type="radio" name="addressSelection" value="${messageChat.id}">
+                                                            <input type="radio" name="addressSelection" value="${address.id}">
                                                         </div>
                                                         <div class="col ms-4 text-end">
                                                             <div class="address text-right">
-                                                                <p class="mb-0">${messageChat.firstName} ${messageChat.lastName}</p>
-                                                                <p class="mb-0">${messageChat.country.name}</p>
-                                                                <p class="mb-0">${messageChat.city}, ${messageChat.postalCode}</p>
-                                                                <p class="mb-0">${messageChat.streetName}</p>
-                                                                <p class="mb-0">tel. ${messageChat.phone}</p>
+                                                                <p class="mb-0">${address.firstName} ${address.lastName}</p>
+                                                                <p class="mb-0">${address.country.name}</p>
+                                                                <p class="mb-0">${address.city}, ${address.postalCode}</p>
+                                                                <p class="mb-0">${address.streetName}</p>
+                                                                <p class="mb-0">tel. ${address.phone}</p>
                                                             </div>
                                                         </div>
                                                     </li>

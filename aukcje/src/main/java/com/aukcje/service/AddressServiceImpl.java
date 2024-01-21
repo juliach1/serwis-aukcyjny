@@ -37,6 +37,7 @@ public class AddressServiceImpl implements AddressService {
         Address address = AddressAddModelMapper.instance.address(addressModel);
         address.setUser(userRepository.findById(userId).orElseThrow());
         address.setCountry(findByName(addressModel.getCountry()));
+        address.setIsDeleted(false);
 
         return address;
     }

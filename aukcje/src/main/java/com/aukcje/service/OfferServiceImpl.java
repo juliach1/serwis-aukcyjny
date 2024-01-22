@@ -82,7 +82,6 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException {
         Offer offer = offerRepository.findById(id).orElseThrow(OfferNotFoundException::new);
-
         return createOfferDTO(offer);
     }
 
@@ -342,7 +341,10 @@ public class OfferServiceImpl implements OfferService {
     }
 
     private OfferDTO createOfferDTO(Offer offer){
-        return OfferDTOMapper.instance.offerDTO(offer);
+        OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
+        List<OfferPhotoDTO> offerPhotoDTOS = offerPhotoService.findByOfferId(offerDTO.getId());
+        offerDTO.setOfferPhoto(offerPhotoDTOS);
+        return offerDTO;
     }
 
     private List<OfferDTO> createOfferDTO(List<Offer> offers) throws OfferStatusNotFoundException {

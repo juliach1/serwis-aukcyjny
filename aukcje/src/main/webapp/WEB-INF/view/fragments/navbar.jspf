@@ -58,6 +58,8 @@
 
                                     <li><a id="sold-items" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/sprzedane">Sprzedane przedmioty</a></li>
 
+                                    <li><a id="my-chats" class="dropdown-item" href="${pageContext.request.contextPath}/wiadomosci/podglad">Czaty</a></li>
+
                                     <li>
                                         <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
                                             <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>

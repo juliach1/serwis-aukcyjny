@@ -43,29 +43,29 @@
                                 <p class="text-danger">Nie rozmawiałeś jeszcze z innymi użytkownikami.</p>
                             </c:when>
                             <c:otherwise>
-                                <c:forEach var ="address" items = "${newestMessageDTOS}" varStatus="index">
+                                <c:forEach var ="newestMessageDTO" items = "${newestMessageDTOS}" varStatus="index">
                                     <c:if test="${index.index!=0}">
                                         <hr class="my-4 col" />
                                     </c:if>
-                                    <a class="d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/wiadomosci/czat?uzytkownikId="+${address.otherUser.id}>
+                                    <a class="d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/wiadomosci/czat?uzytkownikId=${newestMessageDTO.otherUser.id}">
                                         <div class="col-3">
                                             <c:choose>
-                                                <c:when test="${address.otherUser.avatarPath==null || address.otherUser.avatarPath==''}">
+                                                <c:when test="${newestMessageDTO.otherUser.avatarPath==null || newestMessageDTO.otherUser.avatarPath==''}">
                                                     <img id="profile-photo-ph" src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego" class="d-block w-100">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${address.otherUser.id}/${address.otherUser.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
+                                                    <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${newestMessageDTO.otherUser.id}/${newestMessageDTO.otherUser.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
-                                        <div id="message-chat_${address.otherUser}">
+                                        <div id="message-chat_${newestMessageDTO.otherUser}">
 
                                             <div class="align-self-center">
                                                 <div class="col">
                                                     <div class="ms-4 text-end">
-                                                        <p class="mb-0">${address.sendTime.toLocalTime()}</p>
-                                                        <p class="mb-0">${address.sendTime.toLocalDate()}</p>
-                                                        <p class="mb-0">${address.otherUser.username}</p>
+                                                        <p class="mb-0">${newestMessageDTO.sendTime.toLocalTime()}</p>
+                                                        <p class="mb-0">${newestMessageDTO.sendTime.toLocalDate()}</p>
+                                                        <p class="mb-0">${newestMessageDTO.otherUser.username}</p>
                                                     </div>
                                                 </div>
                                             </div>

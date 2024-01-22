@@ -5,15 +5,16 @@ import com.aukcje.dto.NewestMessageDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
 import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.model.AddressModel;
+import com.aukcje.model.MessageModel;
 import com.aukcje.service.iface.MessageService;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
 
@@ -53,6 +54,8 @@ public class MessageController {
         model.addAttribute("messageDTOS", messageDTOS);
         model.addAttribute("principalDTO", principalDTO);
         model.addAttribute("user", userDTO);
+        model.addAttribute("messageModel", new MessageModel());
+
 
         return "/views/user/message/message";
     }

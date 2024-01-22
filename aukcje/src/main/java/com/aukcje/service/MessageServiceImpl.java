@@ -60,6 +60,7 @@ public class MessageServiceImpl implements MessageService {
             UserDTO otherUserDTO = userService.findById(key);
             NewestMessageDTO newestMessageDTO = new NewestMessageDTO(otherUserDTO, newestMessageMap.get(key));
             newestMessageDTOS.add(newestMessageDTO);
+            System.out.println("Other-user: "+otherUserDTO.getId());
         }
 
         newestMessageDTOS.sort(this::compareDates);

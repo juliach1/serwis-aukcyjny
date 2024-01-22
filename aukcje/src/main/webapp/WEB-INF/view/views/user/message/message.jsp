@@ -27,7 +27,6 @@
 <jsp:useBean id="user" scope="request" type="com.aukcje.dto.UserDTO"/>
 <jsp:useBean id="principalDTO" scope="request" type="com.aukcje.dto.UserDTO"/>
 
-
 <main>
     <section class="central container col-sm-12 col-md-10 col-xl-8 bg-light">
             <div class="row d-flex justify-content-center">
@@ -102,8 +101,10 @@
                                     <img class="user-icon" src="${pageContext.request.contextPath}/files/img/users/${principalDTO.id}/${principalDTO.id}.png" alt="Zdjęcie profilowe użytkownika">
                                 </c:otherwise>
                             </c:choose>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                   placeholder="Type message">
+
+                            <textarea  class="form-control mx-2" id="contentInput"></textarea>
+                            <button type="submit" onclick="sendMessageRequest()" class="btn button-submit col-sm-5 col-lg-4 ml-sm-2 text-uppercase">Wyślij</button>
+
                             <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
                             <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
                             <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>

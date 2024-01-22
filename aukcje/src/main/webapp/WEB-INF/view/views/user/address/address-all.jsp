@@ -42,9 +42,9 @@
                             <p class="text-danger">Brak dostępnych adresów. Dodaj nowy adres, by móc dokonywać zakupów.</p>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach var = "address" items = "${addressDTOS}" varStatus="index">
+                            <c:forEach var = "newestMessageDTO" items = "${addressDTOS}" varStatus="index">
 
-                                <div id="address_${address.id}">
+                                <div id="address_${newestMessageDTO.id}">
                                     <c:if test="${index.index!=0}">
                                         <hr class="my-4" />
                                     </c:if>
@@ -52,31 +52,31 @@
                                     <li class="d-flex align-items-center mx-4">
                                         <div class="col text-end">
                                             <div class="address text-right">
-                                                <p class="mb-0">${address.firstName} ${address.lastName}</p>
-                                                <p class="mb-0">${address.country.name}</p>
-                                                <p class="mb-0">${address.city}, ${address.postalCode}</p>
-                                                <p class="mb-0">${address.streetName}</p>
-                                                <p class="mb-0">tel. ${address.phone}</p>
+                                                <p class="mb-0">${newestMessageDTO.firstName} ${newestMessageDTO.lastName}</p>
+                                                <p class="mb-0">${newestMessageDTO.country.name}</p>
+                                                <p class="mb-0">${newestMessageDTO.city}, ${newestMessageDTO.postalCode}</p>
+                                                <p class="mb-0">${newestMessageDTO.streetName}</p>
+                                                <p class="mb-0">tel. ${newestMessageDTO.phone}</p>
                                             </div>
                                         </div>
 
-                                        <a id="edit-button_${address.id}" title="Edytuj adres" data-bs-toggle="modal"
-                                           data-bs-target="#myModal_${address.id}"
-                                           href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${address.id}"
+                                        <a id="edit-button_${newestMessageDTO.id}" title="Edytuj adres" data-bs-toggle="modal"
+                                           data-bs-target="#myModal_${newestMessageDTO.id}"
+                                           href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${newestMessageDTO.id}"
                                            role="button">
-                                            <i id="edit-icon_${address.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
+                                            <i id="edit-icon_${newestMessageDTO.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>
                                         </a>
 
-                                        <a id="remove-button_${address.id}" title="Usuń adres" data-bs-toggle="modal"
-                                           data-bs-target="#myModal_${address.id}"
-                                           href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${address.id}"
+                                        <a id="remove-button_${newestMessageDTO.id}" title="Usuń adres" data-bs-toggle="modal"
+                                           data-bs-target="#myModal_${newestMessageDTO.id}"
+                                           href="${pageContext.request.contextPath}/uzytkownik/adres/usun/${newestMessageDTO.id}"
                                            role="button">
-                                            <i id="remove-icon_${address.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
+                                            <i id="remove-icon_${newestMessageDTO.id}" class="remove-icon card-action-icon ms-4 bi bi-trash3 text-danger"></i>
                                         </a>
                                     </li>
                                 </div>
 
-                                <div class="modal" id="myModal_${address.id}">
+                                <div class="modal" id="myModal_${newestMessageDTO.id}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -87,7 +87,7 @@
                                                 Czy na pewno chcesz usunąć wybrany adres? Nie da się cofnąć tego działania.
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn button-submit" onclick="deleteAddress(${address.id})">Tak</button>
+                                                <button type="button" class="btn button-submit" onclick="deleteAddress(${newestMessageDTO.id})">Tak</button>
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nie</button>
                                             </div>
                                         </div>

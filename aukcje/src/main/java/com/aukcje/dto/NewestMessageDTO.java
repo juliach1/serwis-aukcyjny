@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class
-NewestMessageDTO {
+public class NewestMessageDTO {
     private UserDTO otherUser;
 //    private String content;
     private LocalDateTime sendTime;

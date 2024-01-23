@@ -111,7 +111,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findById(Long id) throws UserNotFoundException {
-        return UserDTOMapper.instance.userDTO(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        System.out.println("avatarpath: "+user.getAvatarPath());
+
+        UserDTO userDTO = UserDTOMapper.instance.userDTO(user);
+        System.out.println("avatarpath: "+userDTO.avatarPath);
+
+        return userDTO;
     }
 
     @Override

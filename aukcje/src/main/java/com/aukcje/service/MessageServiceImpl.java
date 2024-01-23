@@ -7,8 +7,11 @@ import com.aukcje.dto.mapper.MessageDTOMapper;
 import com.aukcje.entity.Message;
 import com.aukcje.entity.MessageReceiver;
 import com.aukcje.entity.MessageSender;
+import com.aukcje.entity.User;
 import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.model.mapper.MessageModelMapper;
 import com.aukcje.repository.MessageRepository;
+import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.MessageService;
 import com.aukcje.service.iface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<NewestMessageDTO> getNewestMessageChats(Long userId) throws UserNotFoundException {
         Set<MessageSender> senders = getSendersForReceiverUserId(userId);
@@ -40,6 +46,16 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageDTO> getMessagesForUserIdAndOtherUserId(Long userId, Long otherUserId) {
        List<Message> messages = messageRepository.findByReceiverIdAndSenderIdOrSenderIdAndReceiverIdOrderBySendTime(userId, otherUserId, userId, otherUserId);
        return createMessageDTO(messages);
+    }
+
+    @Override
+    public void saveMessage(Long senderId, Long receiverId, String msg) throws UserNotFoundException {
+        User sender = userRepository.findById(senderId).orElseThrow(UserNotFoundException::new);
+        User receiver = userRepository.findById(receiverId).orElseThrow(UserNotFoundException::new);
+
+        Message message = MessageModelMapper.message(sender, receiver, msg);
+        System.out.println("Message: "+message.getContent()+" sender: "+message.getSender().getId()+" receiver: "+message.getReceiver().getId());
+        messageRepository.save(message);
     }
 
     private List<MessageDTO> createMessageDTO(List<Message> messages){
@@ -60,7 +76,6 @@ public class MessageServiceImpl implements MessageService {
             UserDTO otherUserDTO = userService.findById(key);
             NewestMessageDTO newestMessageDTO = new NewestMessageDTO(otherUserDTO, newestMessageMap.get(key));
             newestMessageDTOS.add(newestMessageDTO);
-            System.out.println("Other-user: "+otherUserDTO.getId());
         }
 
         newestMessageDTOS.sort(this::compareDates);

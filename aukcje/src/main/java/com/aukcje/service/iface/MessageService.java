@@ -11,4 +11,6 @@ public interface MessageService {
     List<NewestMessageDTO> getNewestMessageChats(Long userId) throws UserNotFoundException;
 
     List<MessageDTO> getMessagesForUserIdAndOtherUserId(Long userId, Long otherUserId);
+
+    void saveMessage(Long senderId, Long receiverId, String msg) throws UserNotFoundException;
 }

@@ -29,4 +29,5 @@ public class UserFavoriteOffer {
 
     @Column(name="INSERT_TIME")
     private LocalDateTime insertTime;
+
 }

@@ -14,45 +14,44 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Offer {
 
-    //TODO: zmienić na private
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
-    Long id;
+    private Long id;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_OFFER_TYPE")
-    OfferType offerType;
+    private OfferType offerType;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_OFFER_STATUS")
-    OfferStatus offerStatus;
+    private OfferStatus offerStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "ID_OFFER_DETAILS")
-    OfferDetails offerDetails;
+    private OfferDetails offerDetails;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_USER")
-    User user;
+    private User user;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_CATEGORY")
-    Category category;
+    private Category category;
 
     @Column(name="PRICE")
-    Double price;
+    private Double price;
 
     @Column(name="VIEWS")
-    Long views;
+    private Long views;
 
     @Column(name="QUANTITY")
-    Integer quantity;
+    private Integer quantity;
 
     @Column(name="INSERT_DATE")
-    LocalDateTime insertDate;
+    private LocalDateTime insertDate;
 
     @Column(name="END_DATE")
-    LocalDateTime endDate;
+    private LocalDateTime endDate;
+
 }

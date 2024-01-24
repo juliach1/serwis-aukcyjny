@@ -13,20 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class OfferDetails {
 
-    //TODO: zmienić na private
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
-    Long id;
+    private Long id;
 
     @Column(name="TITLE")
-    String title;
+    private String title;
 
     @Column(name="DESCRIPTION")
-    String description;
+    private String description;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_ITEM_CONDITION")
-    ItemCondition itemCondition;
+    private ItemCondition itemCondition;
 }

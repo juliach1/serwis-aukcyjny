@@ -13,16 +13,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ItemCondition {
 
-    //TODO: zmienić na private
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
-    Integer id;
+    private Integer id;
 
     @Column(name = "NAME")
-    String name;
+    private String name;
 
     @Column(name="DESCRIPTION")
-    String description;
+    private String description;
+
 }

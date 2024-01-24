@@ -13,20 +13,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class OfferPhoto {
 
-    //TODO: zmienić na private
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
-    Long id;
+    private Long id;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ID_OFFER")
-    Offer offer;
+    private Offer offer;
 
     @Column(name="PATH")
-    String path;
+    private String path;
 
     @Column(name="SEQUENCE")
-    Integer sequence;
+    private Integer sequence;
+
 }

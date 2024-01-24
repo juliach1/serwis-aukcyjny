@@ -23,7 +23,6 @@ public class Role {
     @Column(name = "NAME")
     private String name;
 
-
     public Role(String role_user) {
         name = role_user;
     }

@@ -13,21 +13,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class CartOffer {
 
-    //TODO: zmienić na private
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    Long id;
+    private Long id;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="ID_USER")
-    User user;
+    private User user;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="ID_OFFER")
-    Offer offer;
+    private Offer offer;
 
     @Column(name="QUANTITY")
-    Integer quantity;
+    private Integer quantity;
+
 }

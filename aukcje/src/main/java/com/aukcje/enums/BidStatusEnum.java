@@ -19,5 +19,9 @@ public enum BidStatusEnum {
         public String toString(){
             return "ok";
         }
+    },
+    USER_CREATED_AUCTION{
+        @Override
+        public String toString(){ return "user-created-auction"; }
     }
 }

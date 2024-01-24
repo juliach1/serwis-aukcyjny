@@ -191,25 +191,30 @@
                                         </div>
 
                                         <p class="pt-2">/${offerDTO.quantity}szt.</p>
-
-                                        <c:choose>
-                                            <c:when test="${!isSellerPrincipal}">
-                                                <div class="d-inline-flex justify-content-center mt-2 col-9">
-                                                    <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
-                                                    <button type="submit" onclick="addToCart(${offerDTO.id})" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                                        do koszyka
-                                                    </button>
-                                                </div>
-                                                <button id="addToCart" type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
-                                                    KUP TERAZ
-                                                </button>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a type="submit" href="${pageContext.request.contextPath}/oferta/edytuj/${offerDTO.id}" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                                    Edytuj ofertę
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
+                                            <c:choose>
+                                                <c:when test="${!isSellerPrincipal}">
+                                                    <div class="d-inline-flex justify-content-center mt-2 col-9">
+                                                        <a id="observe-button" href="#"> <i id="observe-icon" class="observe-icon bi bi-eye"></i> </a>
+                                                        <security:authorize access="hasRole('ROLE_USER')">
+                                                            <button type="submit" onclick="addToCart(${offerDTO.id})" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                                                do koszyka
+                                                            </button>
+                                                        </security:authorize>
+                                                    </div>
+                                                    <security:authorize access="hasRole('ROLE_USER')">
+                                                        <button id="addToCart" type="submit" class="btn col-9 btn-buy-now text-uppercase button-add-to-cart h-auto ms-2 mt-4 h-auto">
+                                                            KUP TERAZ
+                                                        </button>
+                                                    </security:authorize>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <security:authorize access="hasRole('ROLE_USER')">
+                                                        <a type="submit" href="${pageContext.request.contextPath}/oferta/edytuj/${offerDTO.id}" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                                            Edytuj ofertę
+                                                        </a>
+                                                    </security:authorize>
+                                                </c:otherwise>
+                                            </c:choose>
                                     </div>
 
                                 </div>
@@ -251,19 +256,21 @@
                                         </div>
 
                                         <div class="d-inline-flex justify-content-center mt-5 col-9">
-                                            <c:choose>
-                                                <c:when test="${!isSellerPrincipal}">
-                                                    <a id="observe-button-auction" class="observe-button"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
-                                                    <button type="submit" onclick="bid(${offerDTO.id})" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
-                                                        licytuj
-                                                    </button>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a type="submit" href="${pageContext.request.contextPath}/oferta/edytuj/${offerDTO.id}" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
-                                                        Edytuj ofertę
-                                                    </a>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <security:authorize access="hasRole('ROLE_USER')">
+                                                <c:choose>
+                                                    <c:when test="${!isSellerPrincipal}">
+                                                        <a id="observe-button-auction" class="observe-button"> <i id="observe-icon-auction" class="observe-icon bi bi-eye"></i> </a>
+                                                        <button type="submit" onclick="bid(${offerDTO.id})" class="btn btn-bid text-uppercase h-auto ms-2 w-100">
+                                                            licytuj
+                                                        </button>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a type="submit" href="${pageContext.request.contextPath}/oferta/edytuj/${offerDTO.id}" class="btn btn-add-to-cart text-lowercase button-add-to-cart h-auto ms-2 w-100">
+                                                            Edytuj ofertę
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </security:authorize>
                                         </div>
                                         <p id="bad-bid-message" class="error" style="display: none"></p>
                                     </div>

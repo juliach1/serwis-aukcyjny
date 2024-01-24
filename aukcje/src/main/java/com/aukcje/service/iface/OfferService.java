@@ -14,6 +14,8 @@ public interface OfferService {
 
     OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException;
 
+    Integer howManyForCategoryId(Integer categoryId) throws OfferNotFoundException, OfferStatusNotFoundException;
+
     List<OfferDTO> findNewActiveAuctions(Integer pageSize) throws OfferStatusNotFoundException;
 
     List<OfferDTO> findNewActiveBuyNow(Integer pagedSize) throws OfferStatusNotFoundException;

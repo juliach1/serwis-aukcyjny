@@ -1,8 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.CategoryDTO;
-import com.aukcje.exception.customException.IncorrectParentException;
-import com.aukcje.exception.customException.NoSuchCategoryException;
+import com.aukcje.exception.customException.*;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -114,7 +113,7 @@ public class CategoryController {
     }
 
     @GetMapping("/usun/{kategoriaId}")
-    public String deleteCategory(@PathVariable("kategoriaId") Integer categoryId) throws NoSuchCategoryException {
+    public String deleteCategory(@PathVariable("kategoriaId") Integer categoryId) throws NoSuchCategoryException, CanNotDeleteCategotyWithOffers, OfferNotFoundException, OfferStatusNotFoundException {
         categoryService.delete(categoryId);
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";

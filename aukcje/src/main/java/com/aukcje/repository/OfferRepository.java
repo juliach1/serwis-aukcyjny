@@ -19,5 +19,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     List<Offer> findByUserId(Long userId);
 
+    Integer countByCategoryId(Integer categoryId);
+
     Integer countOfferByUserIdAndOfferStatusId(Long userId, Integer statusId);
 }

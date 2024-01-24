@@ -6,12 +6,16 @@ import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.dto.mapper.CategoryDTOMapper;
 import com.aukcje.entity.Category;
+import com.aukcje.exception.customException.CanNotDeleteCategotyWithOffers;
 import com.aukcje.exception.customException.NoSuchCategoryException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.mapper.CategoryAddModelMapper;
 import com.aukcje.repository.CategoryRepository;
 import com.aukcje.service.iface.CategoryService;
+import com.aukcje.service.iface.OfferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private OfferService offerService;
 
     @Override
     public Boolean isChosenCategoryForOfferAddCorrect(OfferAddModel offerAddModel) {
@@ -103,6 +110,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+    private boolean hasCategoryAnyOffers(Integer catId) throws OfferNotFoundException, OfferStatusNotFoundException {
+        return offerService.howManyForCategoryId(catId)>0;
+    }
+
     @Override
     public void update(CategoryModel categoryModel) {
         Category category = categoryRepository.findByName(categoryModel.getName());
@@ -119,12 +130,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Integer id) throws NoSuchCategoryException {
+    public void delete(Integer id) throws NoSuchCategoryException, OfferNotFoundException, OfferStatusNotFoundException, CanNotDeleteCategotyWithOffers {
         CategoryDTO categoryDTO = findById(id);
-        if (categoryDTO!=null)
-            categoryRepository.delete(categoryRepository.findById(id).orElseThrow());
-        else
+
+        if(categoryDTO!=null)
             throw new NoSuchCategoryException();
+        else if (hasCategoryAnyOffers(id))
+            throw new CanNotDeleteCategotyWithOffers();
+        else
+            categoryRepository.delete(categoryRepository.findById(id).orElseThrow());
+
+
     }
 
     @AssertFalse(message = "Nazwa kategorii jest zajęta!")

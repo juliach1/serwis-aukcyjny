@@ -5,7 +5,10 @@ import com.aukcje.dto.CategoryParentHierarchyDTO;
 import com.aukcje.dto.CategoryPathCategoryDTO;
 import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.entity.Category;
+import com.aukcje.exception.customException.CanNotDeleteCategotyWithOffers;
 import com.aukcje.exception.customException.NoSuchCategoryException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
 import com.aukcje.model.CategoryModel;
 import com.aukcje.model.OfferAddModel;
 
@@ -29,7 +32,7 @@ public interface CategoryService {
 
     void update(CategoryModel categoryModel);
 
-    void delete(Integer id) throws NoSuchCategoryException;
+    void delete(Integer id) throws NoSuchCategoryException, OfferNotFoundException, OfferStatusNotFoundException, CanNotDeleteCategotyWithOffers;
 
     boolean categoryAlreadyExists(String name);
 

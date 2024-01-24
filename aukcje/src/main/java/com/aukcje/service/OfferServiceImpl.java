@@ -65,6 +65,11 @@ public class OfferServiceImpl implements OfferService {
         return createOfferDTO(offer);
     }
 
+    @Override
+    public Integer howManyForCategoryId(Integer categoryId) throws OfferNotFoundException, OfferStatusNotFoundException {
+        return offerRepository.countByCategoryId(categoryId);
+    }
+
     private Offer checkAndSetStatus(Offer offer) throws OfferStatusNotFoundException {
         if(hasEnded(offer)){
             offer = setStatus(offer, OfferStatusEnum.ENDED);

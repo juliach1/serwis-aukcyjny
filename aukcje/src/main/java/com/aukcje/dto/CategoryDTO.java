@@ -7,12 +7,9 @@ import java.util.List;
 @Data
 public class CategoryDTO {
 
-    //TODO: zmienić na private
-
-    public int id;
-    public String name;
-    public String parentCategory;
-
-    public List<String> subCategories;
+    private int id;
+    private String name;
+    private String parentCategory;
+    private List<String> subCategories;
 
 }

@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class CountryDTO {
 
-    //TODO: zmienić na private
+    private Integer id;
+    private String name;
 
-    public Integer id;
-    public String name;
 }

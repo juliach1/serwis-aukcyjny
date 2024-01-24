@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class OfferStatusDTO {
 
-    //TODO: zmienić na private
-    public Integer id;
-    public String name;
+    private Integer id;
+    private String name;
+
 }

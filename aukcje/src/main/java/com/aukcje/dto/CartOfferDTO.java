@@ -5,13 +5,9 @@ import lombok.Data;
 @Data
 public class CartOfferDTO {
 
-    //TODO: zmienić na private
+    private Long id;
+    private UserDTO user;
+    private OfferDTO offer;
+    private Integer quantity;
 
-    public Long id;
-
-    public UserDTO user;
-
-    public OfferDTO offer;
-
-    public Integer quantity;
 }

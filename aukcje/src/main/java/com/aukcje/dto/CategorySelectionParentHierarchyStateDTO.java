@@ -7,4 +7,5 @@ public class CategorySelectionParentHierarchyStateDTO {
 
     private Boolean checked = false;
     private Boolean selected = false;
+
 }

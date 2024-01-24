@@ -11,4 +11,5 @@ public class MessageDTO {
     private UserDTO sender;
     private String content;
     private LocalDateTime sendTime;
+
 }

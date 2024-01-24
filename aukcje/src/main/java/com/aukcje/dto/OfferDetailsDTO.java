@@ -5,11 +5,9 @@ import lombok.Data;
 @Data
 public class OfferDetailsDTO {
 
-    //TODO: zmienić na private
+    private Long id;
+    private String title;
+    private String description;
+    private ItemConditionOfferPreviewDTO itemCondition;
 
-    public Long id;
-    public String title;
-    public String description;
-
-    public ItemConditionOfferPreviewDTO itemCondition;
 }

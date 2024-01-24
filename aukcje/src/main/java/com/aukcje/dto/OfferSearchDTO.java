@@ -16,20 +16,19 @@ import java.util.Map;
 @Data
 public class OfferSearchDTO {
 
-    //TODO: zmienić na private
-
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private OfferTypeService offerTypeService;
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-
     private CategoryService categoryService;
-    List<String> allOfferTypes;
-    Map<Integer,String> categoryIdNames;
-    List<String> sortTypes;
 
-    public OfferSearchDTO(OfferTypeService offerTypeService, CategoryService categoryService){
+    private List<String> allOfferTypes;
+    private Map<Integer,String> categoryIdNames;
+    private List<String> sortTypes;
+
+    public OfferSearchDTO(OfferTypeService offerTypeService, CategoryService categoryService) {
         this.offerTypeService = offerTypeService;
         this.categoryService = categoryService;
         allOfferTypes = new ArrayList<>();
@@ -45,11 +44,11 @@ public class OfferSearchDTO {
         for (OfferTypeDTO offerTypeDTO : offerTypeDTOS){
             allOfferTypes.add(offerTypeDTO.getName());
         }
+
         List<CategoryDTO> categoryDTOS = categoryService.getRootCategories();
         for(CategoryDTO categoryDTO : categoryDTOS){
             categoryIdNames.put(categoryDTO.getId(), categoryDTO.getName());
         }
-
-        System.out.println("WYWOŁANO getOfferTypes()");
     }
+
 }

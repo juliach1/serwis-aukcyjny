@@ -8,22 +8,20 @@ import java.util.List;
 @Data
 public class OfferDTO {
 
-    //TODO: zmienić na private
-
-    public Long id;
-    public CategoryDTO category;
-    public OfferDetailsDTO offerDetails;
-    public OfferTypeDTO offerType;
-    public UserDTO user;
-    public Double price;
-    public Long views;
-    public Integer quantity;
-    public LocalDateTime insertDate;
-    public Integer daysLeft;
-    public LocalDateTime endDate;
-    public OfferStatusDTO offerStatus;
-    public List<OfferPhotoDTO> offerPhoto;
-    public List<CategoryPathCategoryDTO> categoryPath;
+    private Long id;
+    private CategoryDTO category;
+    private OfferDetailsDTO offerDetails;
+    private OfferTypeDTO offerType;
+    private UserDTO user;
+    private Double price;
+    private Long views;
+    private Integer quantity;
+    private LocalDateTime insertDate;
+    private Integer daysLeft;
+    private LocalDateTime endDate;
+    private OfferStatusDTO offerStatus;
+    private List<OfferPhotoDTO> offerPhoto;
+    private List<CategoryPathCategoryDTO> categoryPath;
     private Boolean isFavorite;
 
 }

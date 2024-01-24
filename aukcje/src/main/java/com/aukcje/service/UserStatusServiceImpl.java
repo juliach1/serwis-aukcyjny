@@ -25,7 +25,7 @@ public class UserStatusServiceImpl implements UserStatusService {
     }
 
     @Override
-    public UserStatusDTO findById(Integer id){
+    public UserStatusDTO findById(Integer id) {
         return createUserStatusDTO(userStatusRepository.findById(id).orElseThrow());
     }
 

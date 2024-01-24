@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class CategoryPathCategoryDTO {
 
-    //TODO: zmienić na private
+    private String name;
 
-    public String name;
 }

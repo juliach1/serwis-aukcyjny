@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 @RestController
 @RequestMapping("/ocen-sprzedawce")
 public class UserRatingRestController {

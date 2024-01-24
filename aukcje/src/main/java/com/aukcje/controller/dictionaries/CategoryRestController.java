@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import java.util.List;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/rest")

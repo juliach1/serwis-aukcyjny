@@ -26,7 +26,7 @@ public class AuctionRestController {
     private final UserAuctionService userAuctionService;
     private final UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/licytuj")
     public ResponseEntity<String> placeBid( Principal principal,
                                             @RequestParam("ofertaId") Long offerId,

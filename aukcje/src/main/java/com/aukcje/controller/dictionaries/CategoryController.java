@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/admin/kategoria")
 public class CategoryController {

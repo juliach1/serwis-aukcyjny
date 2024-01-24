@@ -17,7 +17,7 @@ import java.security.Principal;
 import static com.aukcje.service.iface.OfferPurchaseService.*;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 @RestController
 @RequestMapping("/zakup")
 public class PurchaseRestController {

@@ -25,7 +25,6 @@
 <%@include file="../../../fragments/navbar.jspf" %>
 <jsp:useBean id="addressDTOS" scope="request" type="java.util.List<com.aukcje.dto.AddressDTO>"/>
 
-
 <main>
     <section class="central container col-sm-12 col-md-10 col-xl-8 bg-light">
         <div class="address-list bg-light p-5 mt-5 d-flex flex-column align-items-center">
@@ -60,8 +59,7 @@
                                             </div>
                                         </div>
 
-                                        <a id="edit-button_${newestMessageDTO.id}" title="Edytuj adres" data-bs-toggle="modal"
-                                           data-bs-target="#myModal_${newestMessageDTO.id}"
+                                        <a id="edit-button_${newestMessageDTO.id}" title="Edytuj adres"
                                            href="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/${newestMessageDTO.id}"
                                            role="button">
                                             <i id="edit-icon_${newestMessageDTO.id}" class="edit-icon card-action-icon bi bi-pencil-square ms-4"></i>

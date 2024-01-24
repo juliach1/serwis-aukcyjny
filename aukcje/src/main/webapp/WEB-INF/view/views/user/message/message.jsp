@@ -79,8 +79,6 @@
                                                 <img class="user-icon" src="${pageContext.request.contextPath}/files/img/users/${messageDTO.sender.id}/${messageDTO.sender.id}.png" alt="Zdjęcie profilowe użytkownika">
                                             </c:otherwise>
                                         </c:choose>
-<%--                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"--%>
-<%--                                             alt="avatar 1" style="width: 45px; height: 100%;">--%>
                                         <div class="ms-3">
                                             <p class="p-3 mb-1 rounded-3" style="background-color: #f5f6f7;">${messageDTO.content}</p>
                                             <p class="small ms-3 rounded-3 text-muted">${messageDTO.sendTime.toLocalTime()}</p>

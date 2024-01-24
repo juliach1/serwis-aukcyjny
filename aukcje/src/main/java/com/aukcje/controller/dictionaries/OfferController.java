@@ -98,7 +98,7 @@ public class OfferController {
         return "/views/user/offer/offer";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/dodaj")
     public String addOffer(Model model) {
         //TODO dodać: tylko dla zwykłych userów
@@ -138,7 +138,7 @@ public class OfferController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/edytuj/{ofertaId}")
     public String editOffer(Principal principal,
                             @PathVariable("ofertaId") Long offerId,

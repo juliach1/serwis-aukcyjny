@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@PreAuthorize("hasRole('ROLE_USER')")
 @Controller
+@PreAuthorize("hasAuthority('ROLE_USER')")
 @RequestMapping("/zakup")
 public class PurchaseController {
     private final OfferPurchaseService offerPurchaseService;

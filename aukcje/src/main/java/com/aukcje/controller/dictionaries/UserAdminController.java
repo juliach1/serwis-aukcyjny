@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/admin/uzytkownik")
 public class UserAdminController {

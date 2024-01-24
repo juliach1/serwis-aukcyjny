@@ -2,9 +2,13 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.exception.customException.CartOfferNotFoundException;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,21 +28,11 @@ public class CartRestController {
 
     @GetMapping("/dodaj")
     public void addOfferToCart(HttpServletResponse response,
-                                  Principal principal,
-                                  @RequestParam(value = "ofertaId") Long offerId,
-                                  @RequestParam(value = "szt", required = false) Integer pcs) {
+                                                 Principal principal,
+                                                 @RequestParam(value = "ofertaId") Long offerId,
+                                                 @RequestParam(value = "szt", required = false) Integer pcs) throws OfferNotFoundException, OfferStatusNotFoundException, UserNotFoundException {
         UserDTO user = userService.findByUsername(principal.getName());
-
-        if(userService.isUserActive(user)) {
-
-            if(pcs == null)
-                pcs = 1;
-            cartOfferService.add(user.getId(), offerId, pcs);
-            response.setStatus(HttpServletResponse.SC_ACCEPTED);
-
-        }else {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        }
+        response.setStatus(cartOfferService.add(user.getId(), offerId, pcs));
     }
 
     @GetMapping("/usun")

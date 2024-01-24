@@ -7,6 +7,7 @@ import com.aukcje.model.CategoryModel;
 import com.aukcje.service.iface.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -19,8 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 
-@Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+@Controller
 @RequestMapping("/admin/kategoria")
 public class CategoryController {
 

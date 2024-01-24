@@ -14,6 +14,7 @@ import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.PurchaseStatusService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
-
-@Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@PreAuthorize("hasRole('ROLE_USER')")
+@Controller
 @RequestMapping("/zakup")
 public class PurchaseController {
     private final OfferPurchaseService offerPurchaseService;

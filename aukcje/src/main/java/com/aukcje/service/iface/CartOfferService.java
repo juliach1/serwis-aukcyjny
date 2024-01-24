@@ -1,6 +1,10 @@
 package com.aukcje.service.iface;
 
 import com.aukcje.dto.CartOfferDTO;
+import com.aukcje.exception.customException.OfferNotFoundException;
+import com.aukcje.exception.customException.OfferStatusNotFoundException;
+import com.aukcje.exception.customException.UserNotFoundException;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,7 +14,7 @@ public interface CartOfferService {
 
     CartOfferDTO getOne(Long cartOfferId);
 
-    void add(Long userId, Long offerId, Integer pcs);
+    Integer add(Long userId, Long offerId, Integer pcs) throws OfferNotFoundException, OfferStatusNotFoundException, UserNotFoundException;
 
     void delete(Long cartOfferId);
 

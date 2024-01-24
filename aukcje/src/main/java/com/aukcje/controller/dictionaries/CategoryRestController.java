@@ -5,6 +5,7 @@ import com.aukcje.dto.CategorySelectionParentHierarchyDTO;
 import com.aukcje.service.iface.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import java.util.List;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/rest")

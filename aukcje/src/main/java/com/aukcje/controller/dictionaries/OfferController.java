@@ -7,6 +7,7 @@ import com.aukcje.exception.customException.*;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -97,8 +98,9 @@ public class OfferController {
         return "/views/user/offer/offer";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/dodaj")
-    public String addOffer(Model model, Principal principal) {
+    public String addOffer(Model model) {
         //TODO dodać: tylko dla zwykłych userów
         model.addAttribute("offerAddModel", new OfferAddModel());
         model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
@@ -136,7 +138,7 @@ public class OfferController {
 
     }
 
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/edytuj/{ofertaId}")
     public String editOffer(Principal principal,
                             @PathVariable("ofertaId") Long offerId,

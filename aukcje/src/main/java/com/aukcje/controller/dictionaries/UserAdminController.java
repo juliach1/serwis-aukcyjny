@@ -7,6 +7,7 @@ import com.aukcje.model.UserSearchModel;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.service.iface.UserStatusService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-@Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+@Controller
 @RequestMapping("/admin/uzytkownik")
 public class UserAdminController {
 

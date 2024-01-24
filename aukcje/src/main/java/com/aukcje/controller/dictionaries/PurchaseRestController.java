@@ -7,6 +7,7 @@ import com.aukcje.exception.customException.PermissionDeniedException;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -15,8 +16,9 @@ import java.security.Principal;
 
 import static com.aukcje.service.iface.OfferPurchaseService.*;
 
-@RestController
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@PreAuthorize("hasRole('ROLE_USER')")
+@RestController
 @RequestMapping("/zakup")
 public class PurchaseRestController {
     private final UserService userService;

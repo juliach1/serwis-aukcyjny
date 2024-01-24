@@ -16,6 +16,7 @@ public class UserEditModel {
     private String username;
 
     private String firstName;
+
     private String lastName;
 
     @NotEmpty(message = "Podaj adres e-mail")

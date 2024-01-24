@@ -10,11 +10,11 @@ public class CategoryModel {
 
     //TODO: zmienić na private
 
-    int id;
+    private int id;
 
     @Size(max = 50, message = "Nazwa kategorii może mieć maksymalnie 50 znaków")
     @NotBlank(message = "Nazwa nie może być pusta!")
-    public String name;
+    private String name;
 
-    public String parentCategory;
+    private String parentCategory;
 }

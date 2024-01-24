@@ -25,9 +25,6 @@ public class OfferSearchModel {
     private String phrase;
 
     private Integer searchCategory;
-//
-//    @NotNull
-//    private String sortType;
 
     @Min(value = 0, message = "Cena nie może być niższa niż 0zł")
     @Max(value = 1000000000, message = "Cena jest za wysoka")

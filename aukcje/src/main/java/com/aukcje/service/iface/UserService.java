@@ -2,7 +2,6 @@ package com.aukcje.service.iface;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
-import com.aukcje.entity.UserRating;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;

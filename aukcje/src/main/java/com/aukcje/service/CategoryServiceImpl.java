@@ -12,23 +12,23 @@ import com.aukcje.model.OfferAddModel;
 import com.aukcje.model.mapper.CategoryAddModelMapper;
 import com.aukcje.repository.CategoryRepository;
 import com.aukcje.service.iface.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.validation.constraints.AssertFalse;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Transactional
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    CategoryRepository categoryRepository;
-
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Boolean isChosenCategoryForOfferAddCorrect(OfferAddModel offerAddModel) {

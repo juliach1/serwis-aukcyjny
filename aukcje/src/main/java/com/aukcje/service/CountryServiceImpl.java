@@ -5,17 +5,18 @@ import com.aukcje.dto.mapper.CountryDTOMapper;
 import com.aukcje.entity.Country;
 import com.aukcje.repository.CountryRepository;
 import com.aukcje.service.iface.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class CountryServiceImpl implements CountryService {
 
-    @Autowired
-    private CountryRepository countryRepository;
+    private final CountryRepository countryRepository;
 
     @Override
     public List<CountryDTO> findAll() {
@@ -31,13 +32,12 @@ public class CountryServiceImpl implements CountryService {
         return CountryDTOMapper.instance.countryDTO(country);
     }
 
-    private List<CountryDTO> createCountryDTO(List<Country> countries){
+    private List<CountryDTO> createCountryDTO(List<Country> countries) {
         List<CountryDTO> countryDTOS = new ArrayList<>();
 
         for(Country country : countries){
             countryDTOS.add(CountryDTOMapper.instance.countryDTO(country));
         }
-
         return countryDTOS;
     }
 }

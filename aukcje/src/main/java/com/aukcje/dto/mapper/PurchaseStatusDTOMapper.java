@@ -1,12 +1,9 @@
 package com.aukcje.dto.mapper;
 
-import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.PurchaseStatusDTO;
-import com.aukcje.entity.Offer;
 import com.aukcje.entity.PurchaseStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

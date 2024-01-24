@@ -1,6 +1,7 @@
 package com.aukcje.model;
 
 import lombok.Data;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 

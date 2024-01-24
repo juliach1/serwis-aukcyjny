@@ -1,6 +1,7 @@
 package com.aukcje.repository;
 
-import com.aukcje.entity.*;
+import com.aukcje.entity.Offer;
+import com.aukcje.entity.OfferType;
 import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.enums.OfferTypeEnum;
 import com.aukcje.model.OfferSearchModel;

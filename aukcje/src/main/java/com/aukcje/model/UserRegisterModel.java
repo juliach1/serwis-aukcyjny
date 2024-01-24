@@ -3,7 +3,9 @@ package com.aukcje.model;
 import com.aukcje.validator.FieldMatch;
 import com.aukcje.validator.ValidEmail;
 import lombok.Data;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 @FieldMatch.List({

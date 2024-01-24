@@ -5,4 +5,8 @@ public class PurchaseStatusNotFoundException extends CustomizedException {
         super("Status zamówienia \"" + purchaseStatusName + "\" nie został znaleziony w bazie");
     }
 
+    public PurchaseStatusNotFoundException(Integer purchaseStatusId) {
+        super("Status zamówienia o id \"" + purchaseStatusId + "\" nie został znaleziony w bazie");
+    }
+
 }

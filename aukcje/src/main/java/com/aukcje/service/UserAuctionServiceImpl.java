@@ -2,14 +2,11 @@ package com.aukcje.service;
 
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
-import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserAuctionDTOMapper;
 import com.aukcje.entity.Offer;
 import com.aukcje.entity.User;
 import com.aukcje.entity.UserAuction;
 import com.aukcje.enums.BidStatusEnum;
-import com.aukcje.enums.OfferStatusEnum;
-import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
 import com.aukcje.exception.customException.CanNotBidYourOfferException;
 import com.aukcje.exception.customException.OfferNotFoundException;
@@ -22,34 +19,24 @@ import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.UserAuctionService;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class UserAuctionServiceImpl implements UserAuctionService {
 
-    @Autowired
-    private OfferRepository offerRepository;
-
-    @Autowired
-    private OfferService offerService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserAuctionRepository userAuctionRepository;
+    private final OfferRepository offerRepository;
+    private final OfferService offerService;
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final UserAuctionRepository userAuctionRepository;
 
     @Override
     public List<UserAuctionDTO> findAllByOfferId(Long offerId) {
@@ -108,16 +95,16 @@ public class UserAuctionServiceImpl implements UserAuctionService {
         return findAllByOfferId(offerDTO.getId()).size()>0;
     }
 
-    private boolean isHigherThanLastBid(Double value, Long offerId){
+    private boolean isHigherThanLastBid(Double value, Long offerId) {
         UserAuctionDTO oneWithHighestValue = findOneWithHighestValue(offerId);
         return oneWithHighestValue.getValue() >= value;
     }
 
-    private UserAuctionDTO createUserAuctionDTO(UserAuction userAuction){
+    private UserAuctionDTO createUserAuctionDTO(UserAuction userAuction) {
         return UserAuctionDTOMapper.instance.userAuctionDTO(userAuction);
     }
 
-    private List<UserAuctionDTO> createUserAuctionDTO(List<UserAuction> userAuctions){
+    private List<UserAuctionDTO> createUserAuctionDTO(List<UserAuction> userAuctions) {
         List<UserAuctionDTO> userAuctionDTOS = new ArrayList<>();
         for(UserAuction userAuction : userAuctions){
             userAuctionDTOS.add(UserAuctionDTOMapper.instance.userAuctionDTO(userAuction));

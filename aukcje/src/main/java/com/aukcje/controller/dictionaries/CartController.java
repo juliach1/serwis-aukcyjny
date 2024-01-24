@@ -5,12 +5,12 @@ import com.aukcje.dto.CartOfferDTO;
 import com.aukcje.service.iface.AddressService;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.UserService;
-import com.aukcje.service.iface.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.inject.Inject;
 import java.security.Principal;
 import java.util.List;
@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/koszyk")
 public class CartController {
-
 
     private final CartOfferService cartOfferService;
     private final UserService userService;

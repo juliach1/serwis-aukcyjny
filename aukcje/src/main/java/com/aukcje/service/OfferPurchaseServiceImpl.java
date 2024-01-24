@@ -1,7 +1,6 @@
 package com.aukcje.service;
 
 import com.aukcje.dto.OfferPurchaseInfoDTO;
-import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.OfferPurchaseInfoDTOMapper;
 import com.aukcje.entity.*;
 import com.aukcje.enums.OfferStatusEnum;
@@ -13,42 +12,27 @@ import com.aukcje.model.OfferPurchaseModel;
 import com.aukcje.repository.*;
 import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.OfferPurchaseService;
-import com.aukcje.service.iface.OfferService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class OfferPurchaseServiceImpl implements OfferPurchaseService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private OfferRepository offerRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private PurchaseStatusRepository purchaseStatusRepository;
-
-    @Autowired
-    private OfferPurchaseInfoRepository offerPurchaseInfoRepository;
-
-    @Autowired
-    private OfferStatusRepository offerStatusRepository;
-
-    @Autowired
-    private OfferService offerService;
-
-    @Autowired
-    private CartOfferService cartOfferService;
+    private final UserRepository userRepository;
+    private final OfferRepository offerRepository;
+    private final AddressRepository addressRepository;
+    private final PurchaseStatusRepository purchaseStatusRepository;
+    private final OfferPurchaseInfoRepository offerPurchaseInfoRepository;
+    private final OfferStatusRepository offerStatusRepository;
+    private final CartOfferService cartOfferService;
 
     @Override
     public void setRating(Long purchaseId, UserRating userRating) throws PurchaseNotFoundException {

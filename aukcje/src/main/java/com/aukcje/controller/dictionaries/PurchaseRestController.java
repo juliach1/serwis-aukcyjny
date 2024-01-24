@@ -7,13 +7,11 @@ import com.aukcje.exception.customException.PermissionDeniedException;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.Objects;
 
 import static com.aukcje.service.iface.OfferPurchaseService.*;
 

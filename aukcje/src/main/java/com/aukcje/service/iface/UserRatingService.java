@@ -2,7 +2,6 @@ package com.aukcje.service.iface;
 
 import com.aukcje.exception.customException.CouldNotRateUser;
 import com.aukcje.exception.customException.PurchaseNotFoundException;
-import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserRatingModel;
 
 public interface UserRatingService {

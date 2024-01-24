@@ -1,11 +1,9 @@
 package com.aukcje.model;
 
 import lombok.Data;
-import org.mapstruct.Mapper;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 @Data
 public class MessageModel {

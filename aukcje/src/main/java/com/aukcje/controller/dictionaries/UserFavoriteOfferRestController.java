@@ -1,14 +1,11 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
-import com.aukcje.dto.UserFavoriteOfferDTO;
-import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.OfferNotFoundException;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.service.iface.UserFavoriteOfferService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

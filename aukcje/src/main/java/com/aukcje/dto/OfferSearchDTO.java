@@ -3,8 +3,15 @@ package com.aukcje.dto;
 import com.aukcje.enums.SortTypeEnum;
 import com.aukcje.service.iface.CategoryService;
 import com.aukcje.service.iface.OfferTypeService;
-import lombok.*;
-import java.util.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class OfferSearchDTO {

@@ -2,7 +2,8 @@ package com.aukcje.service;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserDTOMapper;
-import com.aukcje.entity.*;
+import com.aukcje.entity.Role;
+import com.aukcje.entity.User;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
@@ -17,7 +18,6 @@ import com.aukcje.repository.UserStatusRepository;
 import com.aukcje.service.iface.UserService;
 import com.aukcje.utils.Utils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,10 +41,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.exists;
 
-@Service
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUsername(String username){ return createUserDTO(userRepository.findByUsername(username)); }
 
-    public List<UserDTO> createUserDTO(List<User> users){
+    private List<UserDTO> createUserDTO(List<User> users) {
         List<UserDTO> usersDTO = new ArrayList<>();
         for (User tempUser : users){
             usersDTO.add(UserDTOMapper.instance.userDTO(tempUser));
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateEditUser(UserEditModel userEditModel){
+    public void updateEditUser(UserEditModel userEditModel) {
         User user = UserEditModelMapper.instance.user(userEditModel);
 
         if(userEditModel.getUserStatus() != null){
@@ -268,7 +268,6 @@ public class UserServiceImpl implements UserService {
 
         return createdPath;
     }
-
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());

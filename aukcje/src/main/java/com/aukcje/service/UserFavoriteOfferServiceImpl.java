@@ -12,27 +12,24 @@ import com.aukcje.repository.OfferRepository;
 import com.aukcje.repository.UserFavoriteOfferRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.UserFavoriteOfferService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class UserFavoriteOfferServiceImpl implements UserFavoriteOfferService {
 
-    @Autowired
-    private UserFavoriteOfferRepository userFavoriteOfferRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private OfferRepository offerRepository;
+    private final UserFavoriteOfferRepository userFavoriteOfferRepository;
+    private final UserRepository userRepository;
+    private final  OfferRepository offerRepository;
 
     @Override
     public List<UserFavoriteOfferDTO> getActiveByUserId(Long userId, Integer pageSize) {

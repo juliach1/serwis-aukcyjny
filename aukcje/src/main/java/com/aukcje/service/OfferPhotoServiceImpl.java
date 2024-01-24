@@ -5,17 +5,18 @@ import com.aukcje.dto.mapper.OfferPhotoDTOMapper;
 import com.aukcje.entity.OfferPhoto;
 import com.aukcje.repository.OfferPhotoRepository;
 import com.aukcje.service.iface.OfferPhotoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
-public class OfferPhotoServiceImpl implements OfferPhotoService{
+public class OfferPhotoServiceImpl implements OfferPhotoService {
 
-    @Autowired
-    OfferPhotoRepository offerPhotoRepository;
+    private final OfferPhotoRepository offerPhotoRepository;
 
     @Override
     public List<OfferPhotoDTO> findByOfferId(Long offerId) {
@@ -31,7 +32,7 @@ public class OfferPhotoServiceImpl implements OfferPhotoService{
         return OfferPhotoDTOMapper.instance.offerPhotoDTO(offerPhoto);
     }
 
-    private List<OfferPhotoDTO> createOfferPhotoDTO(List<OfferPhoto> offerPhotos){
+    private List<OfferPhotoDTO> createOfferPhotoDTO(List<OfferPhoto> offerPhotos) {
         List<OfferPhotoDTO> offerPhotoDTOS = new ArrayList<>();
 
         for(OfferPhoto offerPhoto : offerPhotos){

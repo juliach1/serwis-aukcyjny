@@ -3,7 +3,6 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.OfferDTO;
 import com.aukcje.dto.UserAuctionDTO;
 import com.aukcje.dto.UserDTO;
-import com.aukcje.enums.OfferStatusEnum;
 import com.aukcje.exception.customException.*;
 import com.aukcje.model.OfferAddModel;
 import com.aukcje.service.iface.*;

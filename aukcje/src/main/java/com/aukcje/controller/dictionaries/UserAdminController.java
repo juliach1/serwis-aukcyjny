@@ -1,6 +1,5 @@
 package com.aukcje.controller.dictionaries;
 
-import com.aukcje.dto.UserStatusDTO;
 import com.aukcje.exception.customException.IncorrectUserStatusException;
 import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.UserEditModel;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Inject))

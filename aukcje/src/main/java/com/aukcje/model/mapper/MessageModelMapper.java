@@ -1,10 +1,11 @@
 package com.aukcje.model.mapper;
 
-import com.aukcje.entity.*;
-import com.aukcje.model.OfferAddModel;
+import com.aukcje.entity.Message;
+import com.aukcje.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
+
 import java.time.LocalDateTime;
 
 @Mapper

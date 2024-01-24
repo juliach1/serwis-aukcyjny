@@ -5,18 +5,18 @@ import com.aukcje.dto.mapper.OfferTypeDTOMapper;
 import com.aukcje.entity.OfferType;
 import com.aukcje.repository.OfferTypeRepository;
 import com.aukcje.service.iface.OfferTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class OfferTypeServiceImpl implements OfferTypeService {
 
-    @Autowired
-    private OfferTypeRepository offerTypeRepository;
-
+    private final OfferTypeRepository offerTypeRepository;
 
     @Override
     public List<OfferTypeDTO> findAll() {
@@ -39,16 +39,16 @@ public class OfferTypeServiceImpl implements OfferTypeService {
         return offerTypesNames;
     }
 
-    private OfferTypeDTO createOfferTypeDTO(OfferType offerType){
+    private OfferTypeDTO createOfferTypeDTO(OfferType offerType) {
         return OfferTypeDTOMapper.instance.offerTypeDTO(offerType);
     }
 
-    private List<OfferTypeDTO> createOfferTypeDTO(List<OfferType> offerTypes){
+    private List<OfferTypeDTO> createOfferTypeDTO(List<OfferType> offerTypes) {
         List<OfferTypeDTO> offerTypeDTOS = new ArrayList<>();
 
         for(OfferType offerType : offerTypes){
-            offerTypeDTOS.add(OfferTypeDTOMapper.instance.offerTypeDTO(offerType));
-            System.out.println("offertype: "+offerType.getName());
+            OfferTypeDTO offerTypeDTO = createOfferTypeDTO(offerType);
+            offerTypeDTOS.add(offerTypeDTO);
         }
 
         return offerTypeDTOS;

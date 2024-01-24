@@ -17,13 +17,14 @@ import com.aukcje.service.iface.CartOfferService;
 import com.aukcje.service.iface.OfferPhotoService;
 import com.aukcje.service.iface.OfferService;
 import com.aukcje.service.iface.UserFavoriteOfferService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.File;
@@ -36,48 +37,27 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class OfferServiceImpl implements OfferService {
 
-    @Autowired
-    private OfferRepository offerRepository;
-
-    @Autowired
-    private CartOfferService cartOfferService;
-
-    @Autowired
-    private UserFavoriteOfferService userFavoriteOfferService;
-
-    @Autowired
-    private OfferStatusRepository offerStatusRepository;
-
-    @Autowired
-    private OfferPhotoService offerPhotoService;
-
-    @Autowired
-    private OfferTypeRepository offerTypeRepository;
-
-    @Autowired
-    private CustomOfferRepository customOfferRepository;
-
-    @Autowired
-    private ItemConditionRepository itemConditionRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private OfferPhotoRepository offerPhotoRepository;
+    private final ServletContext servletContext;
+    private final OfferRepository offerRepository;
+    private final UserFavoriteOfferService userFavoriteOfferService;
+    private final CartOfferService cartOfferService;
+    private final OfferStatusRepository offerStatusRepository;
+    private final OfferPhotoService offerPhotoService;
+    private final OfferTypeRepository offerTypeRepository;
+    private final CustomOfferRepository customOfferRepository;
+    private final ItemConditionRepository itemConditionRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    private final OfferPhotoRepository offerPhotoRepository;
 
     private final Integer DEFAULT_PAGE_SIZE = 12;
     @Value("${files.path}")
     private String filesPath;
 
-    @Autowired
-    private ServletContext servletContext;
 
     @Override
     public OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException {
@@ -156,7 +136,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<OfferDTO> findActiveFavoriteForUser(Long userId, Integer pageSize){
+    public List<OfferDTO> findActiveFavoriteForUser(Long userId, Integer pageSize) {
         List<UserFavoriteOfferDTO> userFavoriteOfferDTOS = userFavoriteOfferService.getActiveByUserId(userId, pageSize);
         return getFromUserFavoriteOfferDTOS(userFavoriteOfferDTOS);
     }
@@ -178,7 +158,7 @@ public class OfferServiceImpl implements OfferService {
         return offer.getId();
     }
 
-    private OfferDetails getOfferDetails(OfferAddModel offerModel){
+    private OfferDetails getOfferDetails(OfferAddModel offerModel) {
         ItemCondition itemCondition = itemConditionRepository.findByName(offerModel.getItemCondition());
         OfferDetails offerDetails = new OfferDetails();
 
@@ -207,7 +187,7 @@ public class OfferServiceImpl implements OfferService {
         return offerRepository.countOfferByUserIdAndOfferStatusId(userId, OfferStatusEnum.ACTIVE.getId());
     }
 
-    private List<OfferDTO> getFromUserFavoriteOfferDTOS(List<UserFavoriteOfferDTO> userFavoriteOfferDTOS){
+    private List<OfferDTO> getFromUserFavoriteOfferDTOS(List<UserFavoriteOfferDTO> userFavoriteOfferDTOS) {
         List<OfferDTO> offers = new ArrayList<>();
         for(UserFavoriteOfferDTO userFavoriteOffer : userFavoriteOfferDTOS){
             offers.add(userFavoriteOffer.getOffer());
@@ -215,7 +195,7 @@ public class OfferServiceImpl implements OfferService {
         return offers;
     }
 
-    private void addPhoto(long offerId, MultipartFile multipartFile){
+    private void addPhoto(long offerId, MultipartFile multipartFile) {
 
         // exit if filesize < 1
         if(!(multipartFile.getSize() > 1)){
@@ -257,7 +237,7 @@ public class OfferServiceImpl implements OfferService {
         offerPhotoRepository.save(offerPhoto);
     }
 
-    private Integer offerNextPhotoOrder(Offer nieruchomosc){
+    private Integer offerNextPhotoOrder(Offer nieruchomosc) {
         int next = 1;
 
         if(offerPhotoService.findByOfferId(nieruchomosc.getId()).isEmpty()) return next;
@@ -270,7 +250,7 @@ public class OfferServiceImpl implements OfferService {
         return next + 1;
     }
 
-    private void saveOfferPhoto(File file, MultipartFile multipartFile){
+    private void saveOfferPhoto(File file, MultipartFile multipartFile) {
         FileOutputStream fos = null;
         try{
             fos = new FileOutputStream(file);
@@ -294,7 +274,7 @@ public class OfferServiceImpl implements OfferService {
         return servletContext.getRealPath("/WEB-INF/files/img/offers");
     }
 
-    private String createFolderForOffer(String path, long offerId){
+    private String createFolderForOffer(String path, long offerId) {
         String createdPath = path +"\\"+ offerId;
         File folder = new File(createdPath);
         folder.mkdirs();
@@ -320,7 +300,7 @@ public class OfferServiceImpl implements OfferService {
         return PageRequest.of(0, size);
     }
 
-    public void setIsFavorite(List<OfferDTO> offerDTOS, Long userId){
+    public void setIsFavorite(List<OfferDTO> offerDTOS, Long userId) {
         for (OfferDTO offerDTO : offerDTOS){
             UserFavoriteOfferDTO offer = userFavoriteOfferService.geByUserIdAndOfferId(userId, offerDTO.getId());
             offerDTO.setIsFavorite(offer != null);
@@ -340,7 +320,7 @@ public class OfferServiceImpl implements OfferService {
         return Objects.equals( offerStatus, activeStatus );
     }
 
-    private OfferDTO createOfferDTO(Offer offer){
+    private OfferDTO createOfferDTO(Offer offer) {
         OfferDTO offerDTO = OfferDTOMapper.instance.offerDTO(offer);
         List<OfferPhotoDTO> offerPhotoDTOS = offerPhotoService.findByOfferId(offerDTO.getId());
         offerDTO.setOfferPhoto(offerPhotoDTOS);

@@ -12,29 +12,24 @@ import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.OfferPurchaseService;
 import com.aukcje.service.iface.UserRatingService;
 import com.aukcje.service.iface.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class UserRatingServiceImpl implements UserRatingService {
 
-    @Autowired
-    private UserRatingRepository userRatingRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private OfferPurchaseService offerPurchaseService;
-
-    @Autowired
-    private UserService userService;
+    private final UserRatingRepository userRatingRepository;
+    private final UserRepository userRepository;
+    private final OfferPurchaseService offerPurchaseService;
+    private final UserService userService;
 
     @Override
-    public Double calculateAvarageRatingForUser(Long userId){
+    public Double calculateAvarageRatingForUser(Long userId) {
         List<UserRating> userRatings = userRatingRepository.getAllByUserId(userId);
         List<UserRatingDTO> userRatingDTOS = createUserRatingDTO(userRatings);
 
@@ -78,17 +73,17 @@ public class UserRatingServiceImpl implements UserRatingService {
         return userRatingRepository.countByUserId(userId);
     }
 
-    private boolean isValid(UserRatingModel userRatingModel){
+    private boolean isValid(UserRatingModel userRatingModel) {
         Integer rating = userRatingModel.getRating();
         Long userId = userRatingModel.getUserId();
         return userId != null && rating >= 1  && rating <= 5 && userRatingModel.getPurchaseId() != null;
     }
 
-    private UserRatingDTO createUserRatingDTO(UserRating userRating){
+    private UserRatingDTO createUserRatingDTO(UserRating userRating) {
         return UserRatingDTOMapper.instance.userRatingDTO(userRating);
     }
 
-    private List<UserRatingDTO> createUserRatingDTO(List<UserRating> userRatings){
+    private List<UserRatingDTO> createUserRatingDTO(List<UserRating> userRatings) {
         List<UserRatingDTO> userRatingDTOS = new ArrayList<>();
 
         for (UserRating userRating : userRatings){

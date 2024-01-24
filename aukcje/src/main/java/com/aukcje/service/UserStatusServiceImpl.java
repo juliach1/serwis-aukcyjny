@@ -5,19 +5,19 @@ import com.aukcje.dto.mapper.UserStatusDTOMapper;
 import com.aukcje.entity.UserStatus;
 import com.aukcje.repository.UserStatusRepository;
 import com.aukcje.service.iface.UserStatusService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
-//@RequiredArgsConstructor(onConstructor_ = {@Inject})
 public class UserStatusServiceImpl implements UserStatusService {
 
-    @Autowired
-    private UserStatusRepository userStatusRepository;
+    private final UserStatusRepository userStatusRepository;
 
     @Override
     public List<UserStatusDTO> findAll() {

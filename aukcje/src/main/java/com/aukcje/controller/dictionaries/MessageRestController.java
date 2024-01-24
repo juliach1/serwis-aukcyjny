@@ -5,21 +5,23 @@ import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.MessageModel;
 import com.aukcje.service.iface.MessageService;
 import com.aukcje.service.iface.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @RequestMapping("/wiadomosci")
 public class MessageRestController {
 
-    @Autowired
-    private MessageService messageService;
-
-    @Autowired
-    private UserService userService;
+    private final MessageService messageService;
+    private final UserService userService;
 
     @PostMapping("/wyslij")
     public void deleteCartOffer(Principal principal,

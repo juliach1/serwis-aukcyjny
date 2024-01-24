@@ -10,25 +10,22 @@ import com.aukcje.repository.CartOfferRepository;
 import com.aukcje.repository.OfferRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.CartOfferService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class CartOfferServiceImpl implements CartOfferService {
 
-    @Autowired
-    CartOfferRepository cartOfferRepository;
-
-    @Autowired
-    OfferRepository offerRepository;
-
-    @Autowired
-    UserRepository userRepository;
+    private final CartOfferRepository cartOfferRepository;
+    private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<CartOfferDTO> getAll(Long userId) {

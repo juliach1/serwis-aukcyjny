@@ -13,24 +13,21 @@ import com.aukcje.repository.AddressRepository;
 import com.aukcje.repository.CountryRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CountryRepository countryRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
+    private final UserRepository userRepository;
+    private final CountryRepository countryRepository;
+    private final AddressRepository addressRepository;
 
     @Override
     public Address getAddressFromAddressAddModel(AddressModel addressModel, Long userId) {

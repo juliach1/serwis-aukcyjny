@@ -3,26 +3,25 @@ package com.aukcje.service;
 import com.aukcje.dto.PurchaseStatusDTO;
 import com.aukcje.dto.mapper.PurchaseStatusDTOMapper;
 import com.aukcje.entity.PurchaseStatus;
+import com.aukcje.exception.PurchaseStatusNotFoundException;
 import com.aukcje.repository.PurchaseStatusRepository;
 import com.aukcje.service.iface.PurchaseStatusService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Service
 public class PurchaseStatusServiceImpl implements PurchaseStatusService {
 
-    @Autowired
-    PurchaseStatusRepository purchaseStatusRepository;
+    private final PurchaseStatusRepository purchaseStatusRepository;
 
     @Override
-    public PurchaseStatusDTO findById(Integer id) {
-        Optional<PurchaseStatus> purchaseStatusOptional = purchaseStatusRepository.findById(id);
-        //TODO: DODAĆ BŁĄD - błąd pobierania statusu zamówienia
-        PurchaseStatus purchaseStatus = purchaseStatusRepository.findById(id).orElse(null);
+    public PurchaseStatusDTO findById(Integer id) throws PurchaseStatusNotFoundException {
+        PurchaseStatus purchaseStatus = purchaseStatusRepository.findById(id).orElseThrow(() -> new PurchaseStatusNotFoundException(id));
 
         return getPurchaseStatusDTO(purchaseStatus);
     }
@@ -35,11 +34,11 @@ public class PurchaseStatusServiceImpl implements PurchaseStatusService {
         return getPurchaseStatusDTO(purchaseStatuses);
     }
 
-    private PurchaseStatusDTO getPurchaseStatusDTO(PurchaseStatus purchaseStatus){
+    private PurchaseStatusDTO getPurchaseStatusDTO(PurchaseStatus purchaseStatus) {
         return PurchaseStatusDTOMapper.instance.purchaseStatusDTO(purchaseStatus);
     }
 
-    private List<PurchaseStatusDTO> getPurchaseStatusDTO(List<PurchaseStatus> purchaseStatuses){
+    private List<PurchaseStatusDTO> getPurchaseStatusDTO(List<PurchaseStatus> purchaseStatuses) {
         List<PurchaseStatusDTO> purchaseStatusDTOS = new ArrayList<>();
         for(PurchaseStatus purchaseStatus : purchaseStatuses){
             PurchaseStatusDTO tempPurchaseStatus = PurchaseStatusDTOMapper.instance.purchaseStatusDTO(purchaseStatus);

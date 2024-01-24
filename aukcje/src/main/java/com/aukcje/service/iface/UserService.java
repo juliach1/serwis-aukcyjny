@@ -41,6 +41,8 @@ public interface UserService extends UserDetailsService {
 
      UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 
+     boolean isUserActive(Long userId) throws UserNotFoundException;
+
      boolean isUserActive(User user);
 
      boolean isUserActive(UserDTO userDTO);

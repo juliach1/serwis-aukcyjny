@@ -44,8 +44,6 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
 
     @Override
     public void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
-        System.out.println("-------> Metoda głowna w serwisie");
-
         List<OfferPurchaseInfo> offerPurchaseInfo = checkAndCreatePurchaseInfos(offerPurchaseModels, buyerId, addressId);
         save0fferPurchases(offerPurchaseInfo);
     }
@@ -80,6 +78,7 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
 
         offerPurchaseInfoRepository.save(offerPurchaseInfo);
     }
+
 
     private List<OfferPurchaseInfoDTO> createOfferPurchaseInfoDTO(List<OfferPurchaseInfo> offerPurchaseInfos){
         List<OfferPurchaseInfoDTO> purchaseInfoDTOS = new ArrayList<>();
@@ -127,6 +126,7 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
         PurchaseStatusEnum statusNew = PurchaseStatusEnum.NEW;
         PurchaseStatus purchaseStatus = purchaseStatusRepository.findById( statusNew.getId() ).orElseThrow(() -> new PurchaseStatusNotFoundException( statusNew.toString() ));
 
+
         for(OfferPurchaseModel offerPurchaseModel: offerPurchaseModels){
             Offer offer = offerRepository.findById(offerPurchaseModel.getOfferId()).orElse(null);
             if(offer == null || !Objects.equals(offer.getOfferStatus().getId(), OfferStatusEnum.ACTIVE.getId())){
@@ -134,7 +134,16 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
             }else if(offer.getUser() == null) {
                 throw new UserNotFoundException("Nie znaleziono konta kupującego");
             }
-            offer.setOfferStatus(offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(() -> new OfferStatusNotFoundException( OfferStatusEnum.ENDED.name() )));
+
+            Integer offerInitialQuantity = offer.getQuantity();
+            Integer itemsLeft = offerInitialQuantity - offerPurchaseModel.getQuantity();
+            offer.setQuantity(itemsLeft);
+            if(itemsLeft<=0){
+                offer.setOfferStatus(offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(() -> new OfferStatusNotFoundException( OfferStatusEnum.ENDED.name() )));
+            }
+            offer.setQuantity(itemsLeft);
+
+//            offerRepository.save(offer);
             User seller = offer.getUser();
 
             OfferPurchaseInfo offerPurchaseInfo = OfferPurchaseInfo.builder()

@@ -5,15 +5,18 @@ import com.aukcje.dto.mapper.CartOfferDTOMapper;
 import com.aukcje.entity.CartOffer;
 import com.aukcje.entity.Offer;
 import com.aukcje.entity.User;
+import com.aukcje.exception.customException.UserNotFoundException;
 import com.aukcje.model.CartOfferModel;
 import com.aukcje.repository.CartOfferRepository;
 import com.aukcje.repository.OfferRepository;
 import com.aukcje.repository.UserRepository;
 import com.aukcje.service.iface.CartOfferService;
+import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class CartOfferServiceImpl implements CartOfferService {
     private final CartOfferRepository cartOfferRepository;
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public List<CartOfferDTO> getAll(Long userId) {
@@ -41,7 +45,7 @@ public class CartOfferServiceImpl implements CartOfferService {
 
     @Transactional
     @Override
-    public void add(Long userId, Long offerId, Integer quantityToAdd) {
+    public Integer add(Long userId, Long offerId, Integer quantityToAdd) throws UserNotFoundException {
 
         if(userId != null && offerId != null) {
 
@@ -51,6 +55,10 @@ public class CartOfferServiceImpl implements CartOfferService {
 
             CartOffer existingCartOffer = cartOfferRepository.findByOfferIdAndUserId(offerId, userId);
             Offer offer = offerRepository.getOne(offerId);
+
+            if(userId.equals(offer.getUser().getId()) || !userService.isUserActive(userId)){
+               return HttpServletResponse.SC_FORBIDDEN;
+            }
 
             CartOffer offerToSave;
 
@@ -72,6 +80,7 @@ public class CartOfferServiceImpl implements CartOfferService {
             }
             cartOfferRepository.save(offerToSave);
         }
+        return HttpServletResponse.SC_ACCEPTED;
     }
 
     @Override

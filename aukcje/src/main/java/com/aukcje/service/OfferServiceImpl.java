@@ -67,7 +67,7 @@ public class OfferServiceImpl implements OfferService {
 
     private Offer checkAndSetStatus(Offer offer) throws OfferStatusNotFoundException {
         if(hasEnded(offer)){
-            offer = setStatusEnded(offer);
+            offer = setStatus(offer, OfferStatusEnum.ENDED);
         }
         return offer;
     }
@@ -76,8 +76,8 @@ public class OfferServiceImpl implements OfferService {
         return offer.getEndDate().isAfter(LocalDateTime.now());
     }
 
-    private Offer setStatusEnded(Offer offer) throws OfferStatusNotFoundException {
-        OfferStatus offerStatus = offerStatusRepository.findById(OfferStatusEnum.ENDED.getId()).orElseThrow(OfferStatusNotFoundException::new);
+    private Offer setStatus(Offer offer, OfferStatusEnum offerStatusEnum) throws OfferStatusNotFoundException {
+        OfferStatus offerStatus = offerStatusRepository.findById(offerStatusEnum.getId()).orElseThrow(OfferStatusNotFoundException::new);
         offer.setOfferStatus(offerStatus);
         return offerRepository.save(offer);
     }
@@ -318,6 +318,16 @@ public class OfferServiceImpl implements OfferService {
         String activeStatus = OfferStatusEnum.ACTIVE.toString();
 
         return Objects.equals( offerStatus, activeStatus );
+    }
+
+
+    @Override
+    public void setOfferSuspended(Long offerId) throws OfferNotFoundException, OfferStatusNotFoundException {
+        OfferDTO offerDTO = findById(offerId);
+        if(isOfferActive(offerDTO)){
+            Offer offer = offerRepository.findById(offerId).orElseThrow(OfferNotFoundException::new);
+            setStatus(offer, OfferStatusEnum.SUSPENDED);
+        }
     }
 
     private OfferDTO createOfferDTO(Offer offer) {

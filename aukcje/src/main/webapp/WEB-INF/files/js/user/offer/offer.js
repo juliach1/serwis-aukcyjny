@@ -44,7 +44,7 @@ if(quantityInput!=null){
             quantityValue = parseInt(quantityInput.getAttribute('max'));
         }else {
             quantityValue = parseInt(quantityInput.getAttribute('value')) + 1;
-            quantityForCart=quantityForCart+1;
+            quantityForCart=quantityValue;
         }
 
         console.log("up");
@@ -56,7 +56,7 @@ if(quantityInput!=null){
             quantityValue = parseInt(quantityInput.getAttribute('min'));
         }else{
             quantityValue = parseInt(quantityInput.getAttribute('value')) - 1;
-            quantityForCart=quantityForCart-1;
+            quantityForCart=quantityValue;
         }
         console.log("down");
         quantityInput.setAttribute('value',quantityValue);
@@ -73,6 +73,7 @@ if(quantityInput!=null){
         if(quantityForCart==null) setQuantityForCart(1)
         console.log("Dodawanie do koszyka "+quantityForCart+" sztuk przedmiotu "+offerId)
         let url = "/koszyk/dodaj?szt="+quantityForCart+"&ofertaId="+offerId;
+        console.log("DODAWANIE DO KOSZYKA: "+quantityForCart)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", url, false ); // false for synchronous request
         xmlHttp.send( null );

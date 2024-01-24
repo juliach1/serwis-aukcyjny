@@ -171,6 +171,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isUserActive(Long userId) throws UserNotFoundException {
+        UserDTO userDTO = findById(userId);
+        return userDTO.isActive();
+    }
+
+    @Override
     public boolean isUserActive(User user) {
         return Objects.equals(user.getUserStatus().getId(), UserStatusEnum.ACTIVE.getId());
     }

@@ -67,7 +67,7 @@ function decrementQuantity(objectId) {
         allItemsPcs--;
         changeAllItemsQuantity();
     }else {
-        quantityValue = parseInt(quantityInput.getAttribute('value')) - 1;
+        quantityValue = parseInt(quantityInput.getAttribute('value'));
         removeOneFromCart(objectId);
         quantityInput.setAttribute('value',quantityValue);
 

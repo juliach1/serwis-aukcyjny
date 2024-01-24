@@ -8,10 +8,7 @@ import com.aukcje.entity.User;
 import com.aukcje.entity.UserAuction;
 import com.aukcje.enums.BidStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
-import com.aukcje.exception.customException.CanNotBidYourOfferException;
-import com.aukcje.exception.customException.OfferNotFoundException;
-import com.aukcje.exception.customException.UserNotActiveException;
-import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.exception.customException.*;
 import com.aukcje.repository.OfferRepository;
 import com.aukcje.repository.UserAuctionRepository;
 import com.aukcje.repository.UserRepository;
@@ -55,7 +52,7 @@ public class UserAuctionServiceImpl implements UserAuctionService {
     }
 
     @Override
-    public BidStatusEnum placeBid(Long offerId, Double value, Long userId) throws OfferNotFoundException, OfferNotActiveException, UserNotFoundException, UserNotActiveException, CanNotBidYourOfferException {
+    public BidStatusEnum placeBid(Long offerId, Double value, Long userId) throws OfferNotFoundException, OfferNotActiveException, UserNotFoundException, UserNotActiveException, CanNotBidYourOfferException, OfferStatusNotFoundException {
         UserAuction userAuction = new UserAuction();
 
         Offer offer = offerRepository.findById(offerId).orElseThrow(OfferNotFoundException::new);
@@ -95,8 +92,13 @@ public class UserAuctionServiceImpl implements UserAuctionService {
         return findAllByOfferId(offerDTO.getId()).size()>0;
     }
 
-    private boolean isHigherThanLastBid(Double value, Long offerId) {
+    private boolean isHigherThanLastBid(Double value, Long offerId) throws OfferNotFoundException, OfferStatusNotFoundException {
         UserAuctionDTO oneWithHighestValue = findOneWithHighestValue(offerId);
+        if(oneWithHighestValue==null){
+            OfferDTO offerDTO = offerService.findById(offerId);
+            System.out.println(offerDTO.getPrice() <= value);
+            return offerDTO.getPrice() >= value;
+        }
         return oneWithHighestValue.getValue() >= value;
     }
 

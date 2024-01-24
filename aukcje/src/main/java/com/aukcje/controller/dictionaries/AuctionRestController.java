@@ -3,10 +3,7 @@ package com.aukcje.controller.dictionaries;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.BidStatusEnum;
 import com.aukcje.exception.OfferNotActiveException;
-import com.aukcje.exception.customException.CanNotBidYourOfferException;
-import com.aukcje.exception.customException.OfferNotFoundException;
-import com.aukcje.exception.customException.UserNotActiveException;
-import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.exception.customException.*;
 import com.aukcje.service.iface.UserAuctionService;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +28,7 @@ public class AuctionRestController {
     @GetMapping("/licytuj")
     public ResponseEntity<String> placeBid( Principal principal,
                                             @RequestParam("ofertaId") Long offerId,
-                                            @RequestParam("kwota") Double bidAmount) throws UserNotFoundException, CanNotBidYourOfferException, OfferNotActiveException, UserNotActiveException, OfferNotFoundException {
+                                            @RequestParam("kwota") Double bidAmount) throws UserNotFoundException, CanNotBidYourOfferException, OfferNotActiveException, UserNotActiveException, OfferNotFoundException, OfferStatusNotFoundException {
 
         UserDTO userDTO = userService.findByUsername(principal.getName());
         BidStatusEnum status = userAuctionService.placeBid(offerId, bidAmount, userDTO.getId());

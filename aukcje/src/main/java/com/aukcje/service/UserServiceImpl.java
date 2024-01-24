@@ -112,12 +112,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findById(Long id) throws UserNotFoundException {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        System.out.println("avatarpath: "+user.getAvatarPath());
 
-        UserDTO userDTO = UserDTOMapper.instance.userDTO(user);
-        System.out.println("avatarpath: "+userDTO.avatarPath);
-
-        return userDTO;
+        return UserDTOMapper.instance.userDTO(user);
     }
 
     @Override
@@ -208,8 +204,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-
-        Long photoName = userId;
+        long photoName = userId;
 
 
         String path;
@@ -233,7 +228,7 @@ public class UserServiceImpl implements UserService {
         saveOfferPhoto(fileTarget, multipartFile);
 
         User changedUser = userRepository.getOne(userId);
-        changedUser.setAvatarPath(photoName.toString());
+        changedUser.setAvatarPath(Long.toString(photoName));
         userRepository.save(changedUser);
     }
 

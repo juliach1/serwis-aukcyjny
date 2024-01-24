@@ -31,7 +31,6 @@ public class MessageRestController {
         Long senderId = principalDTO.getId();
         Long receiverId = messageModel.getReceiverId();
         String msg = messageModel.getContent();
-        System.out.println("Sender: "+senderId+" Receiver: "+receiverId+" Msg: "+msg);
 
         messageService.saveMessage(senderId, receiverId, msg);
     }

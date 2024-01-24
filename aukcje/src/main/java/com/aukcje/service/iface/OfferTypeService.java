@@ -8,5 +8,4 @@ public interface OfferTypeService {
 
     List<OfferTypeDTO> findAll();
 
-    List<String> getAllNames();
 }

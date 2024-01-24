@@ -15,8 +15,6 @@ public interface AddressService {
 
    AddressDTO findById(Long addressId);
 
-   List<AddressDTO> findByUserId(Long userId);
-
    List<AddressDTO> findNotDeletedByUserId(Long userId);
 
    AddressDTO findNotDeletedById(Long addressId) throws AddressNotFoundException;

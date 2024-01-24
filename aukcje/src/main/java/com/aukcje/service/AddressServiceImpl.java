@@ -54,11 +54,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<AddressDTO> findByUserId(Long userId) {
-        return createAddressDTO(addressRepository.findByUserId(userId));
-    }
-
-    @Override
     public List<AddressDTO> findNotDeletedByUserId(Long userId) {
         return createAddressDTO(addressRepository.findByUserIdAndIsDeletedIsFalse(userId));
     }

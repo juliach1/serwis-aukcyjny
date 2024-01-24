@@ -14,8 +14,6 @@ import java.util.Objects;
 
 public interface OfferPurchaseService {
 
-    //TODO DOKOŃCZYĆ
-
     void setRating(Long purchaseId, UserRating userRating) throws PurchaseNotFoundException;
 
     void purchaseItems(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, AddressNotFoundException, OfferNotFoundException, OfferNotActiveException, PurchaseStatusNotFoundException, OfferStatusNotFoundException;

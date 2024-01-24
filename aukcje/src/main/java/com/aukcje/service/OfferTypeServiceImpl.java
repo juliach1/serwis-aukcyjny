@@ -21,22 +21,7 @@ public class OfferTypeServiceImpl implements OfferTypeService {
     @Override
     public List<OfferTypeDTO> findAll() {
         List<OfferType> offerTypes = offerTypeRepository.findAll();
-
-        System.out.println(offerTypes);
         return createOfferTypeDTO(offerTypes);
-    }
-
-    @Override
-    public List<String> getAllNames() {
-
-        List<OfferTypeDTO> offerTypeDTOS = findAll();
-        List<String> offerTypesNames = new ArrayList<>();
-
-        for (OfferTypeDTO offerTypeDTO : offerTypeDTOS){
-            offerTypesNames.add(offerTypeDTO.getName());
-        }
-
-        return offerTypesNames;
     }
 
     private OfferTypeDTO createOfferTypeDTO(OfferType offerType) {

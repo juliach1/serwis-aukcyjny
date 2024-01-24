@@ -47,12 +47,12 @@ public class CartRestController {
                                   @RequestParam(value = "szt", required = false) Integer pcs
     ) throws CartOfferNotFoundException {
 
-        UserDTO user = userService.findByUsername(principal.getName());
-        if(cartOfferService.isCartOfferAssignedToUser(user.id, cartOfferId)){
+        UserDTO principalDTO = userService.findByUsername(principal.getName());
+        if(cartOfferService.isCartOfferAssignedToUser(principalDTO.getId(), cartOfferId)){
             if(pcs == null)
                 cartOfferService.delete(cartOfferId);
             else{
-                if(userService.isUserActive(user))
+                if(userService.isUserActive(principalDTO))
                     cartOfferService.changeQuantity(cartOfferId, pcs);
             }
         }else

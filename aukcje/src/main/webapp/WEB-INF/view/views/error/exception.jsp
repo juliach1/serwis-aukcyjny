@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Error Page</title>
+    <title>Wystąpił błąd</title>
 </head>
 <body>
 <div>

@@ -10,7 +10,7 @@ public class ExceptionController {
 
     @ExceptionHandler(CustomizedException.class)
     public String handleException(Exception ex, Model model) {
-        String errorMessage = "Wystąpił nieznany błąd błąd";
+        String errorMessage = "Wystąpił nieznany błąd";
 
         if (ex instanceof CustomizedException)
             model.addAttribute("errorMessage", ex.getMessage());

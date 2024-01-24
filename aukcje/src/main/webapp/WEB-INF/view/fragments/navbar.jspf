@@ -19,55 +19,63 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <ul class="navbar-nav ms-auto">
 
-<%--                        <security:authorize access="hasRole('USER')">--%>
+                        <security:authorize access="hasAnyRole('USER','ADMIN')">
                             <li class="nav-item">
                                 <a id="main-page-nav-link" class="nav-link px-lg-3" aria-current="page" href="${pageContext.request.contextPath}/uzytkownik/strona-glowna">STRONA GŁÓWNA</a>
                             </li>
-<%--                        </security:authorize>--%>
+                        </security:authorize>
 
-<%--                        <security:authorize access="hasRole('USER')">--%>
+                        <security:authorize access="hasAnyRole('USER', 'ADMIN')">
                             <li class="nav-item">
                                 <a id="cart-nav-link" class="nav-link px-lg-3" href="${pageContext.request.contextPath}/koszyk">Koszyk</a>
                             </li>
-<%--                        </security:authorize>--%>
+                        </security:authorize>
 
-<%--                        <security:authorize access="hasRole('ADMIN')">--%>
+                        <security:authorize access="hasRole('ADMIN')">
                             <li class="nav-item">
                                 <a id="users-nav-link" class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/uzytkownik">Użytkownicy</a>
                             </li>
-<%--                        </security:authorize>--%>
+                        </security:authorize>
 
-<%--                        <security:authorize access="hasRole('ADMIN')">--%>
+                        <security:authorize access="hasRole('ADMIN')">
                             <li class="nav-item">
                                 <a id="categories-nav-link" class="nav-link px-lg-3" href="${pageContext.request.contextPath}/admin/kategoria/pobierz-wszystkie">Kategorie</a>
                             </li>
-<%--                        </security:authorize>--%>
+                        </security:authorize>
 
 
-<%--                        <security:authorize access="hasRole('USER')">--%>
+                        <security:authorize access="hasAnyRole('USER','ADMIN')">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Moje konto</a>
                                 <ul class="dropdown-menu">
-                                    <li><a id="my-account-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/uzytkownik/moj-profil">Mój profil</a></li>
+                                    <security:authorize access="hasAnyRole('USER','ADMIN')">
+                                        <li><a id="my-account-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/uzytkownik/moj-profil">Mój profil</a></li>
+                                   </security:authorize>
 
-                                    <li><a id="new-offer-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/dodaj">Nowa oferta</a></li>
+                                    <security:authorize access="hasRole('USER')">
+                                        <li><a id="new-offer-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/dodaj">Nowa oferta</a></li>
 
-                                    <li><a id="my-offers-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/moje-oferty">Moje oferty</a></li>
+                                        <li><a id="my-offers-nav-item" class="dropdown-item" href="${pageContext.request.contextPath}/oferta/moje-oferty">Moje oferty</a></li>
 
-                                    <li><a id="my-orders-item" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/moje-zakupy">Moje zamówienia</a></li>
+                                        <li><a id="my-orders-item" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/moje-zakupy">Moje zamówienia</a></li>
 
-                                    <li><a id="sold-items" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/sprzedane">Sprzedane przedmioty</a></li>
+                                        <li><a id="sold-items" class="dropdown-item" href="${pageContext.request.contextPath}/zakup/sprzedane">Sprzedane przedmioty</a></li>
+                                    </security:authorize>
 
-                                    <li><a id="my-chats" class="dropdown-item" href="${pageContext.request.contextPath}/wiadomosci/podglad">Czaty</a></li>
+                                    <security:authorize access="hasAnyRole('USER','ADMIN')">
+                                        <li><a id="my-chats" class="dropdown-item" href="${pageContext.request.contextPath}/wiadomosci/podglad">Czaty</a></li>
+                                    </security:authorize>
 
                                     <li>
-                                        <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
-                                            <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
-                                        </form:form>
+                                        <security:authorize access="hasAnyRole('USER','ADMIN')">
+                                            <form:form action="${pageContext.request.contextPath}/wyloguj" method="POST">
+                                                <input class="dropdown-item text-danger" value="Wyloguj" type="submit"/>
+                                            </form:form>
+                                        </security:authorize>
                                     </li>
                                 </ul>
                             </li>
-<%--                            </security:authorize>--%>
+                            </security:authorize>
 
                     </ul>
 

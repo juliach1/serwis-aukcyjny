@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Strona główna</title>
+    <title>Koszyk - SellBuy</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +26,11 @@
 
 <body>
 
-<%@include file="../../../fragments/navbar.jspf" %>
 <jsp:useBean id="cartOfferDTOS" scope="request" type="java.util.List<com.aukcje.dto.CartOfferDTO>"/>
 <jsp:useBean id="addressDTOS" scope="request" type="java.util.List<com.aukcje.dto.AddressDTO>"/>
 <%--@elvariable id="allItemsPrice" type="java.lang.Double"--%>
+
+<%@include file="../../../fragments/navbar.jspf" %>
 
 <main>
     <section class="central container col-sm-12 col-md-10 col-xl-8">

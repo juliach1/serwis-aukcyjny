@@ -3,6 +3,7 @@ package com.aukcje.service.iface;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.User;
 import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.exception.customException.UserStatusNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
@@ -33,7 +34,7 @@ public interface UserService extends UserDetailsService {
 
     void save(UserEditModel userModel);
 
-    void save(UserRegisterModel userRegisterModel);
+    void save(UserRegisterModel userRegisterModel) throws UserStatusNotFoundException;
 
      void updateEditUser(UserEditModel userEditModel);
 

@@ -38,7 +38,7 @@
                 Edytuj adres
             </p>
 
-            <form:form method="POST" action="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/przetworz" modelAttribute="addressModel">
+            <form:form id="address-edit-form" method="POST" action="${pageContext.request.contextPath}/uzytkownik/adres/edytuj/przetworz" modelAttribute="addressModel">
 
                     <form:hidden path="id"/>
 
@@ -64,7 +64,7 @@
                     <form:select type="text" path="country" value="${addressDTO.country.name}" class="form-control form-select display" id="countryInput">
                         <c:forEach var = "countryVar" items = "${countries}">
                             <option value="${countryVar.name}"
-                                ${countryVar.name == "Polska" ? 'selected="selected"' : ''}> ${countryVar.name} </option>
+                                ${countryVar.name == addressDTO.country.name ? 'selected="selected"' : ''}> ${countryVar.name} </option>
                         </c:forEach>
                     </form:select>
                     <form:errors path="country" cssClass="error"/>
@@ -82,7 +82,7 @@
 
                 <div class="col-md-9 col-lg-8 col-xl-7">
                     <label for="streetNameInput" class="form-label">Adres</label>
-                    <form:textarea type="text" path="streetName" value="${addressDTO.streetName}" class="form-control " id="streetNameInput" placeholder="Podaj pełny adres"/>
+                    <textarea name="streetName" form="address-edit-form" type="text" class="form-control " id="streetNameInput">${addressDTO.streetName}</textarea>
                     <form:errors path="streetName" cssClass="error"/>
                 </div>
             </div>

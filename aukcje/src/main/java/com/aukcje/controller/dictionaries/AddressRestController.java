@@ -31,7 +31,7 @@ public class AddressRestController {
         addressService.findNotDeletedById(addressId);
 
         if(addressService.isAddressAssignedToUser(user.getId(), addressId)) {
-            addressService.deleteAddress(addressId);
+            addressService.setAddressDeleted(addressId);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
         }else
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

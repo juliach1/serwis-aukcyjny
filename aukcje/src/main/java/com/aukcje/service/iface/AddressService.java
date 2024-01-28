@@ -11,7 +11,7 @@ public interface AddressService {
 
    Address getAddressFromAddressAddModel(AddressModel addressModel,
                                          Long userId);
-   void updateAddress(AddressModel addressModel, Long userId);
+   void updateAddress(AddressModel addressModel, Long userId) throws AddressNotFoundException;
 
    AddressDTO findById(Long addressId);
 
@@ -19,7 +19,7 @@ public interface AddressService {
 
    AddressDTO findNotDeletedById(Long addressId) throws AddressNotFoundException;
 
-   void deleteAddress(Long addressId) throws AddressNotFoundException;
+   void setAddressDeleted(Long addressId) throws AddressNotFoundException;
 
    boolean isAddressAssignedToUser(Long userId, Long addressId);
 

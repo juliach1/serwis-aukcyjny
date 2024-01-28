@@ -1,6 +1,7 @@
 package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
+import com.aukcje.exception.customException.UserStatusNotFoundException;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.service.iface.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class LoginController {
     public String processRegistrationForm(
             @Valid @ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel,
             BindingResult theBindingResult,
-            Model model) {
+            Model model) throws UserStatusNotFoundException {
 
         if(theBindingResult.hasErrors())
             return "/views/register";
@@ -59,7 +60,6 @@ public class LoginController {
         userService.save(userRegisterModel);
 
         return "register-authorized";
-
     }
 
 }

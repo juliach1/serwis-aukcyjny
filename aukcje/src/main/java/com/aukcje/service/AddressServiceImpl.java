@@ -8,7 +8,6 @@ import com.aukcje.entity.User;
 import com.aukcje.exception.customException.AddressNotFoundException;
 import com.aukcje.model.AddressModel;
 import com.aukcje.model.mapper.AddressAddModelMapper;
-import com.aukcje.model.mapper.AddressEditModelMapper;
 import com.aukcje.repository.AddressRepository;
 import com.aukcje.repository.CountryRepository;
 import com.aukcje.repository.UserRepository;
@@ -40,12 +39,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void updateAddress(AddressModel addressModel, Long userId) {
-        Address address = AddressEditModelMapper.instance.address(addressModel);
-        address.setCountry(countryRepository.findByName(addressModel.getCountry()));
-        address.setUser(findUserById(userId).orElseThrow());
-
-        addressRepository.save(address);
+    public void updateAddress(AddressModel addressModel, Long userId) throws AddressNotFoundException {
+        setAddressDeleted(addressModel.getId());
+        addressModel.setId(null);
+        save(addressModel, userId);
     }
 
     @Override
@@ -65,7 +62,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void deleteAddress(Long addressId) throws AddressNotFoundException {
+    public void setAddressDeleted(Long addressId) throws AddressNotFoundException {
         Address address = findNotDeletedEntityById(addressId);
         address.setIsDeleted(true);
         addressRepository.save(address);

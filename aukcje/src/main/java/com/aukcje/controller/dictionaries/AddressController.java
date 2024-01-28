@@ -77,13 +77,15 @@ public class AddressController {
 
         Long userId = userService.findByUsername(principal.getName()).getId();
         AddressDTO addressDTO = addressService.findNotDeletedById(addressId);
+        AddressModel addressModel = new AddressModel();
+        addressModel.setId(addressId);
 
         if(addressDTO == null) throw new AddressNotFoundException();
 
         if(addressService.isAddressAssignedToUser(userId, addressId)) {
             model.addAttribute("countries", countryService.findAll());
             model.addAttribute("addressDTO", addressDTO);
-            model.addAttribute("addressModel", new AddressModel());
+            model.addAttribute("addressModel", addressModel);
 
             return "/views/user/address/addressedit";
         } else
@@ -95,7 +97,7 @@ public class AddressController {
     public String editAddressProcess( Principal principal,
                                       Model model,
                                       @Valid @ModelAttribute("addressModel") AddressModel addressModel,
-                                      BindingResult bindingResult ) throws IncorrectCountryException {
+                                      BindingResult bindingResult ) throws IncorrectCountryException, AddressNotFoundException {
 
         List<CountryDTO> countries = countryService.findAll();
 
@@ -114,6 +116,6 @@ public class AddressController {
         }else
             throw new IncorrectCountryException();
 
-        return "redirect:/uzytkownik/adres/dodaj";
+        return "redirect:/uzytkownik/adres";
     }
 }

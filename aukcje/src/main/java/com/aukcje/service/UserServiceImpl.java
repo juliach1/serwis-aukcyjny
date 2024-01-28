@@ -4,8 +4,10 @@ import com.aukcje.dto.UserDTO;
 import com.aukcje.dto.mapper.UserDTOMapper;
 import com.aukcje.entity.Role;
 import com.aukcje.entity.User;
+import com.aukcje.entity.UserStatus;
 import com.aukcje.enums.UserStatusEnum;
 import com.aukcje.exception.customException.UserNotFoundException;
+import com.aukcje.exception.customException.UserStatusNotFoundException;
 import com.aukcje.model.UserEditModel;
 import com.aukcje.model.UserRegisterModel;
 import com.aukcje.model.UserSearchModel;
@@ -122,11 +124,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserRegisterModel userRegisterModel) {
+    public void save(UserRegisterModel userRegisterModel) throws UserStatusNotFoundException {
+        UserStatusEnum status = UserStatusEnum.ACTIVE;
+        UserStatus userStatus = userStatusRepository.findById(status.getId()).orElseThrow(() -> new UserStatusNotFoundException(status.name()));
+        List<Role> role = Collections.singletonList(roleRepository.findByName("ROLE_USER"));
+
         User user = UserRegisterModelMapper.instance.user(userRegisterModel);
         user.setPassword(passwordEncoder.encode(userRegisterModel.getPassword()));
-        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USERNAME")));;
+        user.setRoles(role);
+        user.setUserStatus(userStatus);
         user.setRegistrationDate(LocalDateTime.now());
+
         userRepository.save(user);
     }
 

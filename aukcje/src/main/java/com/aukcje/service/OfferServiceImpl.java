@@ -46,6 +46,7 @@ public class OfferServiceImpl implements OfferService {
     private final UserFavoriteOfferService userFavoriteOfferService;
     private final CartOfferService cartOfferService;
     private final OfferStatusRepository offerStatusRepository;
+    private final OfferDetailsRepository offerDetailsRepository;
     private final OfferPhotoService offerPhotoService;
     private final OfferTypeRepository offerTypeRepository;
     private final CustomOfferRepository customOfferRepository;
@@ -62,6 +63,8 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDTO findById(Long id) throws OfferNotFoundException, OfferStatusNotFoundException {
         Offer offer = offerRepository.findById(id).orElseThrow(OfferNotFoundException::new);
+        offer.setViews(offer.getViews()+1);
+        offerRepository.save(offer);
         return createOfferDTO(offer);
     }
 
@@ -78,7 +81,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     private boolean hasEnded(Offer offer){
-        return offer.getEndDate().isAfter(LocalDateTime.now());
+        return offer.getEndDate().isBefore(LocalDateTime.now());
     }
 
     private Offer setStatus(Offer offer, OfferStatusEnum offerStatusEnum) throws OfferStatusNotFoundException {
@@ -167,9 +170,21 @@ public class OfferServiceImpl implements OfferService {
         ItemCondition itemCondition = itemConditionRepository.findByName(offerModel.getItemCondition());
         OfferDetails offerDetails = new OfferDetails();
 
+        Offer existingOffer = null;
+
+        if(offerModel.getId()!=null){
+            existingOffer = offerRepository.findById(offerModel.getId()).orElse(null);
+        }
+
+        if(existingOffer!=null && existingOffer.getOfferDetails()!=null){
+            offerDetails = existingOffer.getOfferDetails();
+            offerDetails.setId(existingOffer.getOfferDetails().getId());
+        }
+
         offerDetails.setTitle(offerModel.getTitle());
         offerDetails.setDescription(offerModel.getDescription());
         offerDetails.setItemCondition(itemCondition);
+
         return offerDetails;
     }
 

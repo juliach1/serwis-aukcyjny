@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 
 public @interface ValidPrice {
 
-    public abstract String message() default "Podaj prawidłową cenę!";
+    public abstract String message() default "Cena musi być wyższa niż 0. Dopuszczalne są przecinki oraz kropki.";
 
     public abstract Class<?>[] groups() default {};
 

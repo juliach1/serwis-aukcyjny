@@ -24,7 +24,6 @@ public class SecurityDataSourceConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/rest/**").hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .antMatchers("/rejestracja").permitAll()
                 .antMatchers("/rejestracja/**").permitAll()

@@ -23,13 +23,11 @@ public interface OfferMapper {
         offer.setCategory(category);
         offer.setUser(user);
         offer.setInsertDate(LocalDateTime.now());
-        offer.setViews(0l);
         offer.setOfferStatus(offerStatus);
         offer.setOfferType(offerType);
         offer.setOfferDetails(offerDetails);
         offer.setQuantity(offerModel.getQuantity());
-        offer.setPrice(Double.valueOf(offerModel.getPrice()));
-        offer.setPrice(Double.valueOf(offerModel.getPrice()));
+        offer.setPrice(Double.valueOf(offerModel.getPrice().replace(",",".")));
         offer.setQuantity(offerModel.getQuantity());
         offer.setInsertDate(LocalDateTime.now());
         offer.setViews(0l);
@@ -38,6 +36,8 @@ public interface OfferMapper {
 
         if(offerModel.getLengthInDays() != null) {
             offer.setEndDate(offer.getInsertDate().plusDays(offerModel.getLengthInDays()));
+        }else {
+            offer.setEndDate(offer.getInsertDate().plusDays(30));
         }
 
         return offer;

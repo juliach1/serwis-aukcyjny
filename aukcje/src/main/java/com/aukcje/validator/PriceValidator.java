@@ -9,8 +9,7 @@ public class PriceValidator implements ConstraintValidator<ValidPrice, String> {
 
     private Pattern pattern;
     private Matcher matcher;
-    private static final  String PRICE_PATTERN = "[0-9]+([,.][0-9]{1,2})?";
-
+    private static final  String PRICE_PATTERN = "^(?!0*[.,]?0*$)[0-9]+([.,][0-9]{1,2})?$";
 
     @Override
     public boolean isValid(String price, ConstraintValidatorContext constraintValidatorContext) {

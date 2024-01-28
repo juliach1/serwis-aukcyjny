@@ -39,6 +39,7 @@
     <%--@elvariable id="itemConditionDTOS" type="java.util.List<com.aukcje.dto.ItemConditionDTO>"--%>
         <%--@elvariable id="offerTypeDTOS" type="java.util.List<com.aukcje.dto.OfferTypeDTO>"--%>
       <%--@elvariable id="badCategory" type="java.lang.String"--%>
+        <jsp:useBean id="offerDTO" scope="request" type="com.aukcje.dto.OfferDTO"/>
 
 
         <section class="central container col-11 col-sm-10 col-md-9 col-lg-8 col-xl-7">
@@ -50,7 +51,7 @@
                     Edytuj przedmiot
                 </p>
 
-            <form:form method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/oferta/dodaj/przetworz" modelAttribute="offerAddModel">
+            <form:form id="offer-edit-form" method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/oferta/edytuj/przetworz" modelAttribute="offerAddModel">
 
                     <form:hidden path="id"/>
                     <form:hidden path="categoryId" id="chosen-category-id"/>
@@ -87,7 +88,7 @@
 
                     <div class="pb-4">
                         <label for="descriptionTextArea" class="form-label">Opis oferty</label>
-                        <textarea type="text" path="description" style="height: 150px" class="form-control" id="descriptionTextArea" placeholder="Podaj kupującym więcej szczegółów na temat sprzedawanego przedmiotu">${offerDTO.offerDetails.description}</textarea>
+                        <textarea id="descriptionTextArea" name="description" form="offer-edit-form" type="text" class="form-control" style="height: 150px">${offerDTO.offerDetails.description}</textarea>
                         <form:errors path="description" cssClass="error"/>
                     </div>
 

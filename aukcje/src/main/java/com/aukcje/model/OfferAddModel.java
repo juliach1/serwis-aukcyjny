@@ -1,13 +1,9 @@
 package com.aukcje.model;
 
-import com.aukcje.validator.ValidNotZeroOrBlank;
 import com.aukcje.validator.ValidPrice;
 import lombok.Data;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
 public class OfferAddModel {
@@ -31,8 +27,6 @@ public class OfferAddModel {
    @NotNull(message = "Ustaw stan przedmiotu.")
    private String itemCondition;
 
-
-    @ValidNotZeroOrBlank
     @ValidPrice
     private String price;
 

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -33,7 +32,8 @@ public class AddressController {
     @GetMapping("")
     public String userAddresses(Principal principal, Model model) {
         UserDTO userDTO = userService.findByUsername(principal.getName());
-        List<AddressDTO> addressDTOS = addressService.findNotDeletedByUserId(userDTO.getId());
+        Long userId = userDTO.getId();
+        List<AddressDTO> addressDTOS = addressService.findNotDeletedByUserId(userId);
 
         model.addAttribute("addressDTOS", addressDTOS);
 
@@ -42,7 +42,9 @@ public class AddressController {
 
     @GetMapping("/dodaj")
     public String addAddress(Model model) {
-        model.addAttribute("countries", countryService.findAll());
+        List<CountryDTO> countries = countryService.findAll();
+
+        model.addAttribute("countries", countries);
         model.addAttribute("addressModel", new AddressModel());
 
         return "/views/user/address/address-add";
@@ -55,7 +57,7 @@ public class AddressController {
                                     BindingResult bindingResult) throws IncorrectCountryException {
 
         if(bindingResult.hasErrors()) {
-            model.addAttribute("addressAddModel", new AddressModel());
+            model.addAttribute("addressModel", new AddressModel());
             model.addAttribute("countries", countryService.findAll());
             return "/views/user/address/address-add";
         }

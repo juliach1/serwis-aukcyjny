@@ -17,7 +17,6 @@ public class ExceptionController {
         else
             model.addAttribute("errorMessage", errorMessage);
 
-        //TODO: zrobić ładniejszą stronę obsługi wyjątków
         return "/views/error/exception";
     }
 }

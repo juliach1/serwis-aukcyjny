@@ -27,8 +27,8 @@ public class MessageController {
     private final UserService userService;
 
     @GetMapping("/podglad")
-    public String getSendersAndReceiversForPrincipal(Model model,
-                                            Principal principal) throws UserNotFoundException {
+    public String getSendersAndReceiversForPrincipal(Model model, Principal principal)
+            throws UserNotFoundException {
         UserDTO principalDTO = userService.findByUsername(principal.getName());
         Long userId = principalDTO.getId();
 

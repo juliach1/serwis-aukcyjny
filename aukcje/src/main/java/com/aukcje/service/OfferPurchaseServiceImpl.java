@@ -157,16 +157,6 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
                     .purchaseStatus(purchaseStatus)
                     .build();
 
-            System.out.println("--------------Tworzenie OPI--------------------");
-            System.out.println(offerPurchaseInfo.getPurchaseTime());
-            System.out.println(offerPurchaseInfo.getAddress().getCity());
-            System.out.println(offerPurchaseInfo.getSeller()+seller.getUsername());
-            System.out.println(offerPurchaseInfo.getBuyer()+seller.getUsername());
-            System.out.println("offer: " + offerPurchaseInfo.getOffer().getId());
-            System.out.println("quantity: " + offerPurchaseInfo.getQuantity());
-            System.out.println("price: " + offerPurchaseInfo.getPrice());
-            System.out.println("purchaseStatus: " + offerPurchaseInfo.getPurchaseStatus());
-
             offerPurchaseInfos.add(offerPurchaseInfo);
         }
         return offerPurchaseInfos;

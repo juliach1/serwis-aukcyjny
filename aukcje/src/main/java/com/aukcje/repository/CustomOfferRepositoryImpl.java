@@ -73,7 +73,6 @@ public class CustomOfferRepositoryImpl implements CustomOfferRepository {
 
         Page<Offer> offers = Utils.listToPageMapper(entityManager.createQuery(criteriaQuery).getResultList(),
                 PageRequest.of(0, offerSearchModel.getPageSize()));
-        System.out.println(offers.toList().toString());
 
         return offers;
     }

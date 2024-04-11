@@ -297,16 +297,16 @@
 
                         <div class="d-flex justify-content-center">
                             <a class="text-center" href="${pageContext.request.contextPath}/uzytkownik/podglad/${offerDTO.user.id}">
-
-                                <c:choose>
-                                    <c:when test="${offerDTO.user.avatarPath == null || offerDTO.user.avatarPath == ''}">
-                                        <img src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" class="avatar" alt="Brak zdjęcia sprzedawcy">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="${pageContext.request.contextPath}/files/img/users/${offerDTO.user.id}/${offerDTO.user.id}.png" class="avatar" alt="Zdjęcie profilowe sprzedawcy">
-                                    </c:otherwise>
-                                </c:choose>
-
+                                <div class="circular-big-img-div">
+                                    <c:choose>
+                                        <c:when test="${offerDTO.user.avatarPath == null || offerDTO.user.avatarPath == ''}">
+                                            <img src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" class="user-icon-big" alt="Brak zdjęcia sprzedawcy">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img  src="${pageContext.request.contextPath}/files/img/users/${offerDTO.user.id}/${offerDTO.user.id}.png" class="user-icon-big" alt="Zdjęcie profilowe sprzedawcy">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                                 <h1>${offerDTO.user.username}</h1>
 
                             </a>

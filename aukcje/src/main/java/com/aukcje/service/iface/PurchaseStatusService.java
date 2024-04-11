@@ -1,7 +1,7 @@
 package com.aukcje.service.iface;
 
 import com.aukcje.dto.PurchaseStatusDTO;
-import com.aukcje.exception.PurchaseStatusNotFoundException;
+import com.aukcje.exception.customException.PurchaseStatusNotFoundException;
 
 import java.util.List;
 

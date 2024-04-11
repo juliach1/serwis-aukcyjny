@@ -2,7 +2,7 @@ package com.aukcje.controller.dictionaries;
 
 import com.aukcje.dto.UserDTO;
 import com.aukcje.enums.BidStatusEnum;
-import com.aukcje.exception.OfferNotActiveException;
+import com.aukcje.exception.customException.OfferNotActiveException;
 import com.aukcje.exception.customException.*;
 import com.aukcje.service.iface.UserAuctionService;
 import com.aukcje.service.iface.UserService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.inject.Inject;
 import java.security.Principal;
 

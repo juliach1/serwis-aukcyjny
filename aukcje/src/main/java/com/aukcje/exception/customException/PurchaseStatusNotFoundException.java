@@ -1,4 +1,5 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
+import com.aukcje.exception.CustomizedException;
 
 public class PurchaseStatusNotFoundException extends CustomizedException {
     public PurchaseStatusNotFoundException(String purchaseStatusName) {

@@ -4,8 +4,8 @@ import com.aukcje.dto.OfferPurchaseInfoDTO;
 import com.aukcje.dto.UserDTO;
 import com.aukcje.entity.UserRating;
 import com.aukcje.enums.PurchaseStatusEnum;
-import com.aukcje.exception.OfferNotActiveException;
-import com.aukcje.exception.PurchaseStatusNotFoundException;
+import com.aukcje.exception.customException.OfferNotActiveException;
+import com.aukcje.exception.customException.PurchaseStatusNotFoundException;
 import com.aukcje.exception.customException.*;
 import com.aukcje.model.OfferPurchaseModel;
 

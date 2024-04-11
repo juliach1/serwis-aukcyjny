@@ -3,7 +3,7 @@ package com.aukcje.service;
 import com.aukcje.dto.PurchaseStatusDTO;
 import com.aukcje.dto.mapper.PurchaseStatusDTOMapper;
 import com.aukcje.entity.PurchaseStatus;
-import com.aukcje.exception.PurchaseStatusNotFoundException;
+import com.aukcje.exception.customException.PurchaseStatusNotFoundException;
 import com.aukcje.repository.PurchaseStatusRepository;
 import com.aukcje.service.iface.PurchaseStatusService;
 import lombok.RequiredArgsConstructor;

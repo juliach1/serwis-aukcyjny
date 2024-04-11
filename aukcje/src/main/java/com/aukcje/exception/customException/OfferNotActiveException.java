@@ -1,6 +1,8 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
 
-public class OfferNotActiveException extends CustomizedException{
+import com.aukcje.exception.CustomizedException;
+
+public class OfferNotActiveException extends CustomizedException {
 
     public OfferNotActiveException() { super("Wybrana oferta nie jest aktywna. Prawdopodobnie została usunięta albo już się zakończyła"); }
 

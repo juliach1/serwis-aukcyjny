@@ -7,7 +7,7 @@ import com.aukcje.entity.Offer;
 import com.aukcje.entity.User;
 import com.aukcje.entity.UserAuction;
 import com.aukcje.enums.BidStatusEnum;
-import com.aukcje.exception.OfferNotActiveException;
+import com.aukcje.exception.customException.OfferNotActiveException;
 import com.aukcje.exception.customException.*;
 import com.aukcje.repository.OfferRepository;
 import com.aukcje.repository.UserAuctionRepository;

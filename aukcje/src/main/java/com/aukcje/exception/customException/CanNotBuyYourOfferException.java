@@ -1,4 +1,5 @@
-package com.aukcje.exception;
+package com.aukcje.exception.customException;
+import com.aukcje.exception.CustomizedException;
 
 public class CanNotBuyYourOfferException extends CustomizedException {
     public CanNotBuyYourOfferException() {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler(CustomizedException.class)
+    @ExceptionHandler(Exception.class)
     public String handleException(Exception ex, Model model) {
         String errorMessage = "Wystąpił nieznany błąd";
 

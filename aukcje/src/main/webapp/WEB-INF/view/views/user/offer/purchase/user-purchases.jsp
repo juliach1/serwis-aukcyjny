@@ -51,7 +51,14 @@
                             <c:if test="${purchaseDTOS.size()<1}">
                                 <div class="noresultbox p-5 my-5 border rounded-3">
                                     <p class=" display-8 text-danger">
-                                        Nie kupiłeś jeszcze żadnego przedmiotu. Skorzystaj z wyszukiwarki i znajdź oferty, które pokochasz.
+                                        <c:choose>
+                                            <c:when test="${requestScope.bought == true}">
+                                                Nie kupiłeś jeszcze żadnego przedmiotu. Skorzystaj z wyszukiwarki i znajdź oferty, które pokochasz.
+                                            </c:when>
+                                            <c:when test="${requestScope.sold == true}">
+                                                Nie sprzedałeś jeszcze żadnego przedmiotu.
+                                            </c:when>
+                                        </c:choose>
                                     </p>
                                 </div>
                             </c:if>
@@ -100,8 +107,8 @@
                                                                     </p>
                                                                 </c:when>
                                                                 <c:when test="${requestScope.sold==true}">
-                                                                    <strong>Kupujący:</strong>
                                                                     <p class="mt-2">
+                                                                        <strong>Kupujący:</strong>
                                                                         <a href="">
                                                                                 ${purchase.buyer.username}
                                                                         </a>
@@ -195,7 +202,7 @@
                                                     </div>
 
                                                     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 align-self-center">
-                                                        <p class="text-center pt-2 mb-4">${purchase.offer.quantity}szt.</p>
+                                                        <p class="text-center pt-2 mb-4">${purchase.quantity}szt.</p>
                                                         <div class="d-flex justify-content-center">
                                                             <h1 class="price display-3" >${purchase.offer.price * purchase.quantity}<span>${purchase.offer.price*10 % 1 == 0 ? '0' : ''} zł</span></h1>
                                                         </div>

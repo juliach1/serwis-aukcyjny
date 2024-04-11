@@ -48,13 +48,13 @@
                                         <hr class="my-4 col" />
                                     </c:if>
                                     <a class="d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/wiadomosci/czat?uzytkownikId=${newestMessageDTO.otherUser.id}">
-                                        <div class="col-3">
+                                        <div class="col-3 circular-big-img-div">
                                             <c:choose>
                                                 <c:when test="${newestMessageDTO.otherUser.avatarPath==null || newestMessageDTO.otherUser.avatarPath==''}">
-                                                    <img id="profile-photo-ph" src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego" class="d-block w-100">
+                                                    <img id="profile-photo-ph" src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego" class="d-block user-icon-small">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${newestMessageDTO.otherUser.id}/${newestMessageDTO.otherUser.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block w-100">
+                                                    <img id="profile-photo" src="${pageContext.request.contextPath}/files/img/users/${newestMessageDTO.otherUser.id}/${newestMessageDTO.otherUser.id}.png" alt="Zdjęcie profilowe użytkownika" class="d-block user-icon-small">
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
@@ -86,8 +86,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/files/js/user/address/address.js"></script>
-
 
 </body>
 </html>

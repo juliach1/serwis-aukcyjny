@@ -4,11 +4,13 @@
     border-radius: 50%;
 }
 
-.sender-message-text{
-    font-size: 80%;
+.message-text{
+    font-size: 90%;
     font-weight: 400;
     padding: 1rem !important;
     margin-bottom: 0.25rem !important;
-    color: #f8f9fa !important;
     border-radius: 0.25rem !important;
+}
+.sender-message-text{
+    color: #f8f9fa !important;
 }

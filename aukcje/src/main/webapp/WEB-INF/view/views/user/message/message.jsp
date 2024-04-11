@@ -42,13 +42,13 @@
                             <c:forEach var ="messageDTO" items = "${messageDTOS}" varStatus="index">
                                 <c:choose>
                                     <c:when test="${index.index>0 && messageDTO.sendTime.toLocalDate() != messageDTOS.get(index.index-1).sendTime.toLocalDate()}">
-                                        <div class="time-divider d-flex justify-content-center mb-4 text-muted">
-                                            <p>${messageDTO.sendTime.toLocalDate()}</p>
+                                        <div class="time-divider text-muted d-flex w-100 justify-content-center mb-4">
+                                           <hr class="col"><p class="mx-4">${messageDTO.sendTime.toLocalDate()}</p><hr class="col">
                                         </div>
                                     </c:when>
                                     <c:when test="${index.index==0}">
-                                        <div class="time-divider d-flex justify-content-center mb-4 text-muted">
-                                            <p>${messageDTO.sendTime.toLocalDate()}</p>
+                                        <div class="time-divider text-muted d-flex w-100 justify-content-center mb-4">
+                                            <hr class="col"><p class="mx-4">${messageDTO.sendTime.toLocalDate()}</p><hr class="col">
                                         </div>
                                     </c:when>
                                 </c:choose>
@@ -56,17 +56,21 @@
                                 <c:when test="${principalDTO.id == messageDTO.sender.id}">
                                     <div class="d-flex flex-row justify-content-end">
                                         <div class="me-3">
-                                            <p class="sender-message-text bg-light-purple">${messageDTO.content}</p>
-                                            <p class="small mb-3 text-muted">${messageDTO.sendTime.toLocalTime()}</p>
+                                            <p class="message-text sender-message-text bg-light-purple">${messageDTO.content}</p>
+                                            <p class="small mb-3 text-muted text-end">${messageDTO.sendTime.toLocalTime()}</p>
                                         </div>
-                                        <c:choose>
-                                            <c:when test="${messageDTO.sender.avatarPath==null || messageDTO.sender.avatarPath==''}">
-                                                <img class="user-icon"  src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img class="user-icon" src="${pageContext.request.contextPath}/files/img/users/${messageDTO.sender.id}/${messageDTO.sender.id}.png" alt="Zdjęcie profilowe użytkownika">
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <div class="circular-small-img-div">
+                                            <c:choose>
+                                                <c:when test="${messageDTO.sender.avatarPath==null || messageDTO.sender.avatarPath==''}">
+
+                                                    <img class="user-icon-small"  src="${pageContext.request.contextPath}/files/img/users/avatar-placeholder.png" alt="Użytkownik nie ustawił zdjęcia profilowego">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img class="user-icon-small" src="${pageContext.request.contextPath}/files/img/users/${messageDTO.sender.id}/${messageDTO.sender.id}.png" alt="Zdjęcie profilowe użytkownika">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+
                                     </div>
                                 </c:when>
                                 <c:when test="${principalDTO.id == messageDTO.receiver.id}">
@@ -81,7 +85,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <div class="ms-3">
-                                            <p class="p-3 mb-1 rounded-3" style="background-color: #f5f6f7;">${messageDTO.content}</p>
+                                            <p class="p-3 mb-1 rounded-3 message-text" style="background-color: #f5f6f7;">${messageDTO.content}</p>
                                             <p class="small ms-3 rounded-3 text-muted">${messageDTO.sendTime.toLocalTime()}</p>
                                         </div>
                                     </div>

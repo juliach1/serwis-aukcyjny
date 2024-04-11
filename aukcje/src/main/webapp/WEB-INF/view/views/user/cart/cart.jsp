@@ -75,13 +75,13 @@
                                         <!-- Quantity -->
                                         <div class="d-flex justify-content-center">
                                             <div id="quantity-selection_${purchase.id}" class="d-inline-flex justify-content-center col-4 col-md-2">
-                                                <button id="button-quantity-down_${purchase.id}" onclick="decrementQuantity(${purchase.id})" type="button" class="btn button-quantity-down col">
+                                                <button id="button-quantity-down_${purchase.id}" onclick="decrementQuantity(${purchase.id})" type="button" class="btn button-quantity button-quantity-down col">
                                                     <i class="bi bi-caret-down"></i>
                                                 </button>
 
                                                 <input type="number" class="quantity form-control" id="quantity_${purchase.id}" name="quantity" value="${purchase.quantity}" min="1" max="${purchase.offer.quantity}" readonly>
 
-                                                <button id="button-quantity-up_${purchase.id}" onclick="incrementQuantity(${purchase.id})" type="button" class="btn button-quantity-up col">
+                                                <button id="button-quantity-up_${purchase.id}" onclick="incrementQuantity(${purchase.id})" type="button" class="btn button-quantity-up button-quantity col">
                                                     <i class="bi bi-caret-up"></i>
                                                 </button>
                                             </div>
@@ -136,21 +136,21 @@
                                                 <p class="text-danger">Brak dostępnych adresów.</p>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:forEach var = "newestMessageDTO" items = "${addressDTOS}" varStatus="index">
+                                                <c:forEach var = "addressDTO" items = "${addressDTOS}" varStatus="index">
                                                     <c:if test="${index.index!=0}">
                                                         <hr class="my-4" />
                                                     </c:if>
                                                     <li class="d-flex align-items-center mx-4">
                                                         <div class="pr-3">
-                                                            <input type="radio" name="addressSelection" value="${newestMessageDTO.id}">
+                                                            <input type="radio" name="addressSelection" value="${addressDTO.id}">
                                                         </div>
                                                         <div class="col ms-4 text-end">
                                                             <div class="address text-right">
-                                                                <p class="mb-0">${newestMessageDTO.firstName} ${newestMessageDTO.lastName}</p>
-                                                                <p class="mb-0">${newestMessageDTO.country.name}</p>
-                                                                <p class="mb-0">${newestMessageDTO.city}, ${newestMessageDTO.postalCode}</p>
-                                                                <p class="mb-0">${newestMessageDTO.streetName}</p>
-                                                                <p class="mb-0">tel. ${newestMessageDTO.phone}</p>
+                                                                <p class="mb-0">${addressDTO.firstName} ${addressDTO.lastName}</p>
+                                                                <p class="mb-0">${addressDTO.country.name}</p>
+                                                                <p class="mb-0">${addressDTO.city}, ${addressDTO.postalCode}</p>
+                                                                <p class="mb-0">${addressDTO.streetName}</p>
+                                                                <p class="mb-0">tel. ${addressDTO.phone}</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -162,7 +162,7 @@
                             </div>
                         </div>
 
-                        <div class="-card mb-4">
+                        <div class="card mb-4">
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Podsumowanie koszyka</h5>
                             </div>
@@ -177,7 +177,7 @@
                                     </li>
                                 </ul>
 
-                                <button id="purchaseBtn" type="button" onclick="buyItems()" class="btn btn-primary btn-lg btn-block">
+                                <button id="purchaseBtn" type="button" onclick="buyItems()" class="btn btn-primary btn-lg btn-block w-100">
                                     Do kasy
                                 </button>
                             </div>

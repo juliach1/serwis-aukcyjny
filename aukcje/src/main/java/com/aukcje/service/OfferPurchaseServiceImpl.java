@@ -117,9 +117,6 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
     }
 
     private List<OfferPurchaseInfo> checkAndCreatePurchaseInfos(List<OfferPurchaseModel> offerPurchaseModels, Long buyerId, Long addressId) throws UserNotFoundException, OfferNotFoundException, AddressNotFoundException, PurchaseStatusNotFoundException, OfferStatusNotFoundException {
-        System.out.println("-------> Metoda prywatna w serwisie");
-        System.out.println("-------> OFFERPURCHASEMODEL - rozmiar: "+offerPurchaseModels.size());
-
         List<OfferPurchaseInfo> offerPurchaseInfos = new ArrayList<>();
         User buyer = userRepository.findById(buyerId).orElseThrow(() -> new UserNotFoundException("Nie znaleziono konta sprzedawcy"));
         Address address = addressRepository.findById(addressId).orElseThrow( AddressNotFoundException::new );
@@ -143,9 +140,7 @@ public class OfferPurchaseServiceImpl implements OfferPurchaseService {
             }
             offer.setQuantity(itemsLeft);
 
-//            offerRepository.save(offer);
             User seller = offer.getUser();
-
             OfferPurchaseInfo offerPurchaseInfo = OfferPurchaseInfo.builder()
                     .purchaseTime(LocalDateTime.now())
                     .address(address)

@@ -51,7 +51,6 @@ public class CategoryController {
                                      BindingResult bindingResult,
                                      Errors error) throws IncorrectParentException {
         if(bindingResult.hasErrors() || categoryService.categoryAlreadyExists(categoryModel.getName())) {
-
             if(categoryService.categoryAlreadyExists(categoryModel.getName()))
                 error.reject("categoryExists","Kategoria o podanej nazwie już istnieje");
 
@@ -61,16 +60,17 @@ public class CategoryController {
             return "redirect:/admin/kategoria/pobierz-wszystkie";
         }
 
-        CategoryDTO parentCategoryDTO;
-        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")) {
-            categoryService.update(categoryModel);
-        }else {
-            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
-            if(parentCategoryDTO != null)
-                categoryService.update(categoryModel);
-            else
-                throw new IncorrectParentException();
-        }
+        categoryService.update(categoryModel);
+//        CategoryDTO parentCategoryDTO;
+//        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")) {    //jeśli kategoria nie została wybrana
+//            categoryService.update(categoryModel);  //aktualizuj kategorię
+//        }else {  //jeśli kategoria != placeholder
+//            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());    //
+//            if(parentCategoryDTO != null)
+//                categoryService.update(categoryModel);
+//            else
+//                throw new IncorrectParentException();
+//        }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }
@@ -84,7 +84,6 @@ public class CategoryController {
         model.addAttribute("categories", categoryService.findAllExcept(categoryId));
 
         return "/views/admin/category/category-edit";
-
     }
 
     @PostMapping("/edytuj/przetworz")
@@ -99,15 +98,17 @@ public class CategoryController {
             return "/views/admin/category/category-edit";
         }
 
-        CategoryDTO parentCategoryDTO;
-        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")){
-            categoryService.update(categoryModel);
-        }else {
-            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
-            if(parentCategoryDTO != null)
-                categoryService.update(categoryModel);
-            else throw new IncorrectParentException();
-        }
+        categoryService.update(categoryModel);
+
+//        CategoryDTO parentCategoryDTO;
+//        if (Objects.equals(categoryModel.getParentCategory(), "placeholder")){
+//            categoryService.update(categoryModel);
+//        }else {
+//            parentCategoryDTO = categoryService.findById(categoryModel.getParentCategory());
+//            if(parentCategoryDTO != null)
+//                categoryService.update(categoryModel);
+//            else throw new IncorrectParentException();
+//        }
 
         return "redirect:/admin/kategoria/pobierz-wszystkie";
     }

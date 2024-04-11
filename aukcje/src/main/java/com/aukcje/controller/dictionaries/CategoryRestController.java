@@ -26,15 +26,12 @@ public class CategoryRestController {
     @Transactional
     @GetMapping("/categories")
     public List<CategoryParentHierarchyDTO> getCategories(){
-
-        System.out.println("----------------rest/categories-------------");
         return categoryService.createCategoriesTree(baseUrl);
     }
 
     @Transactional
     @GetMapping("/categories/selection")
     public List<CategorySelectionParentHierarchyDTO> getSelectionCategories(){
-        System.out.println("----------------rest/categories/selection-------------");
         return categoryService.createCategoriesSelectionTree(baseUrl);
     }
 

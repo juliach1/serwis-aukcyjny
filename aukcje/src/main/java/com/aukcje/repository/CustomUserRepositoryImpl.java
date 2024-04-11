@@ -35,15 +35,15 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
 
 
         List<Predicate> statusPredicates = new ArrayList<>();
-        Path<UserStatus> statusPath = root.get("userStatus").get("name");
+        Path<String> statusPath = root.get("userStatus").get("name");
         if(userSearchModel.getIsActive() != null && userSearchModel.getIsActive()){
-            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.ACTIVE.name() ));
+            statusPredicates.add(criteriaBuilder.like( statusPath, UserStatusEnum.ACTIVE.toString() ));
         }
         if(userSearchModel.getIsBlocked() != null && userSearchModel.getIsBlocked()){
-            statusPredicates.add(criteriaBuilder.equal( statusPath, UserStatusEnum.BANNED.name() ));
+            statusPredicates.add(criteriaBuilder.like( statusPath, UserStatusEnum.BANNED.toString() ));
         }
         if(userSearchModel.getIsDeleted() != null && userSearchModel.getIsDeleted()){
-            statusPredicates.add( criteriaBuilder.equal( statusPath, UserStatusEnum.DELETED.name() ));
+            statusPredicates.add( criteriaBuilder.like( statusPath, UserStatusEnum.DELETED.toString() ));
         }
 
         List<Predicate> phrasePredicates = new ArrayList<>();
@@ -55,7 +55,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
             if( !Utils.isLong(userSearchModel.getPhrase()) ){
                 phrasePredicates.add(criteriaBuilder.like( usernamePath, "%"+phrase+"%" ));
             }else {
-                phrasePredicates.add(criteriaBuilder.equal( idPath, Long.parseLong(phrase) ));
+//                phrasePredicates.add(criteriaBuilder.equal( idPath, Long.parseLong(phrase) ));
                 phrasePredicates.add(criteriaBuilder.like( usernamePath, "%"+phrase+"%" ));
             }
         }
@@ -63,12 +63,16 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
 
         if(userSearchModel.getPageSize() == null || userSearchModel.getPageSize() <=0) userSearchModel.setPageSize(10);
 
-
         if(!statusPredicates.isEmpty()){
-            predicates.add(criteriaBuilder.or(statusPredicates.toArray(new Predicate[statusPredicates.size()])));
+            System.out.println("STATUS - NIE PUSTE");
+            predicates.add(criteriaBuilder
+                    .or(statusPredicates.toArray(new Predicate[statusPredicates.size()])));
         }
         if(!phrasePredicates.isEmpty()){
-            predicates.add(criteriaBuilder.and(phrasePredicates.toArray(new Predicate[phrasePredicates.size()])));
+            System.out.println("phrase - NIE PUSTE");
+
+            predicates.add(criteriaBuilder
+                    .or(phrasePredicates.toArray(new Predicate[phrasePredicates.size()])));
         }
 
         if(predicates.isEmpty()){
@@ -83,7 +87,6 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
 
         Page<User> users = Utils.listToPageMapper(entityManager.createQuery(criteriaQuery).getResultList(),
                 PageRequest.of(0, userSearchModel.getPageSize()));
-
         return users;
     }
 }

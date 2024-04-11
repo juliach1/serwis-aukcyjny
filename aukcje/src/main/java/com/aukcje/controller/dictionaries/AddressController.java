@@ -45,7 +45,7 @@ public class AddressController {
         model.addAttribute("countries", countryService.findAll());
         model.addAttribute("addressModel", new AddressModel());
 
-        return "/views/user/address/addressadd";
+        return "/views/user/address/address-add";
     }
 
     @PostMapping("/dodaj/przetworz")
@@ -57,7 +57,7 @@ public class AddressController {
         if(bindingResult.hasErrors()) {
             model.addAttribute("addressAddModel", new AddressModel());
             model.addAttribute("countries", countryService.findAll());
-            return "/views/user/address/addressadd";
+            return "/views/user/address/address-add";
         }
 
         CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());
@@ -87,7 +87,7 @@ public class AddressController {
             model.addAttribute("addressDTO", addressDTO);
             model.addAttribute("addressModel", addressModel);
 
-            return "/views/user/address/addressedit";
+            return "/views/user/address/address-edit";
         } else
             throw new AddressEditPermissionDeniedException();
 
@@ -105,7 +105,7 @@ public class AddressController {
             model.addAttribute("countries", countries);
             model.addAttribute("addressModel", addressModel);
 
-            return "/views/user/address/addressedit";
+            return "/views/user/address/address-edit";
         }
 
         CountryDTO chosenCountry = countryService.findByName(addressModel.getCountry());

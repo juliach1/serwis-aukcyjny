@@ -42,7 +42,7 @@ public class CategoryController {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAll());
 
-        return "/views/admin/category/categoryadd";
+        return "/views/admin/category/category-add";
     }
 
     @PostMapping("/dodaj/przetworz")
@@ -83,7 +83,7 @@ public class CategoryController {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAllExcept(categoryId));
 
-        return "/views/admin/category/categoryedit";
+        return "/views/admin/category/category-edit";
 
     }
 
@@ -96,7 +96,7 @@ public class CategoryController {
             model.addAttribute("categoryDTO", new CategoryModel());
             model.addAttribute("categories",  categoryService.findAllExcept(categoryModel.getId()));
 
-            return "/views/admin/category/categoryedit";
+            return "/views/admin/category/category-edit";
         }
 
         CategoryDTO parentCategoryDTO;

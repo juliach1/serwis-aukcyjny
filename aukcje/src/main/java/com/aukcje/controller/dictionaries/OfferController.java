@@ -106,7 +106,7 @@ public class OfferController {
         model.addAttribute("offerTypeDTOS", offerTypeService.findAll());
         model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
 
-        return "/views/user/offer/offeradd";
+        return "/views/user/offer/offer-add";
     }
 
     @PostMapping("/dodaj/przetworz")
@@ -129,7 +129,7 @@ public class OfferController {
                 bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
             }
 
-            return "/views/user/offer/offeradd";
+            return "/views/user/offer/offer-add";
         }
         Long userId = userService.findByUsername(principal.getName()).getId();
         Long newOfferId = offerService.save(offerAddModel, userId, file);
@@ -155,7 +155,7 @@ public class OfferController {
             model.addAttribute("itemConditionDTOS", itemConditionService.findAll());
             model.addAttribute("offerDTO", offerDTO);
 
-            return "/views/user/offer/offeredit";
+            return "/views/user/offer/offer-edit";
         }else{
             throw new OfferEditPermissionDeniedException();
         }
@@ -182,7 +182,7 @@ public class OfferController {
                 //TODO poprawić: ZEBY PO USTAWIENIU POPRAWNEJ KATEGORII BŁĄD ZNIKAŁ!
                 bindingResult.rejectValue("categoryId", "error.badCategory", "Wybierz kategorię");
             }
-            return "/views/user/offer/offeredit";
+            return "/views/user/offer/offer-edit";
         }
         Long userId = userService.findByUsername(principal.getName()).getId();
         Long newOfferId = offerService.save(offerModel, userId, file);

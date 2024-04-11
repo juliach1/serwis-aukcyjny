@@ -32,7 +32,10 @@
             <%--@elvariable id="countries" type="com.aukcje.entity.Country"--%>
             <%--@elvariable id="addressModel" type="src/main/java/com/aukcje/model/AddressModel.java"--%>
 
-            <form:form method="post" action="${pageContext.request.contextPath}/uzytkownik/adres/dodaj/przetworz" modelAttribute="addressModel">
+            <form:form method="post"
+                       action="${pageContext.request.contextPath}/uzytkownik/adres/dodaj/przetworz"
+                       modelAttribute="addressModel"
+            >
             <p class="display-3 text-center mt-3 mb-5">
                 Dodaj nowy adres
             </p>

@@ -35,7 +35,7 @@ public class UserAdminController {
                              @RequestParam(value = "isDeleted", required = false) String isDeleted) {
 
         model.addAttribute("users", userService.searchBySearchModel(userSearchModel));
-        return "/views/admin/user/usersearch";
+        return "/views/admin/user/user-search";
     }
 
     @GetMapping("/zablokuj/{uzytkownikId}")

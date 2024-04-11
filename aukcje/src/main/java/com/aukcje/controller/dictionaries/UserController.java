@@ -44,7 +44,7 @@ public class UserController {
         UserDTO userDTO = userService.findById(userId);
         createModel(model, principal, userDTO);
 
-        return "/views/user/user/userprofile";
+        return "/views/user/user/user-profile";
     }
     @GetMapping("/moj-profil")
     public String userPage( Principal principal,
@@ -52,7 +52,7 @@ public class UserController {
         UserDTO userDTO = userService.findByUsername(principal.getName());
         createModel(model, principal, userDTO);
 
-        return "/views/user/user/userprofile";
+        return "/views/user/user/user-profile";
     }
 
     private void createModel(Model model, Principal principal, UserDTO userDTO) throws OfferStatusNotFoundException {
